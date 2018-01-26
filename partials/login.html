@@ -1,0 +1,36 @@
+<h2>LogIn</h2>
+<hr />
+
+<form>
+  <div class="form-group">
+    <label for="emailInput"><i class="ace-icon fa fa-user"></i> E-mail</label>
+    <input type="text" class="form-control" id="emailInput" placeholder="Enter E-mail" ng-model="login.email" required>
+  </div>
+  <div class="form-group">
+    <label for="passwordInput"><i class="ace-icon fa fa-lock"></i> Password</label>
+    <input type="password" class="form-control" id="passwordInput" placeholder="Enter Password" ng-model="login.password" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-click="doLogin(login)" data-ng-disabled="loginForm.$invalid">Login</button>
+</form>
+
+ <br />
+ <a href="" ng-click="showForgotPass()">Forgot Password?</a>
+
+ <!-- Check Out Hardware Modal -->
+  <div id="forgotPassModal" class="modal">
+      <div class="modal-content">
+        <h4>Forgot Password?</h4>
+        <hr />
+
+        <form>
+          <div class="form-group">
+            <label>Please enter your COSMIC-System user e-mail below, and you will receive a new password via e-mail. This may take up to 30 minutes. If you do not see the e-mail, please check your junk/spam folders.</label>
+            <textarea class="form-control" rows="3" ng-model="forgotpass.email" placeholder="Enter User E-mail" required></textarea>
+          </div>
+          <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="forgotPassButtonSubmit()">Submit</button>
+          <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="forgotPassButtonCancel()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>

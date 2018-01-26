@@ -1,0 +1,79 @@
+<h2>Add a New Item</h2>
+
+<hr />
+
+<div class="container">
+
+  <form>
+  <div class="form-group">
+    <h6><label for="name">Name<sup>*</sup></label></h6>
+    <input type="text" class="form-control" id="name" placeholder="Enter Name" ng-model="newItem.name" required>
+  </div>
+
+  <div class="form-group">
+    <h6><label for="quantity">Hardware - Require Unique ID On Check Out/In </label></h6>
+    <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value="" ng-model="newItem.isHardware"> Hardware (Check the box if the item check out should require the user to enter the unique ID of each item unit they check out/in)
+    </label>
+  </div>
+
+  <div class="form-group">
+    <h6><label for="quantity">Quantity<sup>*</sup></label></h6>
+    <input type="text" class="form-control" id="quantityAvailable" placeholder="Enter Quantity Available" ng-model="newItem.quantityAvailable" required>
+    <small>It is assumed the new item is not checked out or reserved yet. If it is, please still enter the total quantity here (including checked out and reserved) and, after the item is added to the COSMIC-System, have the user officially check out/reserve the item from their account.</small>
+  </div>
+
+  <div class="form-group">
+    <h6><label for="reorder">Reorder Threshold<sup>*</sup></label></h6>
+    <input type="text" class="form-control" id="reorderThreshold" placeholder="Enter Reorder Threshold" ng-model="newItem.reorderThreshold" required>
+    <small>Total quantity (in inventory and in circulation) dropping below this value will trigger a reorder e-mail.</small>
+  </div>
+
+  <div class="form-group">
+    <h6><label for="tag1">Tags</label></h6>
+    <input type="text" class="form-control" id="tag1" placeholder="Enter Tag 1"  ng-model="newItem.tag1">
+    <input type="text" class="form-control" id="tag2" placeholder="Enter Tag 2"  ng-model="newItem.tag2">
+    <input type="text" class="form-control" id="tag3" placeholder="Enter Tag 3"  ng-model="newItem.tag3">
+    <input type="text" class="form-control" id="tag4" placeholder="Enter Tag 4"  ng-model="newItem.tag4">
+    <input type="text" class="form-control" id="tag5" placeholder="Enter Tag 5"  ng-model="newItem.tag5">
+  </div>
+
+  <div class="form-group">
+    <h6><label for="locationInput">Location</label></h6>
+    <input type="text" class="form-control" id="locationInput" ng-model="newItem.location" maxlength="100">
+    <small class="form-text text-muted">{{newItem.location.length}}/100 Characters</small>
+  </div>
+
+  <div class="form-group">
+    <h6><label for="notesText">Description<sup>*</sup></label></h6>
+    <textarea class="form-control" rows="3" ng-model="newItem.desc" maxlength="450" required=""></textarea>
+    <small class="form-text text-muted">{{newItem.desc.length}}/450 Characters</small>
+    <small>Please describe the item and units of measurement for check out.</small>
+  </div>
+
+  <div class="form-group">
+    <h6><label for="name">Select an Image<sup>*</sup></label></h6>
+    <input type="file" nv-file-select="" uploader="uploader"  required/>
+
+    <div ng-repeat="item in uploader.queue">
+        <span>
+            Image Preview ({{ item.file.size/1024/1024|number:2 }} MB)<br />
+            <!-- Image preview -->
+            <!--auto height-->
+            <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+            <!--auto width-->
+            <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+            <!--fixed width and height -->
+            <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+        </span>
+    </div>
+    <br><small>Image must be JPEG format and no more than 10 MB.</small>
+
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-click="addItem()" data-ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue.length < 1 || newItem.name == null || newItem.quantityAvailable == null || newItem.reorderThreshold == null || newItem.desc == null">Add Item</button>
+
+</form>
+
+
+</div>

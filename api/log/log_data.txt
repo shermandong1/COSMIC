@@ -1,0 +1,7 @@
+Mishaal Aleem,aleem@usc.edu,Arduino Uno,1,Check In,ARD1,12/06/2017,10:36am,
+Mishaal Aleem,aleem@usc.edu,Arduino Uno,1,Consumed or Broken,,12/06/2017,10:36am,
+Rachel Inouye,rinouye@usc.edu,AAA Batteries,10,Check In,,12/06/2017,10:49am,
+Darin Gray,daring@usc.edu,AAA Batteries,40,Check Out,,01/16/2018,02:07pm,
+Darin Gray,daring@usc.edu,9 Volt Batteries,4,Check Out,,01/16/2018,02:10pm,
+Rochelle Urban,rurban@usc.edu,AAA Batteries,10,Check Out,,01/19/2018,03:50pm,
+Rochelle Urban,rurban@usc.edu,AAA Batteries,10,Check In,,01/19/2018,03:51pm,

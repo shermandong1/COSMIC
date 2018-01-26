@@ -1,0 +1,144 @@
+<div ng-if="show">
+  <h2>User Dashboard </h2>
+  <hr />
+
+  <em class="section-subheading text-muted">Name:</em> {{name}}
+  <br/>
+  <em class="section-subheading text-muted">E-mail:</em> {{email}}
+  <br/>
+  <em class="section-subheading text-muted">Type:</em> {{type}}
+  <br />
+  <i><a href="#changepass">Change Password</a></i>
+  <div class="clearfix"><br /></div>
+  <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="logout();">Logout</button>
+
+  <div ng-if="type === 'Admin'">
+    <div clas="clearfix"><br /></div>
+    <h4>Admin Links</h4>
+      <ul>
+        <li><a href="#4E3D91444D2D47E7ED5711FDCE33FC7928A8A7F9">Register a New User</a></li>
+        <li><a href="#newitem">Add a New Item</a></li>
+        <li><a href="api/log/" target="_blank">View Log</a></li>
+        <li><a href="#removeusers" target="">Remove Users</a></li>
+      </ul>
+  </div>
+
+  <div ng-if="type !== 'Organization'">
+    <div clas="clearfix"><br /></div>
+
+    <h4>Items Checked Out</h4>
+    <div ng-if="data.length > 0">
+      <table class="table table-striped table-hover">
+        <tbody>
+          <tr>
+            <th class="image">Item</th>
+            <th class="name">Name</th>
+            <th class="tags">Quantity</th>
+            <th class="checkIn">Check In</th>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr ng-repeat="item in data">
+            <td><a href="#items/{{item.itemid}}"><img src="./images/items/{{item.itemid}}.jpg" class="img-thumbnail inventory-image"></a></td>
+            <td>{{item.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td><button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkIn(item.name,item.itemid,item.quantity)">Check In</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div ng-if="data.length == 0">
+      <p> You have no items checked out.</p>
+    </div>
+
+    <div clas="clearfix"><br /></div>
+
+    <h4>Items Reserved</h4>
+    <div ng-if="reservations.length > 0">
+      <table class="table table-striped table-hover">
+        <tbody>
+          <tr>
+            <th class="image">Item</th>
+            <th class="name">Name</th>
+            <th class="tags">Quantity</th>
+            <th class="tags">Dates</th>
+            <th class="checkIn">Cancel</th>
+            <th class="checkIn">Check Out</th>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr ng-repeat="item in reservations">
+            <td><a href="#items/{{item.itemid}}"><img src="./images/items/{{item.itemid}}.jpg" class="img-thumbnail inventory-image"></a></td>
+            <td>{{item.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.daterange}}</td>
+            <td><button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="dropReservation($index);">Cancel</button></td>
+            <td><button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkOutReservation($index);">Check Out</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div ng-if="reservations.length == 0">
+      <p> You have no items reserved.</p>
+    </div>
+
+    <!-- Check In Modal -->
+    <div id="checkInModal" class="modal">
+      <div class="modal-content">
+        <h4>Check In</h4>
+        <hr />
+        <form>
+          <div class="form-group">
+            <label>Quantity to Check In<sup>*</sup></label>
+            <input type="text" class="form-control" placeholder="Enter Check In Quantity" ng-model="checkInData.checkInQuantity" required>
+            <small>Please enter the quantity you are returning. These should be unused consumables or still-functioning items.</small>
+          </div>
+
+          <div class="form-group">
+            <label>Quantity Consumed/Broken<sup>*</sup></label>
+            <input type="text" class="form-control" placeholder="Enter Consumed/Broken Quantity" ng-model="checkInData.checkInConsumed" required>
+            <small>Please enter the quantity you have consumed. These should be consumed or broken/non-functioning items. Please explain in the notes.</small>
+          </div>
+
+          <div class="form-group" ng-if="checkInData.isHardware == 1">
+            <label>Enter Unique ID of Each Item<sup>*</sup></label>
+            <textarea class="form-control" rows="3" ng-model="checkInData.HardwareUniqueIDs" placeholder="Enter unique ID of each item checked in, separated by spaces" required></textarea>
+            <small>Enter unique ID of each item checked in, separated by spaces ({{ checkInData.checkInQuantity===''  || checkInData.checkInQuantity== null ? 0 : checkInData.checkInQuantity}} IDs Expected)</small>
+          </div>
+
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea class="form-control" rows="3" ng-model="checkInData.note" ></textarea>
+            <small>Please explain any broken items, and any other notes for the inventory manager.</small>
+          </div>
+
+          <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkInButtonClick()">Check In</button>
+          <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkInButtonCancel()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Check Out Hardware Modal -->
+  <div id="checkOutHardwareModal" class="modal">
+      <div class="modal-content">
+        <h4>Check Out Hardware</h4>
+        <hr />
+        <form>
+          <div class="form-group">
+            <label>Enter Unique ID of Each Item<sup>*</sup></label>
+            <textarea class="form-control" rows="3" ng-model="checkOutData.HardwareUniqueIDs" placeholder="Enter unique ID of each item checked out, separated by commas and/or spaces" required></textarea>
+            <small>Enter unique ID of each item checked out, separated by spaces ({{checkOutData.quantity}} IDs Expected)</small>
+          </div>
+          <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkOutHardwareButtonClick()">Check Out</button>
+          <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkOutHardwareButtonCancel()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
