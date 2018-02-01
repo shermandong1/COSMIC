@@ -46,13 +46,18 @@
       </button>
     </div>
     <div id="checkoutCard" class="collapse"><div class="card-block">
-      
+
 
       <form>
 
         <div class="form-group">
           <label for="checkoutQuantityInput">Quantity to Check Out<sup>*</sup></label>
           <input type="text" class="form-control" id="checkoutQuantityInput" placeholder="Enter Quantity" ng-model="checkout.quantity">
+        </div>
+
+        <div class="form-group">
+          <label for="checkoutReturnDate">Expected Return Date<sup>*</sup></label>
+          <input type="text" class="form-control" name="daterange2" id="checkoutReturnDate " value="01/01/2015 - 01/31/2015" />
         </div>
 
         <div class="form-group" ng-if="data.hardware == 1">
@@ -112,7 +117,7 @@
           <label for="quantity">Quantity<sup>*</sup></label>
           <input type="text" class="form-control" placeholder="Enter Quantity" ng-model="newRes.quantity">
         </div>
-        
+
         <div class="form-group">
         <label for="daterange1">Date Range<sup>*</sup></em></label>
         <input type="text" class="form-control" name="daterange1" id="newResDates" value="01/01/2015 - 01/31/2015" />
@@ -130,6 +135,14 @@
             {
               "timePicker": false,
               startDate: moment()
+            });
+      });
+
+      $(function() {
+          $('input[name="daterange2"]').daterangepicker(
+            {
+              "timePicker": false,
+              singleDatePicker: true
             });
       });
       </script>
