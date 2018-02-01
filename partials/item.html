@@ -134,7 +134,8 @@
           $('input[name="daterange1"]').daterangepicker(
             {
               "timePicker": false,
-              startDate: moment()
+              startDate: moment(),
+              minDate: moment()
             });
       });
 
@@ -142,7 +143,8 @@
           $('input[name="daterange2"]').daterangepicker(
             {
               "timePicker": false,
-              singleDatePicker: true
+              singleDatePicker: true,
+              minDate: moment()
             });
       });
       </script>
