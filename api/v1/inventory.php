@@ -1,9 +1,10 @@
-<?php 
+<?php
 
 /* Get the inventory items */
 $app->post('/getInventory', function() use ($app) {
     $db = new DbHandler();
-    $sql = "SELECT `itemid` , `name` , `tag1` , `tag2` , `tag3` , `tag4` , `tag5` , `status`, `quantityAvailable`  FROM `items`";
+    // $sql = "SELECT `itemid` , `name` , `tag1` , `tag2` , `tag3` , `tag4` , `tag5` , `status`, `quantityAvailable` FROM `items`";
+    $sql = "SELECT * FROM items";
     $result = $db->getMultRecords($sql);
     $response = $result;
     echoResponse(200, $response);
@@ -131,7 +132,7 @@ $app->post('/addReservation', function() use ($app) {
     $user = $r->user;
     $quantity = $r->quantity;
     $dates = $r->dates;
-    $res = $r->res;
+    // $res = $r->res;
 
     $db = new DbHandler();
 
@@ -141,7 +142,7 @@ $app->post('/addReservation', function() use ($app) {
     $uid = $uid["uid"];
     if($uid == NULL)
     {
-        echoResponse(200, "User Does Not Exist");     
+        echoResponse(200, "User Does Not Exist");
     }
     else
     {
@@ -149,14 +150,14 @@ $app->post('/addReservation', function() use ($app) {
         $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `quantity`, `daterange`) VALUES ($itemid, $uid, $quantity, '$dates')";
         $results["addRes"] = $db->update($sql);
 
-        // Update the quantity available for the item 
+        // Update the quantity available for the item
         $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;
         $results["updateQuantity"] = $db->update($sql2);
 
         // Update the item status to unavailable if the quantity available is now 0
         $sql3 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
-        $results["updateStatus"] = $db->update($sql3); 
-        
+        $results["updateStatus"] = $db->update($sql3);
+
         store_data($uid, $itemid, $quantity, "Reserved", "");
         echoResponse(200, $results);
     }
@@ -287,11 +288,11 @@ $app->post('/checkIn', function() use ($app) {
     //If quantity total is less than threshold, send a re-order email to the director
     $sql = "SELECT * FROM `items` WHERE `quantityTotal`<`reorderThreshold` AND `itemid`=$itemid";
     $reorder = $db->getOneRecord($sql);
-    if($reorder == NULL) // Do not need to reorder 
+    if($reorder == NULL) // Do not need to reorder
     {
         $results["emailReorder"] = true;
     }
-    else // Need to reorder 
+    else // Need to reorder
     {
         $newQuantityTotal = $reorder["quantityTotal"];
 

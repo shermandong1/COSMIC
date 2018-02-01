@@ -12,7 +12,7 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
   });
 
   var sortingOrder = 'name'; //default sort
- 
+
   Data.get('session').then(function (results) {
     if (results.uid) {
       $scope.sortingOrder = sortingOrder;
@@ -69,7 +69,7 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
 
 
   /*$scope.searchName = function () {
-    $scope.filteredItems = $filter('filter')($scope.items, function (item) { 
+    $scope.filteredItems = $filter('filter')($scope.items, function (item) {
       if (searchMatch(item["name"], $scope.queryName))
           return true;
       return false;
@@ -82,9 +82,9 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
     // now group by pages
     $scope.groupToPages();
   };
-  
+
   $scope.searchTags = function () {
-    $scope.filteredItems = $filter('filter')($scope.items, function (item) { 
+    $scope.filteredItems = $filter('filter')($scope.items, function (item) {
       if (searchMatch(item["tag1"], $scope.queryTags))
           return true;
       if (searchMatch(item["tag2"], $scope.queryTags))
@@ -105,7 +105,7 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
     // now group by pages
     $scope.groupToPages();
   };
-  
+
   $scope.searchAvailability = function () {
     var show;
     if($scope.showAvailable && $scope.showUnavailable)
@@ -141,11 +141,13 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
   };*/
 
   $scope.searchAll = function () {
-    $scope.filteredItems = $filter('filter')($scope.items, function (item) { 
-      if (searchMatch(item["name"], $scope.queryName) && 
-        (searchMatch(item["tag1"], $scope.queryTags) || searchMatch(item["tag2"], $scope.queryTags) || searchMatch(item["tag3"], $scope.queryTags) || searchMatch(item["tag4"], $scope.queryTags) || searchMatch(item["tag5"], $scope.queryTags))
+    $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+      if (searchMatch(item["name"], $scope.queryName) &&
+        (searchMatch(item["tag1"], $scope.queryTags) || searchMatch(item["tag2"], $scope.queryTags) || searchMatch(item["tag3"], $scope.queryTags) || searchMatch(item["tag4"], $scope.queryTags) || searchMatch(item["tag5"], $scope.queryTags) || searchMatch(item["location"], $scope.queryTags))
         )
           {
+            console.log(item);
+            console.log("item name: " + item["name"] + ", location name: " + item["location"]);
             if($scope.showAvailable && $scope.showUnavailable)
             {
                 return true;
@@ -182,11 +184,11 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
   $scope.perPage = function () {
     $scope.groupToPages();
   };
-  
+
   // calculate page in place
   $scope.groupToPages = function () {
     $scope.pagedItems = [];
-    
+
     for (var i = 0; i < $scope.filteredItems.length; i++) {
       if (i % $scope.itemsPerPage === 0) {
         $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
@@ -195,7 +197,7 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
       }
     }
   };
-  
+
   $scope.range = function (start, end) {
     var ret = [];
     if (!end) {
@@ -207,19 +209,19 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
     }
     return ret;
   };
-  
+
   $scope.prevPage = function () {
     if ($scope.currentPage > 0) {
       $scope.currentPage--;
     }
   };
-  
+
   $scope.nextPage = function () {
     if ($scope.currentPage < $scope.pagedItems.length - 1) {
       $scope.currentPage++;
     }
   };
-  
+
   $scope.setPage = function () {
     $scope.currentPage = this.n;
   };
@@ -228,10 +230,10 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
   $scope.sort_by = function(newSortingOrder) {
     if ($scope.sortingOrder == newSortingOrder)
       $scope.reverse = !$scope.reverse;
-    
+
     $scope.sortingOrder = newSortingOrder;
   };
 
-  
+
 
 }]);
