@@ -38,7 +38,8 @@ $app->post('/checkOut', function() use ($app) {
     $itemid = $r->itemid;
     $date = $r->date;
     $returnDate = $r->returnDate;
-    $checkoutUser = $r->checkoutUserEmail;
+    $checkoutUserEmail = $r->checkoutUserEmail;
+    $checkoutUserName = $r->checkoutUserName;
     $quantityToCheckOut = $r->quantityToCheckOut;
     $hardwareNotes = $r->uniqueItemIDs;
     $db = new DbHandler();
@@ -53,16 +54,19 @@ $app->post('/checkOut', function() use ($app) {
 
     // Update the items checked out table
     $alreadyHaveThisItem = $db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid`=$uid AND `itemid`=$itemid");
-    if ($alreadyHaveThisItem == NULL) {
-        // If the user did not already have this item, insert a new row to the items check out table
-        $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`) VALUES ($itemid, $uid, $quantityToCheckOut)";
-        $results["updatedCheckedOutTable"] = $db->update($sql3);
-    }
-    else{
-        // If the user did already have this item, update the quantity
-        $sql3 = "UPDATE `items_checkedout` SET `quantity` = `quantity` + $quantityToCheckOut WHERE `uid`=$uid AND `itemid`=$itemid";
-        $results["updatedCheckedOutTable"] = $db->update($sql3);
-    }
+    // if ($alreadyHaveThisItem == NULL) {
+    //     // If the user did not already have this item, insert a new row to the items check out table
+    //     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`) VALUES ($itemid, $uid, $quantityToCheckOut)";
+    //     $results["updatedCheckedOutTable"] = $db->update($sql3);
+    // }
+    // else{
+    //     // If the user did already have this item, update the quantity
+    //     $sql3 = "UPDATE `items_checkedout` SET `quantity` = `quantity` + $quantityToCheckOut WHERE `uid`=$uid AND `itemid`=$itemid";
+    //     $results["updatedCheckedOutTable"] = $db->update($sql3);
+    // }
+
+    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES ($itemid, $uid, $quantityToCheckOut, $returnDate, $checkoutUserName, $checkoutUserEmail)";
+    $results["updatedCheckedOutTable"] = $db->update($sql3);
 
     store_data($uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes);
 

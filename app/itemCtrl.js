@@ -39,7 +39,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   {
     var quantity = filterInt($scope.checkout.quantity);
     var returnDate = $('#checkoutReturnDate').val();
-    var checkoutUser = $scope.checkout.checkoutUserEmail;
+    var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
+    var checkoutUserName = $scope.checkout.checkoutUserName;
 
     console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
@@ -51,7 +52,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           quantityToCheckOut: quantity,
           uniqueItemIDs: $scope.checkout.uniqueItemIDs,
           returnDate: returnDate,
-          checkoutUserEmail: checkoutUser,
+          checkoutUserEmail: checkoutUserEmail,
+          checkoutUserName: checkoutUserName,
           date: Date(),
         }).then(function (results) {
           if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){
