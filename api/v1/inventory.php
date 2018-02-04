@@ -37,6 +37,7 @@ $app->post('/checkOut', function() use ($app) {
     $uid = $r->uid;
     $itemid = $r->itemid;
     $date = $r->date;
+    $returnDate = $r->returnDate;
     $quantityToCheckOut = $r->quantityToCheckOut;
     $hardwareNotes = $r->uniqueItemIDs;
     $db = new DbHandler();
