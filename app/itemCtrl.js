@@ -12,6 +12,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.checkOut = function () {
     var itemIDs = $scope.checkout.uniqueItemIDs.split(" ");
     var quantity = filterInt($scope.checkout.quantity);
+
     if($scope.data.hardware == 1)
     {
       var str = $scope.checkout.uniqueItemIDs;
@@ -37,6 +38,9 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.doCheckOut = function()
   {
     var quantity = filterInt($scope.checkout.quantity);
+    var returnDate = $('#checkoutReturnDate').val();
+
+    console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
       {
         Data.post('checkOut', {
@@ -45,6 +49,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           uid: $rootScope.uid,
           quantityToCheckOut: quantity,
           uniqueItemIDs: $scope.checkout.uniqueItemIDs,
+          returnDate: returnDate,
           date: Date(),
         }).then(function (results) {
           if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){
@@ -104,7 +109,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     }
     });
   };
-  
+
   $scope.updateItem = function() {
     Data.get('session').then(function (results) {
 
@@ -150,7 +155,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var dateStart = dates.split(" ");
     dateStart = dateStart[0];
     var parts = dateStart.split('/')
-    var startDateObj = new Date(parts[2],parts[0]-1,parts[1]); 
+    var startDateObj = new Date(parts[2],parts[0]-1,parts[1]);
 
     var returnDateObj = new Date();
     var returnDateObj = new Date(returnDateObj.getFullYear(),returnDateObj

@@ -57,7 +57,7 @@
 
         <div class="form-group">
           <label for="checkoutReturnDate">Expected Return Date<sup>*</sup></label>
-          <input type="text" class="form-control" name="daterange2" id="checkoutReturnDate " value="01/01/2015 - 01/31/2015" />
+          <input type="text" class="form-control" name="daterange2" id="checkoutReturnDate" ng-model="checkout.returnDate" value="01/01/2015 - 01/31/2015" />
         </div>
 
         <div class="form-group" ng-if="data.hardware == 1">
@@ -145,7 +145,7 @@
               "timePicker": false,
               singleDatePicker: true,
               minDate: moment()
-            });
+            }
       });
       </script>
 
