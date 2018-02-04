@@ -131,6 +131,8 @@ CREATE TABLE `items_checkedout` (
   `itemid` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `return_date` varchar(80) NOT NULL,
+  `checkout_user` varchar(80) NOT NULL,
   PRIMARY KEY (`itemid`,`uid`),
   KEY `uid` (`uid`),
   CONSTRAINT `items_checkedout_ibfk_1` FOREIGN KEY (`itemid`) REFERENCES `items` (`itemid`),
