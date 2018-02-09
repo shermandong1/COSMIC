@@ -68,8 +68,7 @@ CREATE TABLE `items_checkedout` (
 -- Dumping data for table `items_checkedout`
 --
 
-INSERT INTO `items_checkedout` (`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES
-(1, 204, 1, '1', '2', '3');
+
 
 -- --------------------------------------------------------
 
@@ -149,7 +148,7 @@ ALTER TABLE `items`
 -- Indexes for table `items_checkedout`
 --
 ALTER TABLE `items_checkedout`
-  ADD PRIMARY KEY (`itemid`,`uid`),
+  ADD PRIMARY KEY (`itemid`,`checkout_user`, `checkout_useremail`),
   ADD KEY `uid` (`uid`);
 
 --

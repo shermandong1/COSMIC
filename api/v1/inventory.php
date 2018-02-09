@@ -65,7 +65,10 @@ $app->post('/checkOut', function() use ($app) {
     //     $results["updatedCheckedOutTable"] = $db->update($sql3);
     // }
 
-    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES ($itemid, $uid, $quantityToCheckOut, $returnDate, $checkoutUserName, $checkoutUserEmail)";
+    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
+
+
+    // echo $sql3;
     $results["updatedCheckedOutTable"] = $db->update($sql3);
 
     store_data($uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes);

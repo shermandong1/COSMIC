@@ -12,7 +12,9 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.checkOut = function () {
     var itemIDs = $scope.checkout.uniqueItemIDs.split(" ");
     var quantity = filterInt($scope.checkout.quantity);
-
+     /*var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
+    var checkoutUserName = $scope.checkout.checkoutUserName;
+*/
     if($scope.data.hardware == 1)
     {
       var str = $scope.checkout.uniqueItemIDs;
@@ -39,8 +41,12 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   {
     var quantity = filterInt($scope.checkout.quantity);
     var returnDate = $('#checkoutReturnDate').val();
-    var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
-    var checkoutUserName = $scope.checkout.checkoutUserName;
+    var checkoutUserEmail = $('#checkoutUserEmail').val();
+    // $scope.checkout.checkoutUserEmail;
+    var checkoutUserName = $('#checkoutUserName').val();;
+
+  /*  console.log(checkoutUserEmail);
+    console.log(checkoutUserName);*/
 
     console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
@@ -60,6 +66,9 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             Data.toast({status:"success",message:"Item checked out"});
           }
           else{
+            console.log(results.substractVal);
+            console.log(results.updateStatus);
+            console.log(results.updatedCheckedOutTable);
             Data.toast({status:"error",message:"There was an error when checking out the item. Please see the manager."});
           }
         });
