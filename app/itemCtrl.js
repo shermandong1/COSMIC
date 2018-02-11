@@ -43,10 +43,12 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var returnDate = $('#checkoutReturnDate').val();
     var checkoutUserEmail = $('#checkoutUserEmail').val();
     // $scope.checkout.checkoutUserEmail;
-    var checkoutUserName = $('#checkoutUserName').val();;
+    var checkoutUserName = $('#checkoutUserName').val();
+    var checkoutAdminUserName = $('#checkoutAdminUserName').val();
+    var checkoutAdminEmail = $('#checkoutAdminEmail').val();;
 
-  /*  console.log(checkoutUserEmail);
-    console.log(checkoutUserName);*/
+    console.log(checkoutAdminUserName);
+    console.log(checkoutAdminEmail);
 
     console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
@@ -60,6 +62,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           returnDate: returnDate,
           checkoutUserEmail: checkoutUserEmail,
           checkoutUserName: checkoutUserName,
+          checkoutAdminUserName: checkoutAdminUserName,
+          checkoutAdminEmail: checkoutAdminEmail,
           date: Date(),
         }).then(function (results) {
           if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){

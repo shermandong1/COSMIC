@@ -40,6 +40,8 @@ $app->post('/checkOut', function() use ($app) {
     $returnDate = $r->returnDate;
     $checkoutUserEmail = $r->checkoutUserEmail;
     $checkoutUserName = $r->checkoutUserName;
+    $checkoutAdminUserName= $r->checkoutAdminUserName;
+    $checkoutAdminEmail= $r->checkoutAdminEmail;
     $quantityToCheckOut = $r->quantityToCheckOut;
     $hardwareNotes = $r->uniqueItemIDs;
     $db = new DbHandler();
@@ -65,7 +67,7 @@ $app->post('/checkOut', function() use ($app) {
     //     $results["updatedCheckedOutTable"] = $db->update($sql3);
     // }
 
-    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
+    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`,`checkout_adminemail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."','" .$checkoutAdminName."','" .$checkoutAdminEmail."')";
 
 
     // echo $sql3;

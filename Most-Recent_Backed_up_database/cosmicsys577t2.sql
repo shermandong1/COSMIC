@@ -61,7 +61,9 @@ CREATE TABLE `items_checkedout` (
   `quantity` int(11) NOT NULL,
   `return_date` varchar(80) DEFAULT NULL,
   `checkout_user` varchar(80) DEFAULT NULL,
-  `checkout_useremail` varchar(80) DEFAULT NULL
+  `checkout_useremail` varchar(80) DEFAULT NULL,
+  `checkout_adminusername` varchar(80) DEFAULT NULL,
+  `checkout_adminemail` varchar(80) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
