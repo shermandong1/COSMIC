@@ -7,6 +7,8 @@
 -- Server version: 5.6.38
 -- PHP Version: 7.1.12
 
+
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -19,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `items`
 --
-
+-- DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
   `itemid` int(11) NOT NULL,
   `hardware` tinyint(4) NOT NULL,
@@ -40,6 +42,7 @@ CREATE TABLE `items` (
 --
 -- Dumping data for table `items`
 --
+-- LOCK TABLES `items` WRITE;
 
 INSERT INTO `items` (`itemid`, `hardware`, `name`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `location`, `reorderThreshold`) VALUES
 (1, 1, 'Arduino Uno', 'Single-board microcontroller. Ages 10+. Measured in units of Arduinos..', 'Arduino', 'Computer', NULL, NULL, NULL, 'Available', 13, 13, 'A125', 4),
@@ -48,12 +51,13 @@ INSERT INTO `items` (`itemid`, `hardware`, `name`, `desc`, `tag1`, `tag2`, `tag3
 (16, 0, 'Colored Pencils', 'Colored pencils. Measured in units per box of pencils.', 'Crafts', 'Pencils', NULL, NULL, NULL, 'Available', 10, 10, '', 2),
 (17, 1, 'Laptop', 'Dell', 'Computer', NULL, NULL, NULL, NULL, 'Available', 39, 39, 'RTH 210D', 2),
 (28, 1, '3D Printer Pro', '3D printer each', '3D', 'Design', NULL, NULL, NULL, 'Available', 1, 1, 'RTH 210D', 0);
-
+-- UNLOCK TABLES;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `items_checkedout`
 --
+-- DROP TABLE IF EXISTS `items_checkedout`;
 
 CREATE TABLE `items_checkedout` (
   `itemid` int(11) NOT NULL,
@@ -77,10 +81,13 @@ CREATE TABLE `items_checkedout` (
 --
 -- Table structure for table `items_reserved`
 --
+-- DROP TABLE IF EXISTS `items_reserved`;
 
 CREATE TABLE `items_reserved` (
   `itemid` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
+  `username` varchar(200) NOT NULL,
+  `useremail` varchar(200) NOT NULL,
   `quantity` int(11) NOT NULL,
   `daterange` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -90,6 +97,7 @@ CREATE TABLE `items_reserved` (
 --
 -- Table structure for table `superadmin`
 --
+-- DROP TABLE IF EXISTS `superadmin`;
 
 CREATE TABLE `superadmin` (
   `title` varchar(100) NOT NULL,
@@ -100,16 +108,18 @@ CREATE TABLE `superadmin` (
 --
 -- Dumping data for table `superadmin`
 --
+-- LOCK TABLES `superadmin` WRITE;
 
 INSERT INTO `superadmin` (`title`, `name`, `email`) VALUES
 ('Director', 'Darin Gray', 'aleem@usc.edu'),
 ('Inventory Manager', 'Xue Fei', 'aleem@usc.edu');
-
+-- UNLOCK TABLES:
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
+-- DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `uid` int(11) NOT NULL,
@@ -123,6 +133,7 @@ CREATE TABLE `users` (
 --
 -- Dumping data for table `users`
 --
+-- LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`uid`, `name`, `email`, `type`, `password`, `created`) VALUES
 (204, 'Sarah Wu', 'sarahlwu@usc.edu', 'Admin', '$2a$10$5d7474b7f9b612361a50fuB87H7qkZmGgLsPoeL9tVqQ7PUYCluEi', '2017-09-29 05:44:13'),
@@ -135,7 +146,7 @@ INSERT INTO `users` (`uid`, `name`, `email`, `type`, `password`, `created`) VALU
 (218, 'Sitan Gao', 'sitangao@usc.edu', 'Admin', '$2a$10$b321d09283da4a665013eOncq1os7NfeCZVPCkfuVE8ITs8e5.PcO', '2017-11-08 19:17:26'),
 (225, 'sam villarreal', 'samuelvi@usc.edu', 'Admin', '$2a$10$d87b99763fee3e0c335bfe7o0z4xz0yT.oJdu3eCNb8CyhlkH7TGa', '2017-11-18 08:41:09'),
 (230, 'Darin Gray', 'daring@usc.edu', 'Admin', '$2a$10$244d278375ec992a8c957u0VKobp2cmKFkuIz/Rxa.acFAgkBaeB.', '2017-11-19 20:42:26');
-
+-- UNLOCK TABLES
 --
 -- Indexes for dumped tables
 --
