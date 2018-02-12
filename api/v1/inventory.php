@@ -72,7 +72,7 @@ $app->post('/checkOut', function() use ($app) {
      //echo $sql3;
     $results["updatedCheckedOutTable"] = $db->update($sql3);
 
-    store_data($uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes);
+    store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes, $returnDate);
 
     echoResponse(200, $results);
 });
@@ -140,6 +140,8 @@ $app->post('/addReservation', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
     $user = $r->user;
+    $resUserEmail = $r->resUserEmail;
+    $resUserName = $r->resUserName;
     $quantity = $r->quantity;
     $dates = $r->dates;
     // $res = $r->res;
@@ -168,7 +170,7 @@ $app->post('/addReservation', function() use ($app) {
         $sql3 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
         $results["updateStatus"] = $db->update($sql3);
 
-        store_data($uid, $itemid, $quantity, "Reserved", "");
+        store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reserved", "", $dates);
         echoResponse(200, $results);
     }
 });
@@ -201,6 +203,9 @@ $app->post('/dropReservation', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $uid = $r->user;
     $itemid = $r->itemid;
+    //TODO: fill in below
+// $resUserName
+// $resUserName
     $daterange = $r->daterange;
     $quantity = $r->quantity;
     $db = new DbHandler();
@@ -217,7 +222,7 @@ $app->post('/dropReservation', function() use ($app) {
     $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
     $results["updateStatus"] = $db->update($sql);
 
-    store_data($uid, $itemid, $quantity, "Reservation Cancelled", "");
+    store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Cancelled", "", $daterange);
     echoResponse(200, $results);
 });
 
@@ -226,6 +231,9 @@ $app->post('/checkOutReservation', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $uid = $r->uid;
     $itemid = $r->itemid;
+    //TODO: fill in below
+    // $resUserName
+    // $resUserName
     $daterange = $r->daterange;
     $quantity = $r->quantity;
     $uniqueItemIDs = $r->uniqueItemIDs;
@@ -251,7 +259,7 @@ $app->post('/checkOutReservation', function() use ($app) {
         $results["addCheckedOut"] = $db->update($sql);
     }
 
-    store_data($uid, $itemid, $quantity, "Reservation Check Out", $uniqueItemIDs);
+    store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Check Out", $uniqueItemIDs, $daterange);
     echoResponse(200, $results);
 });
 
@@ -332,11 +340,11 @@ $app->post('/checkIn', function() use ($app) {
     $message = "<b> $itemname </b> has been checked in by $useremail <br><br> <b> $checkInConsumed </b> has/have been consumed or broken. <br><br> Notes: $note";
     $results["emailManager"] = mail($emailManager,$subject,$message,$headers);
 
-    store_data($uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes);
+    store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
 
     if($checkInConsumed > 0)
     {
-        store_data($uid, $itemid, $checkInConsumed, "Consumed or Broken", $uniqueItemIDs);
+        store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInConsumed, "Consumed or Broken", $uniqueItemIDs, "");
     }
 
     echoResponse(200, $results);

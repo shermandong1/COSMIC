@@ -51,7 +51,7 @@ function echoResponse($status_code, $response) {
     echo json_encode($response);
 }
 
-function store_data($uid, $itemid, $quantity, $action, $hardwarenotes) {
+function store_data($borrowername, $borroweremail, $uid, $itemid, $quantity, $action, $hardwarenotes, $CRInput) {
 
     //get the current date and time
       date_default_timezone_set('America/Los_Angeles');
@@ -64,14 +64,23 @@ function store_data($uid, $itemid, $quantity, $action, $hardwarenotes) {
       $sql = "SELECT `name`, `email` from `users` where uid = $uid";
       $user = $db->getOneRecord($sql);
       $name = $user["name"];
-      $email = $user["email"];
+      // $email = $user["email"];
+      $email = $borroweremail;
 
       //get item name from database
       $sql2 = "SELECT `name` from `items` where itemid = $itemid";
       $item = $db->getOneRecord($sql2);
       $item = $item["name"];
+      $expectedreturn = "N/A";
+      $daterange = "N/A";
 
-      $values = array($name, $email, $item, $quantity, $action, $hardwarenotes, $date, $time);
+      if ($action == "Check Out") {
+        $expectedreturn = $CRInput;
+      } else if ($action == "Reserved") {
+        $daterange = $CRInput;
+      }
+
+      $values = array($name, $borrowername, $email, $item, $quantity, $action, $hardwarenotes, $date, $time, $expectedreturn, $daterange);
 
       //write to the log txt file
       foreach ($values as $x) {
