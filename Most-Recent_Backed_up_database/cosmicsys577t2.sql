@@ -18,7 +18,6 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
 -- Table structure for table `items`
 --
 -- DROP TABLE IF EXISTS `items`;
@@ -35,8 +34,9 @@ CREATE TABLE `items` (
   `status` varchar(50) DEFAULT NULL,
   `quantityAvailable` int(11) NOT NULL,
   `quantityTotal` int(11) NOT NULL,
-  `location` varchar(100) DEFAULT NULL,
+  `locationid` int(11) DEFAULT NULL,
   `reorderThreshold` int(11) NOT NULL
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -44,16 +44,26 @@ CREATE TABLE `items` (
 --
 -- LOCK TABLES `items` WRITE;
 
-INSERT INTO `items` (`itemid`, `hardware`, `name`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `location`, `reorderThreshold`) VALUES
-(1, 1, 'Arduino Uno', 'Single-board microcontroller. Ages 10+. Measured in units of Arduinos..', 'Arduino', 'Computer', NULL, NULL, NULL, 'Available', 13, 13, 'A125', 4),
-(2, 1, 'BIOLOID STEM Standard Robot Kit', 'Ages 8+. Measured in units of complete kits.', 'Robot', NULL, NULL, NULL, NULL, 'Available', 5, 5, 'B26', 4),
-(15, 0, 'AAA Batteries', 'Standard batteries. Measured in units of battery.', 'Battery', 'AAA', 'AAA', NULL, NULL, 'Available', 90, 99, 'A1234', 10),
-(16, 0, 'Colored Pencils', 'Colored pencils. Measured in units per box of pencils.', 'Crafts', 'Pencils', NULL, NULL, NULL, 'Available', 10, 10, '', 2),
-(17, 1, 'Laptop', 'Dell', 'Computer', NULL, NULL, NULL, NULL, 'Available', 39, 39, 'RTH 210D', 2),
-(28, 1, '3D Printer Pro', '3D printer each', '3D', 'Design', NULL, NULL, NULL, 'Available', 1, 1, 'RTH 210D', 0);
+INSERT INTO `items` (`itemid`, `hardware`, `name`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES
+(1, 1, 'Arduino Uno', 'Single-board microcontroller. Ages 10+. Measured in units of Arduinos..', 'Arduino', 'Computer', NULL, NULL, NULL, 'Available', 13, 13, 1, 4),
+(2, 1, 'BIOLOID STEM Standard Robot Kit', 'Ages 8+. Measured in units of complete kits.', 'Robot', NULL, NULL, NULL, NULL, 'Available', 5, 5, 2, 4),
+(15, 0, 'AAA Batteries', 'Standard batteries. Measured in units of battery.', 'Battery', 'AAA', 'AAA', NULL, NULL, 'Available', 90, 99, 2, 10),
+(16, 0, 'Colored Pencils', 'Colored pencils. Measured in units per box of pencils.', 'Crafts', 'Pencils', NULL, NULL, NULL, 'Available', 10, 10, 1, 2),
+(17, 1, 'Laptop', 'Dell', 'Computer', NULL, NULL, NULL, NULL, 'Available', 39, 39, 1, 2),
+(28, 1, '3D Printer Pro', '3D printer each', '3D', 'Design', NULL, NULL, NULL, 'Available', 1, 1, 3, 0);
 -- UNLOCK TABLES;
 -- --------------------------------------------------------
+CREATE TABLE `locations` (
+  `locationid` int(11) NOT NULL,
+  `location` varchar(200) NOT NULL 
+  )ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  
+INSERT INTO `locations` (`locationid`, `location`) VALUES
+(1, 'USC'),
+(2, 'Off Site'),
+(3,'RTH 210D');
 
+--
 --
 -- Table structure for table `items_checkedout`
 --
@@ -148,6 +158,12 @@ INSERT INTO `users` (`uid`, `name`, `email`, `type`, `password`, `created`) VALU
 (230, 'Darin Gray', 'daring@usc.edu', 'Admin', '$2a$10$244d278375ec992a8c957u0VKobp2cmKFkuIz/Rxa.acFAgkBaeB.', '2017-11-19 20:42:26');
 -- UNLOCK TABLES
 --
+
+
+ALTER TABLE `locations`
+	MODIFY `locationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29,
+  ADD PRIMARY KEY(`locationid`);
+
 -- Indexes for dumped tables
 --
 
@@ -183,15 +199,22 @@ ALTER TABLE `superadmin`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`uid`);
 
+
+
+
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29,
+   ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`locationid`) REFERENCES `locations` (`locationid`);
+  
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -216,3 +239,8 @@ ALTER TABLE `items_checkedout`
 ALTER TABLE `items_reserved`
   ADD CONSTRAINT `items_reserved_ibfk_1` FOREIGN KEY (`itemid`) REFERENCES `items` (`itemid`),
   ADD CONSTRAINT `items_reserved_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`);
+--
+-- Constraints for table `locations`
+--
+
+ 
