@@ -194,8 +194,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           Data.post('addReservation', {
             itemid: $routeParams.itemID,
             user: $scope.newRes.user,
-            resUserName: $scope.newRes.userName,
-            resUserEmail: $scope.newRes.userEmail,
+            resUserName: $scope.newRes.resUserName,
+            resUserEmail: $scope.newRes.resUserEmail,
             quantity: resQuantity,
             dates: dates
           }).then(function (results) {

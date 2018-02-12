@@ -189,8 +189,7 @@ $app->post('/addReservation', function() use ($app) {
     {
         // Add the reservation into the items reserved table
         $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `username`, `useremail`, `quantity`, `daterange`) VALUES ($itemid, $uid, $resUserName, $resUserEmail, $quantity, '$dates')";
-        echo $sql;
-       $results["addRes"] = $db->update($sql);
+        $results["addRes"] = $db->update($sql);
 
         // Update the quantity available for the item
         $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;

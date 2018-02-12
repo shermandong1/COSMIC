@@ -7,7 +7,7 @@ app.controller('demoController', ['$scope', '$http','NgTableParams', function ($
   $http.get("log_data.txt")
     .then(
       function(response) {
-        
+
         var allText = response.data;
         var allTextLines = allText.split(/\r\n|\n/);
         var headers = allTextLines[0].split(',');
@@ -21,13 +21,16 @@ app.controller('demoController', ['$scope', '$http','NgTableParams', function ($
             var tarr = {};
 
             tarr.name = data[0];
-            tarr.email = data[1];
-            tarr.item = data[2];
-            tarr.quantity = data[3];
-            tarr.action = data[4];
-            tarr.hardwarenotes = data[5];
-            tarr.date = data[6];
-            tarr.time = data[7];
+            tarr.borrowerName = data[1];
+            tarr.borrowerEmail = data[2];
+            tarr.item = data[3];
+            tarr.quantity = data[4];
+            tarr.action = data[5];
+            tarr.hardwarenotes = data[6];
+            tarr.date = data[7];
+            tarr.time = data[8];
+            tarr.expectedreturn = data[9];
+            tarr.daterange = data[10];
 
             lines.push(tarr);
           }
