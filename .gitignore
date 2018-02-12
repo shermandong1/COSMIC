@@ -1,2 +1,2 @@
-.htaccess
-config.php
+api/v1/.htaccess
+api/config.php
