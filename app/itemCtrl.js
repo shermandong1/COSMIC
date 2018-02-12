@@ -43,16 +43,15 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var returnDate = $('#checkoutReturnDate').val();
     var checkoutUserEmail = $('#checkoutUserEmail').val();
     // $scope.checkout.checkoutUserEmail;
-    var checkoutUserName = $('#checkoutUserName').val();
-    var checkoutAdminUserName = $('#checkoutAdminUserName').val();
-    var checkoutAdminEmail = $('#checkoutAdminEmail').val();;
+    var checkoutUserName = $('#checkoutUserName').val();;
 
-    console.log(checkoutAdminUserName);
-    console.log(checkoutAdminEmail);
+    // console.log(checkoutAdminUserName);
+    // console.log(checkoutAdminEmail);
 
     console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
       {
+        console.log($('#bo1').value);
         Data.post('checkOut', {
           itemid: $routeParams.itemID,
           user: $rootScope.email,
