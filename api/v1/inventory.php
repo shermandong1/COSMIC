@@ -59,7 +59,7 @@ $app->post('/checkOut', function() use ($app) {
 
       // Update the items checked out table
       $alreadyHaveThisItem = $db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid`=$uid AND `itemid`=$itemid");
-      store_data($uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes);
+      store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes, $returnDate);
       echoResponse(200, $results);
     }
     else {
@@ -81,10 +81,6 @@ $app->post('/checkOut', function() use ($app) {
 
 
 
-<<<<<<< HEAD
-    store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes, $returnDate);
-=======
->>>>>>> 77c17715082b7ce908276602235766b6058a409e
 
 });
 
