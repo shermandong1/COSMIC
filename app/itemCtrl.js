@@ -42,11 +42,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var quantity = filterInt($scope.checkout.quantity);
     var returnDate = $('#checkoutReturnDate').val();
     var checkoutUserEmail = $('#checkoutUserEmail').val();
-    // $scope.checkout.checkoutUserEmail;
     var checkoutUserName = $('#checkoutUserName').val();;
-
-    // console.log(checkoutAdminUserName);
-    // console.log(checkoutAdminEmail);
 
     console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
@@ -61,17 +57,12 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           returnDate: returnDate,
           checkoutUserEmail: checkoutUserEmail,
           checkoutUserName: checkoutUserName,
-          checkoutAdminUserName: checkoutAdminUserName,
-          checkoutAdminEmail: checkoutAdminEmail,
           date: Date(),
         }).then(function (results) {
           if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){
             Data.toast({status:"success",message:"Item checked out"});
           }
           else{
-            console.log(results.substractVal);
-            console.log(results.updateStatus);
-            console.log(results.updatedCheckedOutTable);
             Data.toast({status:"error",message:"There was an error when checking out the item. Please see the manager."});
           }
         });
@@ -203,6 +194,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           Data.post('addReservation', {
             itemid: $routeParams.itemID,
             user: $scope.newRes.user,
+            resUserName: $scope.newRes.userName,
+            resUserEmail: $scope.newRes.userEmail,
             quantity: resQuantity,
             dates: dates
           }).then(function (results) {
