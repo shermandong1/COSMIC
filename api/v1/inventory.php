@@ -30,7 +30,7 @@ $app->post('/getReservedList', function() use ($app) {
     echoResponse(200, $response);
 });
 
-x
+
 
 /* Get a single item's details */
 $app->post('/getItem', function() use ($app) {
