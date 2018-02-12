@@ -10,6 +10,28 @@ $app->post('/getInventory', function() use ($app) {
     echoResponse(200, $response);
 });
 
+/* Get the checkout list */
+$app->post('/getCheckoutList', function() use ($app) {
+    $db = new DbHandler();
+    // $sql = "SELECT `itemid` , `name` , `tag1` , `tag2` , `tag3` , `tag4` , `tag5` , `status`, `quantityAvailable` FROM `items`";
+    $sql = "SELECT * FROM items_checkedout";
+    $result = $db->getMultRecords($sql);
+    $response = $result;
+    echoResponse(200, $response);
+});
+
+/* Get the reserved list */
+$app->post('/getReservedList', function() use ($app) {
+    $db = new DbHandler();
+    // $sql = "SELECT `itemid` , `name` , `tag1` , `tag2` , `tag3` , `tag4` , `tag5` , `status`, `quantityAvailable` FROM `items`";
+    $sql = "SELECT * FROM items_reserved";
+    $result = $db->getMultRecords($sql);
+    $response = $result;
+    echoResponse(200, $response);
+});
+
+
+
 /* Get a single item's details */
 $app->post('/getItem', function() use ($app) {
     $r = json_decode($app->request->getBody());
@@ -166,8 +188,9 @@ $app->post('/addReservation', function() use ($app) {
     else
     {
         // Add the reservation into the items reserved table
-        $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `quantity`, `daterange`) VALUES ($itemid, $uid, $quantity, '$dates')";
-        $results["addRes"] = $db->update($sql);
+        $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `username`, `useremail`, `quantity`, `daterange`) VALUES ($itemid, $uid, $resUserName, $resUserEmail, $quantity, '$dates')";
+        echo $sql;
+       $results["addRes"] = $db->update($sql);
 
         // Update the quantity available for the item
         $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;
