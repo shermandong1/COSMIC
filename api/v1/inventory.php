@@ -44,16 +44,29 @@ $app->post('/checkOut', function() use ($app) {
     $hardwareNotes = $r->uniqueItemIDs;
     $db = new DbHandler();
 
-    // Update the quantity available for the item
-    $sql = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantityToCheckOut  . " WHERE `itemid` =" . $itemid;
-    $results["substractVal"] = $db->update($sql);
+    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
+    $results["updatedCheckedOutTable"] = $db->update($sql3);
 
-    // Update the item status to unavailable if the quantity available is now 0
-    $sql2 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
-    $results["updateStatus"] = $db->update($sql2);
+    if($results["updatedCheckedOutTable"] == true)
+    {
+      // Update the quantity available for the item
+      $sql = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantityToCheckOut  . " WHERE `itemid` =" . $itemid;
+      $results["substractVal"] = $db->update($sql);
 
-    // Update the items checked out table
-    $alreadyHaveThisItem = $db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid`=$uid AND `itemid`=$itemid");
+      // Update the item status to unavailable if the quantity available is now 0
+      $sql2 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
+      $results["updateStatus"] = $db->update($sql2);
+
+      // Update the items checked out table
+      $alreadyHaveThisItem = $db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid`=$uid AND `itemid`=$itemid");
+      store_data($uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes);
+      echoResponse(200, $results);
+    }
+    else {
+      echoResponse(400, $results);
+    }
+
+
     // if ($alreadyHaveThisItem == NULL) {
     //     // If the user did not already have this item, insert a new row to the items check out table
     //     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`) VALUES ($itemid, $uid, $quantityToCheckOut)";
@@ -65,16 +78,14 @@ $app->post('/checkOut', function() use ($app) {
     //     $results["updatedCheckedOutTable"] = $db->update($sql3);
     // }
 
-//$sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
-    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`,`checkout_adminemail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."','" .$checkoutAdminUserName."','" .$checkoutAdminEmail."')";
 
 
-     //echo $sql3;
-    $results["updatedCheckedOutTable"] = $db->update($sql3);
 
+<<<<<<< HEAD
     store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes, $returnDate);
+=======
+>>>>>>> 77c17715082b7ce908276602235766b6058a409e
 
-    echoResponse(200, $results);
 });
 
 /* Get the item's details for items checked out by a particular user */
