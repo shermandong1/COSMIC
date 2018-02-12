@@ -10,6 +10,28 @@ $app->post('/getInventory', function() use ($app) {
     echoResponse(200, $response);
 });
 
+/* Get the checkout list */
+$app->post('/getCheckoutList', function() use ($app) {
+    $db = new DbHandler();
+    // $sql = "SELECT `itemid` , `name` , `tag1` , `tag2` , `tag3` , `tag4` , `tag5` , `status`, `quantityAvailable` FROM `items`";
+    $sql = "SELECT * FROM items_checkedout";
+    $result = $db->getMultRecords($sql);
+    $response = $result;
+    echoResponse(200, $response);
+});
+
+/* Get the reserved list */
+$app->post('/getReservedList', function() use ($app) {
+    $db = new DbHandler();
+    // $sql = "SELECT `itemid` , `name` , `tag1` , `tag2` , `tag3` , `tag4` , `tag5` , `status`, `quantityAvailable` FROM `items`";
+    $sql = "SELECT * FROM items_reserved";
+    $result = $db->getMultRecords($sql);
+    $response = $result;
+    echoResponse(200, $response);
+});
+
+
+
 /* Get a single item's details */
 $app->post('/getItem', function() use ($app) {
     $r = json_decode($app->request->getBody());
