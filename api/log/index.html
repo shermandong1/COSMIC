@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <title>COSMIC-System Log</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 <link rel='stylesheet prefetch' href='https://unpkg.com/ng-table/bundles/ng-table.min.css'>
 <link rel='stylesheet prefetch' href='css/nqjzro.css'>
 
-  
-  
+
+
 </head>
 
 <body>
@@ -25,13 +25,16 @@
       <table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="row in $data">
           <td data-title="'Name'">{{row.name}}</td>
-          <td data-title="'Email'">{{row.email}}</td>
+          <td data-title="'Borrower Name'">{{row.borrowerName}}</td>
+          <td data-title="'Borrower Email'">{{row.borrowerEmail}}</td>
           <td data-title="'Item'">{{row.item}}</td>
           <td data-title="'Quantity'">{{row.quantity}}</td>
           <td data-title="'Action'">{{row.action}}</td>
           <td data-title="'Hardware IDs'" filter="{hardwarenotes: 'text'}">{{row.hardwarenotes}}</td>
           <td data-title="'Date'">{{row.date}}</td>
           <td data-title="'Time'">{{row.time}}</td>
+          <td data-title="'Expected Return'">{{row.expectedreturn}}</td>
+          <td data-title="'Date Range'">{{row.daterange}}</td>
         </tr>
       </table>
     </div>
