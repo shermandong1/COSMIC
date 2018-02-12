@@ -166,7 +166,7 @@ $app->post('/addReservation', function() use ($app) {
     else
     {
         // Add the reservation into the items reserved table
-        $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `quantity`, `daterange`) VALUES ($itemid, $uid, $quantity, '$dates')";
+        $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `username`, `useremail`, `quantity`, `daterange`) VALUES ($itemid, $uid, $resUserName, $resUserEmail, $quantity, '$dates')";
         $results["addRes"] = $db->update($sql);
 
         // Update the quantity available for the item
