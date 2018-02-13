@@ -144,11 +144,6 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
           }
           else
           {
-            console.log(results);
-            console.log(results["dropReservation"] && results["addQuantity"] && results["updateStatus"]);
-            console.log(results[0]);
-            console.log(results[1]);
-            console.log(results["dropReservation"]);
             Data.toast({status:"error",message:"There was an error when trying to cancel the reservation."});
           }
         });

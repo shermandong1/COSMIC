@@ -238,7 +238,7 @@ $app->post('/getReserved', function() use ($app) {
 /* Drop a particular reservation */
 $app->post('/dropReservation', function() use ($app) {
     $r = json_decode($app->request->getBody());
-    print_r($r);
+    // print_r($r);
     $uid = $r->user;
     $itemid = $r->itemid;
     //TODO: fill in below
