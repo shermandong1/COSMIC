@@ -30,6 +30,15 @@ $app->post('/getReservedList', function() use ($app) {
     echoResponse(200, $response);
 });
 
+  /* Get the list of locations */
+$app->post('/getLocationsList', function() use ($app) {
+   $db = new DbHandler();
+   $sql = "SELECT location FROM locations";
+   $result = $db->getMultRecords($sql);
+   $response = $result;
+   echoResponse(200, $response);
+});
+
 
 
 /* Get a single item's details */
