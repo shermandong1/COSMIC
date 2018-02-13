@@ -190,7 +190,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     else{
        Data.get('session').then(function (results) {
         if (results.uid) {
-          console.log("lkjlsdf");
           Data.post('addReservation', {
             itemid: $routeParams.itemID,
             user: $scope.newRes.user,
@@ -226,11 +225,14 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.dropReservation = function(index) {
     Data.get('session').then(function (results) {
         if (results.uid) {
+          //console.log($rootScope.uid)
           Data.post('dropReservation', {
             itemid: parseInt($routeParams.itemID),
-            user: $scope.reservations[index].uid,
+            user: $rootScope.uid,
             quantity: parseInt($scope.reservations[index].quantity),
-            daterange: $scope.reservations[index].daterange
+            daterange: $scope.reservations[index].daterange,
+            borrowerName: $scope.reservations[index].username,
+            borrowerEmail: $scope.reservations[index].useremail
           }).then(function (results) {
             if(results["dropReservation"] && results["addQuantity"] && results["updateStatus"])
             {

@@ -229,11 +229,12 @@ $app->post('/getReserved', function() use ($app) {
 /* Drop a particular reservation */
 $app->post('/dropReservation', function() use ($app) {
     $r = json_decode($app->request->getBody());
+    print_r($r);
     $uid = $r->user;
     $itemid = $r->itemid;
     //TODO: fill in below
-    $resUserName = "";
-    $resUserEmail = "";
+    $resUserName = $r->borrowerName;
+    $resUserEmail = $r->borrowerEmail;
     $daterange = $r->daterange;
     $quantity = $r->quantity;
     $db = new DbHandler();

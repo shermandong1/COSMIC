@@ -60,6 +60,8 @@
           <tr>
             <th class="image">Item</th>
             <th class="name">Name</th>
+            <th class="name">Borrower Name</th>
+            <th class="name">Borrower Email</th>
             <th class="tags">Quantity</th>
             <th class="tags">Dates</th>
             <th class="checkIn">Cancel</th>
@@ -70,6 +72,8 @@
           <tr ng-repeat="item in reservations">
             <td><a href="#items/{{item.itemid}}"><img src="./images/items/{{item.itemid}}.jpg" class="img-thumbnail inventory-image"></a></td>
             <td>{{item.name}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.useremail}}</td>
             <td>{{item.quantity}}</td>
             <td>{{item.daterange}}</td>
             <td><button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="dropReservation($index);">Cancel</button></td>
@@ -138,7 +142,3 @@
   </div>
 
 </div>
-
-
-
-
