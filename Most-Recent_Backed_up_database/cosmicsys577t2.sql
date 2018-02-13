@@ -69,6 +69,12 @@ INSERT INTO `locations` (`locationid`, `location`) VALUES
 --
 -- DROP TABLE IF EXISTS `items_checkedout`;
 
+CREATE TABLE `HardwareTable`(
+  `HardwareID` varchar(200) NOt NULL,
+  `itemid` int(11) NOT NULL,
+   `available` tinyint(4) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `items_checkedout` (
   `itemid` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
@@ -180,6 +186,9 @@ ALTER TABLE `items_checkedout`
   ADD PRIMARY KEY (`itemid`,`checkout_user`, `checkout_useremail`),
   ADD KEY `uid` (`uid`);
 
+
+ALTER TABLE `HardwareTable`
+  ADD PRIMARY KEY (`HardwareID`);
 --
 -- Indexes for table `items_reserved`
 --
@@ -232,6 +241,10 @@ ALTER TABLE `users`
 ALTER TABLE `items_checkedout`
   ADD CONSTRAINT `items_checkedout_ibfk_1` FOREIGN KEY (`itemid`) REFERENCES `items` (`itemid`),
   ADD CONSTRAINT `items_checkedout_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`);
+
+
+ALTER TABLE `HardwareTable`
+   ADD CONSTRAINT `itemid_ibfk_1` FOREIGN KEY (`itemid`) REFERENCES `items` (`itemid`);
 
 --
 -- Constraints for table `items_reserved`
