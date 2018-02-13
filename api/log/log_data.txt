@@ -1,2 +1,6 @@
 Sarah Wu,12,2,AAA Batteries,2,Reserved,,02/12/2018,02:19pm,N/A,02/12/2018 - 02/12/2018,
 Sarah Wu,1,1,AAA Batteries,1,Reserved,,02/12/2018,02:36pm,N/A,02/12/2018 - 02/12/2018,
+Sarah Wu,ninareh,ninarehm@usc.edu,AAA Batteries,1,Check Out,,02/12/2018,05:08pm,02/12/2018,N/A,
+Sarah Wu,1,1,AAA Batteries,1,Reserved,,02/12/2018,09:14pm,N/A,02/12/2018 - 02/12/2018,
+Sarah Wu,ninalkuid,kljiiojjlk,AAA Batteries,2,Reserved,,02/12/2018,09:33pm,N/A,02/12/2018 - 02/12/2018,
+Sarah Wu,kldfkus,sdgdgfhg,AAA Batteries,3,Reserved,,02/12/2018,09:34pm,N/A,02/12/2018 - 02/12/2018,

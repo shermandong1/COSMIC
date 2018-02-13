@@ -174,7 +174,6 @@ $app->post('/addReservation', function() use ($app) {
     $quantity = $r->quantity;
     $dates = $r->dates;
     // $res = $r->res;
-
     $db = new DbHandler();
 
     // Get the user id for the user from the email
@@ -188,7 +187,7 @@ $app->post('/addReservation', function() use ($app) {
     else
     {
         // Add the reservation into the items reserved table
-        $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `username`, `useremail`, `quantity`, `daterange`) VALUES ($itemid, $uid, $resUserName, $resUserEmail, $quantity, '$dates')";
+        $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `username`, `useremail`, `quantity`, `daterange`) VALUES ($itemid, $uid, '$resUserName', '$resUserEmail', $quantity, '$dates')";
         $results["addRes"] = $db->update($sql);
 
         // Update the quantity available for the item

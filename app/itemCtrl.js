@@ -47,7 +47,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
       {
-        console.log($('#bo1').value);
         Data.post('checkOut', {
           itemid: $routeParams.itemID,
           user: $rootScope.email,
@@ -175,7 +174,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var todayDateObj = new Date();
     todayDateObj = new Date(todayDateObj.getFullYear(),todayDateObj
       .getMonth(),todayDateObj.getDate());
-
+      console.log(typeof $scope.newRes.resUserName);
     if(startDateObj < todayDateObj){
       Data.toast({status:"error", message:"Reservation must begin in the future."});
     }
@@ -191,6 +190,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     else{
        Data.get('session').then(function (results) {
         if (results.uid) {
+          console.log("lkjlsdf");
           Data.post('addReservation', {
             itemid: $routeParams.itemID,
             user: $scope.newRes.user,
