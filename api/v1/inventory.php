@@ -221,7 +221,7 @@ $app->post('/getReserved', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $uid = $r->uid;
     $db = new DbHandler();
-    $sql = "SELECT A.itemid, B.name, A.quantity, A.daterange FROM items_reserved AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
+    $sql = "SELECT A.itemid, B.name, A.username,A.useremail, A.quantity, A.daterange FROM items_reserved AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
     $result = $db->getMultRecords($sql);
     echoResponse(200, $result);
 });
