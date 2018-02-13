@@ -208,7 +208,7 @@ $app->post('/getItemReservations', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
     $db = new DbHandler();
-    $sql = "SELECT items_reserved.daterange, items_reserved.quantity, users.email, users.uid\n"
+    $sql = "SELECT items_reserved.daterange, users.email, items_reserved.username, items_reserved.useremail,items_reserved.quantity\n"
     . "FROM items_reserved\n"
     . "INNER JOIN users ON items_reserved.uid=users.uid\n"
     . "WHERE items_reserved.itemid = $itemid ";
@@ -413,7 +413,11 @@ $app->post('/addItem', function() use ($app) {
     $quantityTotal = $quantityAvailable;
 
     // Insert new item
-    $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `location`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,$location,$reorderThreshold)";
+    $sql2 = "INSERT INTO `locations` (`location`) VALUES ('$location')";
+
+    $sql3 = "SELECT `locationid` FROM `locations` WHERE location='$location'";
+
+    $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,$sql3,$reorderThreshold)";
     $results["addedItem"] = $db->insertItem($sql);
     echoResponse(200, $results);
 });
