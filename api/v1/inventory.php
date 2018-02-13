@@ -30,6 +30,15 @@ $app->post('/getReservedList', function() use ($app) {
     echoResponse(200, $response);
 });
 
+  /* Get the list of locations */
+$app->post('/getLocationsList', function() use ($app) {
+   $db = new DbHandler();
+   $sql = "SELECT location FROM locations";
+   $result = $db->getMultRecords($sql);
+   $response = $result;
+   echoResponse(200, $response);
+});
+
 
 
 /* Get a single item's details */
@@ -221,7 +230,7 @@ $app->post('/getReserved', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $uid = $r->uid;
     $db = new DbHandler();
-    $sql = "SELECT A.itemid, B.name, A.quantity, A.daterange FROM items_reserved AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
+    $sql = "SELECT A.itemid, B.name, A.username,A.useremail, A.quantity, A.daterange FROM items_reserved AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
     $result = $db->getMultRecords($sql);
     echoResponse(200, $result);
 });
