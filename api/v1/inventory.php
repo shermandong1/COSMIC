@@ -232,8 +232,8 @@ $app->post('/dropReservation', function() use ($app) {
     $uid = $r->user;
     $itemid = $r->itemid;
     //TODO: fill in below
-// $resUserName
-// $resUserName
+    $resUserName = "";
+    $resUserEmail = "";
     $daterange = $r->daterange;
     $quantity = $r->quantity;
     $db = new DbHandler();
