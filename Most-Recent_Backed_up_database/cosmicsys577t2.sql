@@ -36,7 +36,7 @@ CREATE TABLE `items` (
   `quantityTotal` int(11) NOT NULL,
   `locationid` int(11) DEFAULT NULL,
   `reorderThreshold` int(11) NOT NULL
-  
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -55,9 +55,9 @@ INSERT INTO `items` (`itemid`, `hardware`, `name`, `desc`, `tag1`, `tag2`, `tag3
 -- --------------------------------------------------------
 CREATE TABLE `locations` (
   `locationid` int(11) NOT NULL,
-  `location` varchar(200) NOT NULL 
+  `location` varchar(200) NOT NULL
   )ENGINE=InnoDB DEFAULT CHARSET=latin1;
-  
+
 INSERT INTO `locations` (`locationid`, `location`) VALUES
 (1, 'USC'),
 (2, 'Off Site'),
@@ -184,7 +184,7 @@ ALTER TABLE `items_checkedout`
 -- Indexes for table `items_reserved`
 --
 ALTER TABLE `items_reserved`
-  ADD PRIMARY KEY (`itemid`,`uid`,`quantity`,`daterange`),
+  ADD PRIMARY KEY (`itemid`,`username`,`useremail`,`quantity`,`daterange`),
   ADD KEY `items_reserved_ibfk_2` (`uid`);
 
 --
@@ -214,7 +214,7 @@ ALTER TABLE `users`
 ALTER TABLE `items`
   MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29,
    ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`locationid`) REFERENCES `locations` (`locationid`);
-  
+
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -242,5 +242,3 @@ ALTER TABLE `items_reserved`
 --
 -- Constraints for table `locations`
 --
-
- 
