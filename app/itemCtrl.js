@@ -41,39 +41,42 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   {
     var quantity = filterInt($scope.checkout.quantity);
     var returnDate = $('#checkoutReturnDate').val();
-    var checkoutUserEmail = $('#checkoutUserEmail').val();
-    var checkoutUserName = $('#checkoutUserName').val();;
+    var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
+    var checkoutUserName = $scope.checkout.returnDate;
+    if(!validateEmail(checkoutUserEmail)){
+      Data.toast({status:"error",message:"Please enter a valid email."})
+    }
+    else{
+      if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
+        {
+          Data.post('checkOut', {
+            itemid: $routeParams.itemID,
+            user: $rootScope.email,
+            uid: $rootScope.uid,
+            quantityToCheckOut: quantity,
+            uniqueItemIDs: $scope.checkout.uniqueItemIDs,
+            returnDate: returnDate,
+            checkoutUserEmail: checkoutUserEmail,
+            checkoutUserName: checkoutUserName,
+            date: Date(),
+          }).then(function (results) {
+            if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){
+              Data.toast({status:"success",message:"Item checked out"});
+            }
+            else{
+              Data.toast({status:"error",message:"There was an error when checking out the item. Please see the manager."});
+            }
+          });
 
-    console.log(returnDate);
-    if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
+
+          $scope.checkout.quantity = '';
+          $scope.checkout.uniqueItemIDs = "";
+          $scope.getItemDetails();
+        }
+      else
       {
-        Data.post('checkOut', {
-          itemid: $routeParams.itemID,
-          user: $rootScope.email,
-          uid: $rootScope.uid,
-          quantityToCheckOut: quantity,
-          uniqueItemIDs: $scope.checkout.uniqueItemIDs,
-          returnDate: returnDate,
-          checkoutUserEmail: checkoutUserEmail,
-          checkoutUserName: checkoutUserName,
-          date: Date(),
-        }).then(function (results) {
-          if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){
-            Data.toast({status:"success",message:"Item checked out"});
-          }
-          else{
-            Data.toast({status:"error",message:"There was an error when checking out the item. Please see the manager."});
-          }
-        });
-
-
-        $scope.checkout.quantity = '';
-        $scope.checkout.uniqueItemIDs = "";
-        $scope.getItemDetails();
+        Data.toast({status:"error",message:"Please enter a valid quantity."});
       }
-    else
-    {
-      Data.toast({status:"error",message:"Please enter a valid quantity."});
     }
   }
 
@@ -171,6 +174,9 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var resQuantity = filterInt($scope.newRes.quantity);
 
 
+    var email =  $scope.newRes.resUserEmail;
+
+
     var todayDateObj = new Date();
     todayDateObj = new Date(todayDateObj.getFullYear(),todayDateObj
       .getMonth(),todayDateObj.getDate());
@@ -186,6 +192,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     }
     else if(isNaN(resQuantity) || resQuantity > $scope.data.quantityAvailable || resQuantity <= 0){
        Data.toast({status:"error", message:"Please enter valid quantity for reservation."});
+    }else if (!validateEmail(email)){
+      Data.toast({status:"error", message: "Please enter a valid email"});
     }
     else{
        Data.get('session').then(function (results) {
@@ -221,6 +229,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       });
     }
   };
+
+
 
   $scope.dropReservation = function(index) {
     Data.get('session').then(function (results) {
@@ -318,3 +328,9 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.getItemReservations();
 
 });
+
+
+function validateEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
