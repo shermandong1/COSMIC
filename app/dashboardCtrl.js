@@ -40,6 +40,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
         Data.post('getReserved', {
           uid: results.uid
         }).then(function (results) {
+          //console.log(results);
           $scope.reservations = results;
         });
       }
@@ -133,7 +134,9 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
           itemid: $scope.reservations[index].itemid,
           user: results.uid,
           quantity: parseInt($scope.reservations[index].quantity),
-          daterange: $scope.reservations[index].daterange
+          daterange: $scope.reservations[index].daterange,
+          borrowerName: $scope.reservations[index].username,
+          borrowerEmail: $scope.reservations[index].useremail
         }).then(function (results) {
           if(results["dropReservation"] && results["addQuantity"] && results["updateStatus"])
           {
@@ -141,6 +144,11 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
           }
           else
           {
+            console.log(results);
+            console.log(results["dropReservation"] && results["addQuantity"] && results["updateStatus"]);
+            console.log(results[0]);
+            console.log(results[1]);
+            console.log(results["dropReservation"]);
             Data.toast({status:"error",message:"There was an error when trying to cancel the reservation."});
           }
         });
@@ -194,7 +202,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
     var partsStart = startDate.split('/')
     var partsEnd = endDate.split('/')
 
-    var startDateObj = new Date(partsStart[2],partsStart[0]-1,partsStart[1]); 
+    var startDateObj = new Date(partsStart[2],partsStart[0]-1,partsStart[1]);
     var endDateObj = new Date(partsEnd[2],partsEnd[0]-1,partsEnd[1]);
     var dateOkToCheckOut = (startDateObj <= currDate && currDate <= endDateObj);
 
