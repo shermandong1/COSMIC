@@ -42,7 +42,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var quantity = filterInt($scope.checkout.quantity);
     var returnDate = $('#checkoutReturnDate').val();
     var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
-    var checkoutUserName = $scope.checkout.returnDate;
+    var checkoutUserName = $scope.checkout.checkoutUserName;
     if(!validateEmail(checkoutUserEmail)){
       Data.toast({status:"error",message:"Please enter a valid email."})
     }
