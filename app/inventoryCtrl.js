@@ -24,6 +24,12 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
       $scope.pagedItems = [];
       $scope.currentPage = 0;
       $scope.items = [];
+      $scope.locations = [];
+       Data.post('getLocationsList', {
+      }).then(function (results) {
+        $scope.locations = results;
+      });
+
       Data.post('getInventory', {
       }).then(function (results) {
         $scope.items = results;
@@ -32,8 +38,14 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
         $scope.showUnavailable = true;
         $scope.searchAll();
       });
+
+     
     }
   });
+
+
+
+
 
   var searchMatch = function (haystack, needle) {
     if (!needle) {
@@ -66,6 +78,8 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
     $scope.queryTags = tag;
     $scope.searchAll();
   };
+
+
 
 
   /*$scope.searchName = function () {
@@ -142,7 +156,8 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
 
   $scope.searchAll = function () {
     $scope.filteredItems = $filter('filter')($scope.items, function (item) {
-      if (searchMatch(item["name"], $scope.queryName) &&
+      if (searchMatch(item["name"], $scope.queryName) && 
+      	searchMatch(item["location"], $scope.queryLocation) &&
         (searchMatch(item["tag1"], $scope.queryTags) || searchMatch(item["tag2"], $scope.queryTags) || searchMatch(item["tag3"], $scope.queryTags) || searchMatch(item["tag4"], $scope.queryTags) || searchMatch(item["tag5"], $scope.queryTags) || searchMatch(item["location"], $scope.queryTags))
         )
           {

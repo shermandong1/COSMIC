@@ -103,12 +103,16 @@
           <tr>
             <th>Dates</th>
             <th>User</th>
+            <th>Borrower Name</th>
+            <th>Borrower Email</th>
             <th>Quantity</th>
             <th>Cancel</th>
           </tr>
           <tr ng-repeat="reservation in reservations">
             <td>{{reservation.daterange}}</td>
             <td>{{reservation.email}}</td>
+            <td>{{reservation.username}}</td>
+            <td>{{reservation.useremail}}</td>
             <td>{{reservation.quantity}}</td>
             <td><button type="submit" class="btn btn-primary" ng-click="dropReservation($index)" data-ng-disabled="">Cancel</button></td>
           </tr>

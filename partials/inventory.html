@@ -23,6 +23,13 @@
           </div>
         </div>
 
+        <div class="col-md-3">
+          <div class="input-group input-group-md add-on searchbar">
+             <select class="form-control input-md pull-right custom-select searchbar" ng-model="queryLocation"  ng-change="searchAll()" ng-options="x['location'] for x in locations"></select>
+          </div>
+        </div>
+
+
         <div class="col-md-3 text-center">
           <div class="form-check searchbar">
           <label class="form-check-label form-check-inline">

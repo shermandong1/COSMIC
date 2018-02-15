@@ -36,7 +36,7 @@ CREATE TABLE `items` (
   `quantityTotal` int(11) NOT NULL,
   `locationid` int(11) DEFAULT NULL,
   `reorderThreshold` int(11) NOT NULL
-  
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `locations` (
   `locationid` int(11) NOT NULL,
   `location` varchar(200) 
   )ENGINE=InnoDB DEFAULT CHARSET=latin1;
-  
+
 INSERT INTO `locations` (`locationid`, `location`) VALUES
 (1, 'USC'),
 (2, 'Off Site'),
@@ -68,6 +68,12 @@ INSERT INTO `locations` (`locationid`, `location`) VALUES
 -- Table structure for table `items_checkedout`
 --
 -- DROP TABLE IF EXISTS `items_checkedout`;
+
+CREATE TABLE `HardwareTable`(
+  `HardwareID` varchar(200) NOt NULL,
+  `itemid` int(11) NOT NULL,
+   `available` tinyint(4) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `items_checkedout` (
   `itemid` int(11) NOT NULL,
@@ -180,11 +186,14 @@ ALTER TABLE `items_checkedout`
   ADD PRIMARY KEY (`itemid`,`checkout_user`, `checkout_useremail`),
   ADD KEY `uid` (`uid`);
 
+
+ALTER TABLE `HardwareTable`
+  ADD PRIMARY KEY (`HardwareID`);
 --
 -- Indexes for table `items_reserved`
 --
 ALTER TABLE `items_reserved`
-  ADD PRIMARY KEY (`itemid`,`uid`,`quantity`,`daterange`),
+  ADD PRIMARY KEY (`itemid`,`username`,`useremail`,`quantity`,`daterange`),
   ADD KEY `items_reserved_ibfk_2` (`uid`);
 
 --
@@ -214,7 +223,7 @@ ALTER TABLE `users`
 ALTER TABLE `items`
   MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29,
    ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`locationid`) REFERENCES `locations` (`locationid`);
-  
+
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -233,6 +242,10 @@ ALTER TABLE `items_checkedout`
   ADD CONSTRAINT `items_checkedout_ibfk_1` FOREIGN KEY (`itemid`) REFERENCES `items` (`itemid`),
   ADD CONSTRAINT `items_checkedout_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`);
 
+
+ALTER TABLE `HardwareTable`
+   ADD CONSTRAINT `itemid_ibfk_1` FOREIGN KEY (`itemid`) REFERENCES `items` (`itemid`);
+
 --
 -- Constraints for table `items_reserved`
 --
@@ -242,5 +255,3 @@ ALTER TABLE `items_reserved`
 --
 -- Constraints for table `locations`
 --
-
- 

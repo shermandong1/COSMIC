@@ -42,6 +42,15 @@ $app->post('/getReservedList', function() use ($app) {
     echoResponse(200, $response);
 });
 
+  /* Get the list of locations */
+$app->post('/getLocationsList', function() use ($app) {
+   $db = new DbHandler();
+   $sql = "SELECT location FROM locations";
+   $result = $db->getMultRecords($sql);
+   $response = $result;
+   echoResponse(200, $response);
+});
+
 
 
 /* Get a single item's details */
@@ -223,7 +232,7 @@ $app->post('/getItemReservations', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
     $db = new DbHandler();
-    $sql = "SELECT items_reserved.daterange, items_reserved.quantity, users.email, users.uid\n"
+    $sql = "SELECT items_reserved.daterange, users.email, items_reserved.username, items_reserved.useremail,items_reserved.quantity\n"
     . "FROM items_reserved\n"
     . "INNER JOIN users ON items_reserved.uid=users.uid\n"
     . "WHERE items_reserved.itemid = $itemid ";
@@ -236,7 +245,7 @@ $app->post('/getReserved', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $uid = $r->uid;
     $db = new DbHandler();
-    $sql = "SELECT A.itemid, B.name, A.quantity, A.daterange FROM items_reserved AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
+    $sql = "SELECT A.itemid, B.name, A.username,A.useremail, A.quantity, A.daterange FROM items_reserved AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
     $result = $db->getMultRecords($sql);
     echoResponse(200, $result);
 });
@@ -244,11 +253,12 @@ $app->post('/getReserved', function() use ($app) {
 /* Drop a particular reservation */
 $app->post('/dropReservation', function() use ($app) {
     $r = json_decode($app->request->getBody());
+    // print_r($r);
     $uid = $r->user;
     $itemid = $r->itemid;
     //TODO: fill in below
-// $resUserName
-// $resUserName
+    $resUserName = $r->borrowerName;
+    $resUserEmail = $r->borrowerEmail;
     $daterange = $r->daterange;
     $quantity = $r->quantity;
     $db = new DbHandler();
@@ -444,7 +454,6 @@ $app->post('/addItem', function() use ($app) {
         $results["addedItem"] = $db->insertItem($sql);
     }
    
-
     echoResponse(200, $results);
 });
 

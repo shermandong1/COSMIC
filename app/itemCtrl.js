@@ -42,7 +42,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var quantity = filterInt($scope.checkout.quantity);
     var returnDate = $('#checkoutReturnDate').val();
     var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
-    var checkoutUserName = $scope.checkout.returnDate;
+    var checkoutUserName = $scope.checkout.checkoutUserName;
     if(!validateEmail(checkoutUserEmail)){
       Data.toast({status:"error",message:"Please enter a valid email."})
     }
@@ -235,11 +235,14 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.dropReservation = function(index) {
     Data.get('session').then(function (results) {
         if (results.uid) {
+          //console.log($rootScope.uid)
           Data.post('dropReservation', {
             itemid: parseInt($routeParams.itemID),
-            user: $scope.reservations[index].uid,
+            user: $rootScope.uid,
             quantity: parseInt($scope.reservations[index].quantity),
-            daterange: $scope.reservations[index].daterange
+            daterange: $scope.reservations[index].daterange,
+            borrowerName: $scope.reservations[index].username,
+            borrowerEmail: $scope.reservations[index].useremail
           }).then(function (results) {
             if(results["dropReservation"] && results["addQuantity"] && results["updateStatus"])
             {
