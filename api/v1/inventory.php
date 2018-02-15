@@ -77,7 +77,6 @@ $app->post('/checkOut', function() use ($app) {
 
     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
     $results["updatedCheckedOutTable"] = $db->update($sql3);
-
     if($results["updatedCheckedOutTable"] == true)
     {
       // Update the quantity available for the item
