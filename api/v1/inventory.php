@@ -427,7 +427,7 @@ $app->post('/addItem', function() use ($app) {
 
     $quantityTotal = $quantityAvailable;
     // Insert new item
-    if(!empty($location)){
+    if(($location)!= "NULL"){
         $sql2 = "INSERT INTO `locations` (`location`) VALUES ($location)";
         $db->insertItem($sql2);
     }
