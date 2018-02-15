@@ -101,6 +101,7 @@ app.controller("newitemCtrl", ['$scope', '$filter', '$routeParams','$rootScope',
       }).then(function (results) {
         if(results["addedItem"] == null || isNaN(results["addedItem"]))
         {
+          console.log(results);
           Data.toast({status:"error",message:"There was an error when adding the new item."})
         }
         else
