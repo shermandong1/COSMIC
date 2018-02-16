@@ -4,7 +4,7 @@
 $app->post('/getInventory', function() use ($app) {
     $db = new DbHandler();
     // $sql = "SELECT `itemid` , `name` , `tag1` , `tag2` , `tag3` , `tag4` , `tag5` , `status`, `quantityAvailable` FROM `items`";
-    $sql = "SELECT * FROM items";
+    $sql = "SELECT * FROM items JOIN locations ON locations.locationid=items.locationid";
     $result = $db->getMultRecords($sql);
     $response = $result;
     echoResponse(200, $response);
@@ -58,7 +58,7 @@ $app->post('/getItem', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
     $db = new DbHandler();
-    $sql = "SELECT * FROM items where itemid = " . $itemid;
+    $sql = "SELECT * FROM items JOIN locations ON locations.locationid=items.locationid where itemid = " . $itemid;
     $result = $db->getOneRecord($sql);
     $response = $result;
     echoResponse(200, $response);
