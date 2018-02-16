@@ -55,7 +55,7 @@ INSERT INTO `items` (`itemid`, `hardware`, `name`, `desc`, `tag1`, `tag2`, `tag3
 -- --------------------------------------------------------
 CREATE TABLE `locations` (
   `locationid` int(11) NOT NULL,
-  `location` varchar(200) NOT NULL
+  `location` varchar(200) 
   )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `locations` (`locationid`, `location`) VALUES

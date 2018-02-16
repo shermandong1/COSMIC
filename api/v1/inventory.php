@@ -10,6 +10,18 @@ $app->post('/getInventory', function() use ($app) {
     echoResponse(200, $response);
 });
 
+/* Get the list of locations */
+$app->post('/getLocationsList', function() use ($app) {
+    $db = new DbHandler();
+    $sql = "SELECT * FROM locations";
+    $result = $db->getMultRecords($sql);
+    $response = $result;
+    echoResponse(200, $response);
+});
+
+
+
+
 /* Get the checkout list */
 $app->post('/getCheckoutList', function() use ($app) {
     $db = new DbHandler();
@@ -123,6 +135,9 @@ $app->post('/getCheckedOut', function() use ($app) {
     $result = $db->getMultRecords($sql);
     echoResponse(200, $result);
 });
+
+
+
 
 /* Update an item's details */
 $app->post('/updateItemDetails', function() use ($app) {
@@ -420,14 +435,24 @@ $app->post('/addItem', function() use ($app) {
     $location = !empty($location) ? "'$location'" : "NULL";
 
     $quantityTotal = $quantityAvailable;
-
     // Insert new item
-    $sql2 = "INSERT INTO `locations` (`location`) VALUES ('$location')";
+    if(($location)!= "NULL"){
+        $sql2 = "INSERT INTO `locations` (`location`) VALUES ($location)";
+        $db->insertItem($sql2);
+    }
 
-    $sql3 = "SELECT `locationid` FROM `locations` WHERE location='$location'";
+    $sql3 = "SELECT `locationid` FROM `locations` WHERE location=$location";
+    $result3 = $db->getOneRecord($sql3);
 
-    $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,$sql3,$reorderThreshold)";
-    $results["addedItem"] = $db->insertItem($sql);
+    if($result3["locationid"] != null){
+        $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,".$result3["locationid"].",$reorderThreshold)";
+        $results["addedItem"] = $db->insertItem($sql);
+    }
+    else{
+         $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable, NULL ,$reorderThreshold)";
+        $results["addedItem"] = $db->insertItem($sql);
+    }
+   
     echoResponse(200, $results);
 });
 
