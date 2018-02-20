@@ -67,7 +67,12 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
       }
       else
       {
-        found = haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1
+      	// console.log(typeof(haystack));
+      	// console.log(haystack);	
+      	// console.log(needle);
+      	// console.log(typeof(needle));
+      	// console.log(needle.location);
+        found = (haystack.toLowerCase()).indexOf(needle.toLowerCase()) !== -1
       }
     }
     return found;
@@ -157,12 +162,12 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
   $scope.searchAll = function () {
     $scope.filteredItems = $filter('filter')($scope.items, function (item) {
       if (searchMatch(item["name"], $scope.queryName) && 
-      	searchMatch(item["location"], $scope.queryLocation) &&
+      	searchMatch(item["location"], $scope.queryLocation.location) &&
         (searchMatch(item["tag1"], $scope.queryTags) || searchMatch(item["tag2"], $scope.queryTags) || searchMatch(item["tag3"], $scope.queryTags) || searchMatch(item["tag4"], $scope.queryTags) || searchMatch(item["tag5"], $scope.queryTags) || searchMatch(item["location"], $scope.queryTags))
         )
           {
-            console.log(item);
-            console.log("item name: " + item["name"] + ", location name: " + item["location"]);
+            // console.log(item);
+            // console.log("item name: " + item["name"] + ", location name: " + item["location"]);
             if($scope.showAvailable && $scope.showUnavailable)
             {
                 return true;
