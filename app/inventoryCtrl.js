@@ -162,9 +162,41 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
   $scope.searchAll = function () {
     $scope.filteredItems = $filter('filter')($scope.items, function (item) {
       if (searchMatch(item["name"], $scope.queryName) && 
-      	searchMatch(item["location"], $scope.queryLocation.location) &&
+      	// searchMatch(item["location"], $scope.queryLocation.location) &&
         (searchMatch(item["tag1"], $scope.queryTags) || searchMatch(item["tag2"], $scope.queryTags) || searchMatch(item["tag3"], $scope.queryTags) || searchMatch(item["tag4"], $scope.queryTags) || searchMatch(item["tag5"], $scope.queryTags) || searchMatch(item["location"], $scope.queryTags))
         )
+          {
+            console.log(item);
+            console.log("item name: " + item["name"] + ", location name: " + item["location"]);
+            if($scope.showAvailable && $scope.showUnavailable)
+            {
+                return true;
+            }
+            else if($scope.showAvailable)
+            {
+              if (item["status"] === "Available")
+                return true;
+            }
+            else if($scope.showUnavailable)
+            {
+              if (item["status"] === "Unavailable")
+                  return true;
+            }
+          }
+      return false;
+    });
+    // take care of the sorting order
+    if ($scope.sortingOrder !== '') {
+      $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sortingOrder, $scope.reverse);
+    }
+    $scope.currentPage = 0;
+    // now group by pages
+    $scope.groupToPages();
+  };
+
+  $scope.searchLoc = function () {
+    $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+      if ( searchMatch(item["location"], $scope.queryLocation.location))
           {
             // console.log(item);
             // console.log("item name: " + item["name"] + ", location name: " + item["location"]);
@@ -193,6 +225,8 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
     // now group by pages
     $scope.groupToPages();
   };
+
+
 
 
   // show items per page
