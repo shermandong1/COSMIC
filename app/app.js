@@ -1,4 +1,11 @@
-var app = angular.module('myApp', ['ngRoute', 'ngAnimate', 'toaster','angularFileUpload', 'matchMedia']);
+var app = angular.module('myApp', [
+  'ngRoute',
+  'ngAnimate',
+  'toaster',
+  'angularFileUpload',
+  'matchMedia',
+  'tien.clndr'
+]);
 
 app.config(['$routeProvider',
   function ($routeProvider) {

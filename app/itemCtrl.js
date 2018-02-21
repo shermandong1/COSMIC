@@ -1,7 +1,7 @@
 app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$http, Data, $location) {
 
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
   });
 
   $scope.uid = $rootScope.uid;
@@ -327,6 +327,19 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.getItemDetails();
   $scope.getItemReservations();
 
+  $scope.options = {
+      weekOffset: 0,
+      daysOfTheWeek: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      showAdjacentMonths: true,
+  };
+  $scope.events = [
+      { date: moment().add(3, 'days').format(), title: "Happy days" },
+      { date: moment().subtract(5, 'days').format(), title: "Good old days" },
+      { date: moment().subtract(5, 'days').format(), title: "And some more" }
+  ];
+  $scope.showEvents = function(events) {
+      alert(events.map(function(e) { return e.title }).join("\n"));
+  };
 });
 
 

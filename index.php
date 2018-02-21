@@ -15,11 +15,12 @@
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
     <!-- Daterange picker CSS -->
-    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css"  href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <!-- Custom styles for this template -->
     <link href="./css/agency.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
     <link href="./css/toaster.css" rel="stylesheet">
+    <link href="./css/angular-clndr.css" rel="stylesheet">
   </head>
   <body id="page-top" ng-app="COSMIC"  ng-cloak="">
     >
@@ -103,5 +104,9 @@
     <!-- Daterange Picker -->
     <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <!-- CLNDR -->
+    <script src="./js/momentOld.js"></script>
+    <script src="./js/clndr.js"></script>
+    <script src="./js/angular-clndr.min.js"></script>
   </body>
 </html>
