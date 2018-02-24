@@ -28,6 +28,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
           uid: results.uid
         }).then(function (results) {
           $scope.data = results;
+          console.log(results);
         });
       }
       $scope.show = true;
