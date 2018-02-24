@@ -25,9 +25,9 @@ $app->post('/getCalendarInfo', function() use ($app) {
     $db = new DbHandler();
 	$r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
-    $sql = "SELECT quantity, return_date FROM items_checkedout WHERE itemid = 15 UNION SELECT quantity, daterange  FROM items_reserved WHERE itemid =  ".$itemid;
+    $sql = "SELECT quantity, return_date FROM items_checkedout WHERE itemid = $itemid  UNION SELECT quantity, daterange  FROM items_reserved WHERE itemid =  ".$itemid;
     $result = $db->getMultRecords($sql);
-    $result["sql"] = sql;
+    // $result["sql"] = sql;
     $response = $result;
     echoResponse(200, $response);
 });
