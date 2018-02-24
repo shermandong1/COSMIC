@@ -89,6 +89,7 @@ $app->post('/checkOut', function() use ($app) {
 
     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
     $results["updatedCheckedOutTable"] = $db->update($sql3);
+    
     if($results["updatedCheckedOutTable"] == true)
     {
       // Update the quantity available for the item
@@ -213,13 +214,13 @@ $app->post('/addReservation', function() use ($app) {
         $sql = "INSERT INTO `items_reserved`(`itemid`, `uid`, `username`, `useremail`, `quantity`, `daterange`) VALUES ($itemid, $uid, '$resUserName', '$resUserEmail', $quantity, '$dates')";
         $results["addRes"] = $db->update($sql);
 
-        // Update the quantity available for the item
+        /*// Update the quantity available for the item
         $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;
         $results["updateQuantity"] = $db->update($sql2);
 
         // Update the item status to unavailable if the quantity available is now 0
         $sql3 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
-        $results["updateStatus"] = $db->update($sql3);
+        $results["updateStatus"] = $db->update($sql3);*/
 
         store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reserved", "", $dates);
         echoResponse(200, $results);
@@ -263,16 +264,18 @@ $app->post('/dropReservation', function() use ($app) {
     $db = new DbHandler();
 
     // Drop the entry from the items reserved table
-    $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity";
+    $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity AND `username` = '$resUserName' AND `useremail` ='$resUserEmail' ";
     $results["dropReservation"] = $db->update($sql);
+    $results["drop"] = $sql;
+
 
     // Update the quantity available for the item
-    $sql = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` + $quantity WHERE `itemid` = $itemid";
-    $results["addQuantity"] = $db->update($sql);
+    $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` + $quantity WHERE `itemid` = $itemid";
+    $results["addQuantity"] = $db->update($sql2);
 
     // Update the item status to available if the quantity available is now > 0
-    $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
-    $results["updateStatus"] = $db->update($sql);
+    $sql3 = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
+    $results["updateStatus"] = $db->update($sql3);
 
     store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Cancelled", "", $daterange);
     echoResponse(200, $results);
@@ -284,35 +287,54 @@ $app->post('/checkOutReservation', function() use ($app) {
     $uid = $r->uid;
     $itemid = $r->itemid;
     //TODO: fill in below
-    // $resUserName
-    // $resUserName
+    $resUserName = $r->ckoutUserName;
+    $resUserEmail = $r->ckoutUserEmail;
     $daterange = $r->daterange;
     $quantity = $r->quantity;
     $uniqueItemIDs = $r->uniqueItemIDs;
     $db = new DbHandler();
 
-    // Remove from the items reserved table
-    $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity";
-    $results["dropReservation"] = $db->update($sql);
 
+    $user = $db->getOneRecord("SELECT `email`, `name` FROM `users` WHERE `uid`=$uid");
+    $userName = $user["name"];
+    $userEmail = $user["email"];
 
-    // Add to the items checked out table
-    $user = $db->getOneRecord("SELECT `email` FROM `users` WHERE `uid`=$uid");
-    $user = $user["email"];
-    $alreadyHaveThisItem = $db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid`=$uid AND `itemid`=$itemid");
-    if ($alreadyHaveThisItem == NULL) {
-        // If the user did not already have this item, insert a new row to the items check out table
-        $sql = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`) VALUES ($itemid, $uid, $quantity)";
+    $pieces = explode(" - ", $daterange);
+
+    $return_date = $pieces[1];
+
+    // check if the user has already checked out an item
+    $alreadyHaveThisItem =$db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid` = $uid AND `checkout_user` = '$resUserName' AND `checkout_useremail` = '$resUserEmail'");
+
+    if($alreadyHaveThisItem == NULL){
+
+        // Remove from the items reserved table
+        $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity";
+        $results["dropReservation"] = $db->update($sql);
+            
+        // Add to the items checked out table
+         $sql = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid, $quantity, '$return_date', '$resUserName', '$resUserEmail', '$userName', '$userEmail' )";
         $results["addCheckedOut"] = $db->update($sql);
+
+        $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;
+        $results["substractVal"] = $db->update($sql2);
+
+        // Update the item status to unavailable if the quantity available is now 0
+        $sql3 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
+        $results["updateStatus"] = $db->update($sql3);
+
+   store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Check Out", $uniqueItemIDs, $return_date);
+
+        
+
     }
     else{
-        // If the user did already have this item, update the quantity
-        $sql = "UPDATE `items_checkedout` SET `quantity` = `quantity` + $quantity WHERE `uid`=$uid AND `itemid`=$itemid";
-        $results["addCheckedOut"] = $db->update($sql);
+        
+        $results["duplicate"] = true;
     }
-
-    store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Check Out", $uniqueItemIDs, $daterange);
+     
     echoResponse(200, $results);
+    
 });
 
 /* Check in an item */
@@ -331,7 +353,6 @@ $app->post('/checkIn', function() use ($app) {
     $db = new DbHandler();
 
 
-
     // Get the manager's email
     $sql = "SELECT `email` FROM `superadmin` WHERE `title` = 'Inventory Manager'";
     $emailManager = $db->getOneRecord($sql);
@@ -339,9 +360,11 @@ $app->post('/checkIn', function() use ($app) {
 
 
     // Update the value of the quantity
-    $sql = "UPDATE `items_checkedout` SET `quantity`=(`quantity`- $checkInConsumed - $checkInQuantity) WHERE `itemid`=$itemid";
-    $results["updateCheckOut"] = $db->update($sql);
+    $sql = "UPDATE `items_checkedout` SET `quantity`=(`quantity`- $checkInConsumed - $checkInQuantity) WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$useremail'";
+    // $results["updateCheckOut"] = $db->update($sql);
+    $results["updateCheckOut"] = $sql;
 
+/*
 
     // Remove from items checked out if quantity checked out is now 0
     $sql = "DELETE FROM `items_checkedout` WHERE `itemid`=$itemid and `quantity`=0";
@@ -398,7 +421,7 @@ $app->post('/checkIn', function() use ($app) {
     {
         store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInConsumed, "Consumed or Broken", $uniqueItemIDs, "");
     }
-
+*/
     echoResponse(200, $results);
 
 });

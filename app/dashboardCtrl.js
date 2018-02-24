@@ -115,6 +115,8 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
               {
                 Data.toast({status:"error",message:"There was an error when trying to check in the item."});
               }
+
+              console.log("melldy " + results["updateCheckOut"]);
             });
             $scope.getCheckedOut();
           }
@@ -140,12 +142,16 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
         }).then(function (results) {
           if(results["dropReservation"] && results["addQuantity"] && results["updateStatus"])
           {
+            console.log("melody " + results["drop"]);
             Data.toast({status:"success",message:"Reservation cancelled."});
           }
           else
           {
+            console.log("melody 2 " + results["drop"]);
             Data.toast({status:"error",message:"There was an error when trying to cancel the reservation."});
           }
+
+
         });
         $scope.getReserved();
       }
@@ -223,12 +229,17 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
           if (results.uid) {
             Data.post('checkOutReservation', {
               itemid: $scope.reservations[index].itemid,
+              ckoutUserName: $scope.reservations[index].username,
+              ckoutUserEmail: $scope.reservations[index].useremail,
               uid: results.uid,
               quantity: parseInt($scope.reservations[index].quantity),
               daterange: $scope.reservations[index].daterange,
               uniqueItemIDs: $scope.checkOutData.HardwareUniqueIDs
             }).then(function (results) {
-              if(results["dropReservation"] && results["addCheckedOut"])
+              if(results["duplicate"]){
+                Data.toast({status:"error",message:"User must return all previously checkout items before checking out again."});
+              }
+              else if(results["dropReservation"] && results["addCheckedOut"] && $results["substractVal"] &&  $results["updateStatus"])
               {
                 Data.toast({status:"success",message:"Reservation checked out."});
               }
