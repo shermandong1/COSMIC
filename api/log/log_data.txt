@@ -8,3 +8,11 @@ Sarah Wu,1,1,AAA Batteries,2,Reserved,,02/12/2018,10:29pm,N/A,02/12/2018 - 02/12
 Sarah Wu,1,1,AAA Batteries,1,Reservation Cancelled,,02/12/2018,10:58pm,N/A,N/A,
 Sarah Wu,sarah,green@green.a,Colored Pencils,3,Reservation Cancelled,,02/12/2018,11:05pm,N/A,N/A,
 
+Sarah Wu,ni,nina@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/20/2018,05:21pm,N/A,N/A,
+Sarah Wu,ninareh,ninarehm@usc.edu,AAA Batteries,3,Reserved,,02/24/2018,02:53pm,N/A,02/24/2018 - 03/06/2018,
+Sarah Wu,Newuser,Newuser@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/24/2018,03:06pm,N/A,N/A,
+Sarah Wu,ninareh,ninarehm@usc.edu,AAA Batteries,3,Reservation Cancelled,,02/24/2018,03:06pm,N/A,N/A,
+Sarah Wu,user2,user2@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/24/2018,03:06pm,N/A,N/A,
+Sarah Wu,Newuser,Newuser@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/24/2018,03:06pm,N/A,N/A,
+Sarah Wu,user2,user2@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/24/2018,03:06pm,N/A,N/A,
+Sarah Wu,Newuser,Newuser@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/24/2018,03:06pm,N/A,N/A,
