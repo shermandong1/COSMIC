@@ -20,6 +20,19 @@ $app->post('/getLocationsList', function() use ($app) {
 });
 
 
+// get the reservation and chedckouts for an item
+$app->post('/getCalendarInfo', function() use ($app) {
+    $db = new DbHandler();
+	$r = json_decode($app->request->getBody());
+    $itemid = $r->itemid;
+    $sql = "SELECT quantity, return_date FROM items_checkedout WHERE itemid = $itemid  UNION SELECT quantity, daterange  FROM items_reserved WHERE itemid =  ".$itemid;
+    $result = $db->getMultRecords($sql);
+    // $result["sql"] = sql;
+    $response = $result;
+    echoResponse(200, $response);
+});
+
+
 
 
 /* Get the checkout list */
