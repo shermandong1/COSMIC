@@ -131,7 +131,7 @@ $app->post('/getCheckedOut', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $uid = $r->uid;
     $db = new DbHandler();
-    $sql = "SELECT A.itemid, B.name, A.quantity FROM items_checkedout AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
+    $sql = "SELECT A.itemid, B.name, A.checkout_user, A.checkout_useremail, A.quantity FROM items_checkedout AS A, items AS B WHERE A.itemid = B.itemid AND uid = $uid";
     $result = $db->getMultRecords($sql);
     echoResponse(200, $result);
 });
@@ -452,7 +452,7 @@ $app->post('/addItem', function() use ($app) {
          $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable, NULL ,$reorderThreshold)";
         $results["addedItem"] = $db->insertItem($sql);
     }
-   
+
     echoResponse(200, $results);
 });
 
