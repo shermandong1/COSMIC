@@ -32,7 +32,9 @@
         <tbody>
           <tr>
             <th class="image">Item</th>
-            <th class="name">Name</th>
+            <th class="name">Item Name</th>
+            <th class="name">Borrower Name</th>
+            <th class="name">Borrower Email</th>
             <th class="tags">Quantity</th>
             <th class="checkIn">Check In</th>
           </tr>
@@ -41,6 +43,8 @@
           <tr ng-repeat="item in data">
             <td><a href="#items/{{item.itemid}}"><img src="./images/items/{{item.itemid}}.jpg" class="img-thumbnail inventory-image"></a></td>
             <td>{{item.name}}</td>
+            <td>{{item.checkout_user}}</td>
+            <td>{{item.checkout_useremail}}</td>
             <td>{{item.quantity}}</td>
             <td><button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkIn(item.name,item.itemid,item.quantity)">Check In</button></td>
           </tr>
