@@ -267,10 +267,10 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           Data.post('getCalendarInfo', {
             itemid: $routeParams.itemID,
           }).then(function (results) {
-            
-        }
+            console.log(results);
       });
-    }
+      }
+    });
   };
 
   $scope.deleteItem = function() {
