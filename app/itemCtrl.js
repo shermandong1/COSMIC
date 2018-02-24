@@ -232,6 +232,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
 
 
+
   $scope.dropReservation = function(index) {
     Data.get('session').then(function (results) {
         if (results.uid) {
@@ -257,6 +258,19 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           $scope.getItemReservations();
         }
       });
+  };
+
+
+  $scope.getCalendarInfo = function() {
+  	Data.get('session').then(function (results) {
+        if (results.uid) {
+          Data.post('getCalendarInfo', {
+            itemid: $routeParams.itemID,
+          }).then(function (results) {
+            
+        }
+      });
+    }
   };
 
   $scope.deleteItem = function() {

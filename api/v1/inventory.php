@@ -20,6 +20,18 @@ $app->post('/getLocationsList', function() use ($app) {
 });
 
 
+// get the reservation and chedckouts for an item
+$app->post('/getCalendarInfo', function() use ($app) {
+    $db = new DbHandler();
+	$r = json_decode($app->request->getBody());
+    $itemid = $r->itemid;
+    $sql = "SELECT items_checkedout.quantity, items_checkedout.return_date, items_reserved.quantity, items_reserved.daterange FROM items_checkedout JOIN items_reserved ON items_reserved.itemid = items_checkedout.itemid WHERE itemid = ".$itemid;
+    $result = $db->getMultRecords($sql);
+    $response = $result;
+    echoResponse(200, $response);
+});
+
+
 
 
 /* Get the checkout list */
