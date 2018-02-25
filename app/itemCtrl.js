@@ -268,6 +268,21 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             itemid: $routeParams.itemID,
           }).then(function (results) {
             console.log(results);
+            var quantityPerDay = [];
+            var i = 0;
+            while(moment().add(i, 'days').isBefore(moment().add(6, 'months')))
+            {
+              quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] = 1;
+              for(key in results)
+              {
+                if(moment().add(i, 'days').isSameOrBefore(moment(results[key]["return_date"], "MM/DD/YYYY"), 'day'))
+                {
+                  quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                }
+              }
+              i++;
+            }
+            console.log(quantityPerDay);
       });
       }
     });
