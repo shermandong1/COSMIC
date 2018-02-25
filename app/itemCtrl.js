@@ -269,22 +269,39 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           Data.post('getCalendarInfo', {
             itemid: $routeParams.itemID,
           }).then(function (results) {
-            console.log(results);
+
             var quantityPerDay = [];
             var i = 0;
+            //quanityTotal is the last element of the array, so we save it and remove it
+            //the allows us to loop through results without problems :(
+            var quantityTotal = parseInt(results.quantityTotal.quantityTotal);
+            delete results["quantityTotal"];
+            //generate an array of the dates for the next 6 months and calculate the quantity for each date.
             while(moment().add(i, 'days').isBefore(moment().add(6, 'months')))
             {
-              quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] = 1;
+              quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] = quantityTotal;
               for(key in results)
               {
-                if(moment().add(i, 'days').isSameOrBefore(moment(results[key]["return_date"], "MM/DD/YYYY"), 'day'))
+                if(results[key]["return_date"].indexOf("-") == -1)
                 {
-                  quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                  //parse the checkout dates, items should be decremented from today until the return date
+                  if(moment().add(i, 'days').isSameOrBefore(moment(results[key]["return_date"], "MM/DD/YYYY"), 'day'))
+                  {
+                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                  }
+                }
+                else
+                {
+                  //parse the reservation dates, items within the date range should be decremented
+                  var dates = results[key]["return_date"].split(" - ");
+                  if(moment().add(i, 'days').isBetween(moment(dates[0], "MM/DD/YYYY").subtract(1, 'days'), moment(dates[1], "MM/DD/YYYY").add(1, 'days'), 'day'))
+                  {
+                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                  }
                 }
               }
               i++;
             }
-            console.log(quantityPerDay);
       });
       }
     });
