@@ -399,6 +399,8 @@ $app->post('/checkIn', function() use ($app) {
     $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
     $results["updateStatus"] = $db->update($sql);
 
+    
+    store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
      //If quantity total is less than threshold, send a re-order email to the director
     $sql = "SELECT * FROM `items` WHERE `quantityTotal`<`reorderThreshold` AND `itemid`=$itemid";
     $reorder = $db->getOneRecord($sql);
@@ -437,7 +439,6 @@ $app->post('/checkIn', function() use ($app) {
     $message = "<b> $itemname </b> has been checked in by $useremail <br><br> <b> $checkInConsumed </b> has/have been consumed or broken. <br><br> Notes: $note";
     $results["emailManager"] = mail($emailManager,$subject,$message,$headers);
 
-    store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
 
     if($checkInConsumed > 0)
     {
