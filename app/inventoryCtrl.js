@@ -166,8 +166,8 @@ app.controller("inventoryCtrl", ['$scope','$filter','$http','Data','screenSize' 
         (searchMatch(item["tag1"], $scope.queryTags) || searchMatch(item["tag2"], $scope.queryTags) || searchMatch(item["tag3"], $scope.queryTags) || searchMatch(item["tag4"], $scope.queryTags) || searchMatch(item["tag5"], $scope.queryTags) || searchMatch(item["location"], $scope.queryTags))
         )
           {
-            console.log(item);
-            console.log("item name: " + item["name"] + ", location name: " + item["location"]);
+            // console.log(item);
+            // console.log("item name: " + item["name"] + ", location name: " + item["location"]);
             if($scope.showAvailable && $scope.showUnavailable)
             {
                 return true;

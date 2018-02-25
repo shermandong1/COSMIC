@@ -206,18 +206,20 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             quantity: resQuantity,
             dates: dates
           }).then(function (results) {
-            if(results.addRes && results.updateQuantity && results.updateStatus)
+            if(results.addRes)
             {
+              console.log("hello firnesd");
+
               Data.toast({status:"success",message:"Reservation Added."});
             }
             else if(results==='"User Does Not Exist"')
             {
               Data.toast({status:"error",message:"User with this e-mail does not exist."});
             }
-            else if(results.indexOf("Duplicate entry") != -1)
+          /*  else if(results.indexOf("Duplicate entry") != -1)
             {
               Data.toast({status:"error",message:"Duplicate reservation."});
-            }
+            }*/
             else
             {
               Data.toast({status:"error",message:"There was an error when try to create the reservation."});
