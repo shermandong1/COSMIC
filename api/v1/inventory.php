@@ -27,7 +27,7 @@ $app->post('/getCalendarInfo', function() use ($app) {
     $itemid = $r->itemid;
     $sql = "SELECT quantity, return_date FROM items_checkedout WHERE itemid = $itemid  UNION SELECT quantity, daterange  FROM items_reserved WHERE itemid =  ".$itemid;
     $result = $db->getMultRecords($sql);
-    // $result["sql"] = sql;
+    $result["quantityTotal"] = $db->getOneRecord("SELECT quantityTotal FROM items WHERE itemid = $itemid");
     $response = $result;
     echoResponse(200, $response);
 });
@@ -100,7 +100,16 @@ $app->post('/checkOut', function() use ($app) {
     $hardwareNotes = $r->uniqueItemIDs;
     $db = new DbHandler();
 
-    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
+
+    $sql4 = "SELECT name, email FROM users WHERE `uid`=".$uid;
+    $admin = $db->getOneRecord("SELECT name, email FROM users WHERE `uid`=$uid");
+
+    $adminEmail = $admin["email"];
+    $adminName = $admin["name"];
+
+
+
+    $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid,$quantityToCheckOut,'$returnDate','$checkoutUserName','$checkoutUserEmail', '$adminName', '$adminEmail')";
     $results["updatedCheckedOutTable"] = $db->update($sql3);
     
     if($results["updatedCheckedOutTable"] == true)
@@ -359,6 +368,8 @@ $app->post('/checkIn', function() use ($app) {
     $useremail = $r->useremail;
     $checkInConsumed = $r->checkInConsumed;
     $checkInQuantity = $r->checkInQuantity;
+    $checkoutUserName = $r->borrowerName;
+    $checkoutUserEmail = $r->borrowerEmail;
 
     $hardwareNotes = $r->hardwareNotes;
 
@@ -373,27 +384,25 @@ $app->post('/checkIn', function() use ($app) {
 
 
     // Update the value of the quantity
-    $sql = "UPDATE `items_checkedout` SET `quantity`=(`quantity`- $checkInConsumed - $checkInQuantity) WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$useremail'";
-    // $results["updateCheckOut"] = $db->update($sql);
-    $results["updateCheckOut"] = $sql;
-
-/*
+    $sql = "UPDATE `items_checkedout` SET `quantity`=(`quantity`- $checkInConsumed - $checkInQuantity) WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$checkoutUserEmail' AND `checkout_user`=  '$checkoutUserName'";
+    $results["updateCheckOut"] = $db->update($sql);
 
     // Remove from items checked out if quantity checked out is now 0
-    $sql = "DELETE FROM `items_checkedout` WHERE `itemid`=$itemid and `quantity`=0";
+    $sql = "DELETE FROM `items_checkedout` WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$checkoutUserEmail' AND `checkout_user`=  '$checkoutUserName' AND `quantity`=0";
     $results["dropCheckOut"] = $db->update($sql);
 
     // Update quantity available & quantity total
     $sql = "UPDATE `items` SET `quantityAvailable`=(`quantityAvailable`+$checkInQuantity),`quantityTotal`=`quantityTotal`-($checkInConsumed) WHERE `itemid`=$itemid";
     $results["updateQuantities"] = $db->update($sql);
 
-    // Update availability
+     // Update availability
     $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
     $results["updateStatus"] = $db->update($sql);
 
-    //If quantity total is less than threshold, send a re-order email to the director
+     //If quantity total is less than threshold, send a re-order email to the director
     $sql = "SELECT * FROM `items` WHERE `quantityTotal`<`reorderThreshold` AND `itemid`=$itemid";
     $reorder = $db->getOneRecord($sql);
+
     if($reorder == NULL) // Do not need to reorder
     {
         $results["emailReorder"] = true;
@@ -434,7 +443,7 @@ $app->post('/checkIn', function() use ($app) {
     {
         store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInConsumed, "Consumed or Broken", $uniqueItemIDs, "");
     }
-*/
+
     echoResponse(200, $results);
 
 });
