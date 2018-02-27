@@ -83,9 +83,19 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
+        $scope.hardwareID = [];
+
+      Data.post('getHardwareId', {
+      }).then(function (results) {
+        console.log("meldoy " + results);
+        $scope.hardwareID = results;
+
+      });
+
       Data.post('getItem', {
         itemid: $routeParams.itemID
       }).then(function (results) {
+        console.log(results);
         $scope.data = results;
         $scope.updatedItemDetails = {};
         $scope.updatedItemDetails.name = $scope.data.name;
@@ -264,12 +274,47 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
 
   $scope.getCalendarInfo = function() {
-  	Data.get('session').then(function (results) {
+    Data.get('session').then(function (results) {
         if (results.uid) {
           Data.post('getCalendarInfo', {
             itemid: $routeParams.itemID,
           }).then(function (results) {
-            console.log(results["quantityTotal"]);
+
+            var quantityPerDay = [];
+            var i = 0;
+            //quanityTotal is the last element of the array, so we save it and remove it
+            //the allows us to loop through results without problems :(
+            var quantityTotal = parseInt(results.quantityTotal.quantityTotal);
+            delete results["quantityTotal"];
+            //generate an array of the dates for the next 6 months and calculate the quantity for each date.
+            while(moment().add(i, 'days').isBefore(moment().add(6, 'months')))
+            {
+              quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] = quantityTotal;
+              for(key in results)
+              {
+                if(results[key]["return_date"].indexOf("-") == -1)
+                {
+                  //parse the checkout dates, items should be decremented from today until the return date
+                  if(moment().add(i, 'days').isSameOrBefore(moment(results[key]["return_date"], "MM/DD/YYYY"), 'day'))
+                  {
+                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                  }
+                }
+                else
+                {
+                  //parse the reservation dates, items within the date range should be decremented
+                  var dates = results[key]["return_date"].split(" - ");
+                  if(moment().add(i, 'days').isBetween(moment(dates[0], "MM/DD/YYYY").subtract(1, 'days'), moment(dates[1], "MM/DD/YYYY").add(1, 'days'), 'day'))
+                  {
+                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                  }
+                }
+              }
+              i++;
+            }
+          for (key in quantityPerDay){
+          $scope.events.push( { date: moment(key, "MM/DD/YYYY").format(), title: quantityPerDay[key]});
+          }
       });
       }
     });
@@ -343,16 +388,26 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.getItemDetails();
   $scope.getItemReservations();
 
+
+
   $scope.options = {
       weekOffset: 0,
       daysOfTheWeek: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       showAdjacentMonths: true,
   };
-  $scope.events = [
-      { date: moment().add(3, 'days').format(), title: "Happy days" },
-      { date: moment().subtract(5, 'days').format(), title: "Good old days" },
-      { date: moment().subtract(5, 'days').format(), title: "And some more" }
-  ];
+ 
+ $scope.events = [];
+ $scope.getCalendarInfo();
+
+
+
+  // $scope.events = [
+  //     { date: moment().add(3, 'days').format(), title: "Happy days" },
+  //     { date: moment().subtract(5, 'days').format(), title: "Good old days" },
+  //     { date: moment().subtract(5, 'days').format(), title: "And some more" }
+  // ];
+  // console.log($scope.events);
+
   $scope.showEvents = function(events) {
       alert(events.map(function(e) { return e.title }).join("\n"));
   };
