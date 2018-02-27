@@ -80,7 +80,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     }
   }
 
-  $scope.getItemDetails = function() {
+ $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
       Data.post('getItem', {
@@ -264,7 +264,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
 
   $scope.getCalendarInfo = function() {
-  	Data.get('session').then(function (results) {
+    Data.get('session').then(function (results) {
         if (results.uid) {
           Data.post('getCalendarInfo', {
             itemid: $routeParams.itemID,
@@ -302,9 +302,9 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
               }
               i++;
             }
-  				for (key in quantityPerDay){
-					$scope.events.push( { date: moment(key, "MM/DD/YYYY").format(), title: quantityPerDay[key]});
-  				}
+          for (key in quantityPerDay){
+          $scope.events.push( { date: moment(key, "MM/DD/YYYY").format(), title: quantityPerDay[key]});
+          }
       });
       }
     });
