@@ -44,7 +44,7 @@
         </div>
         <div class="days">
           <div class="{{day.classes}}" ng-repeat="day in days">
-            <div class="event-indicator" ng-show="day.events.length" ng-click="getCalendarInfo()">{{day.events.length}}</div>
+            <div class="event-indicator" ng-show="isAfterToday(day.date)" ng-click="showEvents(day.events)">{{availableItems(day.events)}}</div>
             {{day.day}}
           </div>
         </div>
