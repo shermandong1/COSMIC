@@ -267,47 +267,48 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             itemid: $routeParams.itemID,
           }).then(function (results) {
 
-            var quantityPerDay = [];
-            var i = 0;
-            //quanityTotal is the last element of the array, so we save it and remove it
-            //the allows us to loop through results without problems :(
-            var quantityTotal = parseInt(results.quantityTotal.quantityTotal);
-            delete results["quantityTotal"];
+            $scope.quantityTotal = parseInt(results.quantityTotal);
             //generate an array of the dates for the next 6 months and calculate the quantity for each date.
-            while(moment().add(i, 'days').isBefore(moment().add(6, 'months'))) {
-              var day = {
-                date: moment().add(i, 'days').format("MM/DD/YYYY"),
-                quantity: quantityTotal
-              };
-              for(key in results)
+
+            // reservation is being used interchangeably for checkout and reserved items
+            var quantityPerDay = results.reservations.map(function(reservation) {
+              if(reservation["return_date"].indexOf("-") == -1) // if checkout
               {
-                if(results[key]["return_date"].indexOf("-") == -1)
-                {
-                  //parse the checkout dates, items should be decremented from today until the return date
-                  if(moment().add(i, 'days').isSameOrBefore(moment(results[key]["return_date"], "MM/DD/YYYY"), 'day'))
-                  {
-                    day.quantity -= results[key]["quantity"];
-                  }
-                }
-                else
-                {
-                  //parse the reservation dates, items within the date range should be decremented
-                  var dates = results[key]["return_date"].split(" - ");
-                  if(moment().add(i, 'days').isBetween(moment(dates[0], "MM/DD/YYYY").subtract(1, 'days'), moment(dates[1], "MM/DD/YYYY").add(1, 'days'), 'day'))
-                  {
-                    day.quantity -= results[key]["quantity"];
-                  }
-                }
+                return {
+                  start: moment().format("MM/DD/YYYY"),
+                  end: reservation["return_date"],
+                  quantity: parseInt(reservation["quantity"]),
+                  reserved: true,
+                  checkedOut: false
+                };
               }
-              quantityPerDay.push(day);
-              i++;
-            }
-            debugger;
+              else // must be a reserved item
+              {
+                //parse the reservation dates, items within the date range should be decremented
+                var dates = reservation["return_date"].split(" - ");
+                return {
+                  start: dates[0],
+                  end: dates[1],
+                  quantity: parseInt(reservation["quantity"]),
+                  checkedOut: true,
+                  reserved: false
+                };
+              }
+            });
             $scope.events = quantityPerDay;
       });
       }
     });
   };
+
+  $scope.availableItems = function (events) {
+    var totalUnavailable = events.reduce((sum, event) => { return sum + event.quantity }, 0);
+    return $scope.quantityTotal - totalUnavailable;
+  }
+
+  $scope.isAfterToday = function (date) {
+    return date.isAfter(moment().subtract(1, 'd'));
+  }
 
   $scope.deleteItem = function() {
     //console.log("delete");
@@ -387,19 +388,15 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
  $scope.events = [];
  $scope.getCalendarInfo();
- debugger;
 
-
-
-  // $scope.events = [
-  //     { date: moment().add(3, 'days').format(), title: "Happy days" },
-  //     { date: moment().subtract(5, 'days').format(), title: "Good old days" },
-  //     { date: moment().subtract(5, 'days').format(), title: "And some more" }
-  // ];
-  // console.log($scope.events);
 
   $scope.showEvents = function(events) {
-      alert(events.map(function(e) { return e.title }).join("\n"));
+    var totalUnavailable = events.reduce((sum, event) => { return sum + event.quantity }, 0);
+    var checkedOut = events.filter((event) => event.checkedOut).reduce((sum, event) => { return sum + event.quantity }, 0);
+    var reserved = events.filter((event) => event.reserved).reduce((sum, event) => { return sum + event.quantity }, 0);
+
+
+      alert(`Reserved: ${reserved}, Checked Out: ${checkedOut} Total: ${totalUnavailable}`);
   };
 });
 
