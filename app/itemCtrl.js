@@ -96,6 +96,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       Data.post('getItem', {
         itemid: $routeParams.itemID
       }).then(function (results) {
+        console.log(results);
         $scope.data = results;
         $scope.updatedItemDetails = {};
         $scope.updatedItemDetails.name = $scope.data.name;
