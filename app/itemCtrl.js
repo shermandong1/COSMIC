@@ -80,14 +80,15 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     }
   }
 
-  $scope.getItemDetails = function() {
+ $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
-        $scope.hardwareID = [];
+            $scope.hardwareID = [];
 
-      Data.post('getHardwareId', {
+      Data.post('getHardwareID', {
+        itemid: $routeParams.itemID
       }).then(function (results) {
-        console.log("meldoy " + results);
+        console.log(results);
         $scope.hardwareID = results;
 
       });
@@ -277,7 +278,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             itemid: $routeParams.itemID,
           }).then(function (results) {
 
-<<<<<<< 9a1f146db4cc0d414e9f8f76d74fe9a78ea2d90f
             $scope.quantityTotal = parseInt(results.quantityTotal);
             //generate an array of the dates for the next 6 months and calculate the quantity for each date.
 
@@ -307,43 +307,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
               }
             });
             $scope.events = quantityPerDay;
-=======
-            var quantityPerDay = [];
-            var i = 0;
-            //quanityTotal is the last element of the array, so we save it and remove it
-            //the allows us to loop through results without problems :(
-            var quantityTotal = parseInt(results.quantityTotal.quantityTotal);
-            delete results["quantityTotal"];
-            //generate an array of the dates for the next 6 months and calculate the quantity for each date.
-            while(moment().add(i, 'days').isBefore(moment().add(6, 'months')))
-            {
-              quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] = quantityTotal;
-              for(key in results)
-              {
-                if(results[key]["return_date"].indexOf("-") == -1)
-                {
-                  //parse the checkout dates, items should be decremented from today until the return date
-                  if(moment().add(i, 'days').isSameOrBefore(moment(results[key]["return_date"], "MM/DD/YYYY"), 'day'))
-                  {
-                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
-                  }
-                }
-                else
-                {
-                  //parse the reservation dates, items within the date range should be decremented
-                  var dates = results[key]["return_date"].split(" - ");
-                  if(moment().add(i, 'days').isBetween(moment(dates[0], "MM/DD/YYYY").subtract(1, 'days'), moment(dates[1], "MM/DD/YYYY").add(1, 'days'), 'day'))
-                  {
-                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
-                  }
-                }
-              }
-              i++;
-            }
-          for (key in quantityPerDay){
-          $scope.events.push( { date: moment(key, "MM/DD/YYYY").format(), title: quantityPerDay[key]});
-          }
->>>>>>> mess
       });
       }
     });

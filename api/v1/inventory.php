@@ -68,11 +68,15 @@ $app->post('/getHardwareID', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
     $db = new DbHandler();
-    $sql1 ="SELECT `HardwareID` FROM `HardwareTable` WHERE available=1";
-    $result["hardwareIDs"] = $db->getOneRecord($sql1);
+    $sql1 ="SELECT `HardwareID` FROM `HardwareTable` WHERE available=1 AND itemid= ".$itemid;
+    // $result = $sql1;
+    $result = $db->getMultRecords($sql1);
     $response = $result;
     echoResponse(200, $response);
 
+
+
+});
 
 
 });
