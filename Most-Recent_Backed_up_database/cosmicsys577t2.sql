@@ -167,7 +167,7 @@ INSERT INTO `users` (`uid`, `name`, `email`, `type`, `password`, `created`) VALU
 
 
 ALTER TABLE `locations`
-	MODIFY `locationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29,
+  MODIFY `locationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29,
   ADD PRIMARY KEY(`locationid`);
 
 -- Indexes for dumped tables
@@ -188,7 +188,7 @@ ALTER TABLE `items_checkedout`
 
 
 ALTER TABLE `HardwareTable`
-  ADD PRIMARY KEY (`HardwareID`);
+  ADD PRIMARY KEY (`HardwareID`, `itemid`);
 --
 -- Indexes for table `items_reserved`
 --

@@ -23,7 +23,7 @@ $app->post('/getLocationsList', function() use ($app) {
 // get the reservation and chedckouts for an item
 $app->post('/getCalendarInfo', function() use ($app) {
     $db = new DbHandler();
-	$r = json_decode($app->request->getBody());
+    $r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
     $sql = "SELECT quantity, return_date FROM items_checkedout WHERE itemid = $itemid  UNION SELECT quantity, daterange  FROM items_reserved WHERE itemid =  ".$itemid;
     $result["reservations"] = $db->getMultRecords($sql);
@@ -64,7 +64,18 @@ $app->post('/getLocationsList', function() use ($app) {
    echoResponse(200, $response);
 });
 
+$app->post('/getHardwareID', function() use ($app) {
+    $r = json_decode($app->request->getBody());
+    $itemid = $r->itemid;
+    $db = new DbHandler();
+    $sql1 ="SELECT `HardwareID` FROM `HardwareTable` WHERE available=1";
+    $result["hardwareIDs"] = $db->getOneRecord($sql1);
+    $response = $result;
+    echoResponse(200, $response);
 
+
+
+}
 
 /* Get a single item's details */
 $app->post('/getItem', function() use ($app) {
