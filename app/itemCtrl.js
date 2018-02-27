@@ -83,6 +83,16 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
  $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
+            $scope.hardwareID = [];
+
+      Data.post('getHardwareID', {
+        itemid: $routeParams.itemID
+      }).then(function (results) {
+        console.log(results);
+        $scope.hardwareID = results;
+
+      });
+
       Data.post('getItem', {
         itemid: $routeParams.itemID
       }).then(function (results) {
