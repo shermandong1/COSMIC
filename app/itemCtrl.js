@@ -302,6 +302,9 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
               }
               i++;
             }
+  				for (key in quantityPerDay){
+					$scope.events.push( { date: moment(key, "MM/DD/YYYY").format(), title: quantityPerDay[key]});
+  				}
       });
       }
     });
@@ -375,16 +378,26 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.getItemDetails();
   $scope.getItemReservations();
 
+
+
   $scope.options = {
       weekOffset: 0,
       daysOfTheWeek: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       showAdjacentMonths: true,
   };
-  $scope.events = [
-      { date: moment().add(3, 'days').format(), title: "Happy days" },
-      { date: moment().subtract(5, 'days').format(), title: "Good old days" },
-      { date: moment().subtract(5, 'days').format(), title: "And some more" }
-  ];
+ 
+ $scope.events = [];
+ $scope.getCalendarInfo();
+
+
+
+  // $scope.events = [
+  //     { date: moment().add(3, 'days').format(), title: "Happy days" },
+  //     { date: moment().subtract(5, 'days').format(), title: "Good old days" },
+  //     { date: moment().subtract(5, 'days').format(), title: "And some more" }
+  // ];
+  // console.log($scope.events);
+
   $scope.showEvents = function(events) {
       alert(events.map(function(e) { return e.title }).join("\n"));
   };
