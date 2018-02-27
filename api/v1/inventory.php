@@ -75,7 +75,7 @@ $app->post('/getHardwareID', function() use ($app) {
 
 
 
-}
+});
 
 /* Get a single item's details */
 $app->post('/getItem', function() use ($app) {
