@@ -180,7 +180,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var todayDateObj = new Date();
     todayDateObj = new Date(todayDateObj.getFullYear(),todayDateObj
       .getMonth(),todayDateObj.getDate());
-      console.log(typeof $scope.newRes.resUserName);
     if(startDateObj < todayDateObj){
       Data.toast({status:"error", message:"Reservation must begin in the future."});
     }
@@ -208,8 +207,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           }).then(function (results) {
             if(results.addRes)
             {
-              console.log("hello firnesd");
-
               Data.toast({status:"success",message:"Reservation Added."});
             }
             else if(results==='"User Does Not Exist"')
@@ -277,9 +274,11 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             var quantityTotal = parseInt(results.quantityTotal.quantityTotal);
             delete results["quantityTotal"];
             //generate an array of the dates for the next 6 months and calculate the quantity for each date.
-            while(moment().add(i, 'days').isBefore(moment().add(6, 'months')))
-            {
-              quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] = quantityTotal;
+            while(moment().add(i, 'days').isBefore(moment().add(6, 'months'))) {
+              var day = {
+                date: moment().add(i, 'days').format("MM/DD/YYYY"),
+                quantity: quantityTotal
+              };
               for(key in results)
               {
                 if(results[key]["return_date"].indexOf("-") == -1)
@@ -287,7 +286,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
                   //parse the checkout dates, items should be decremented from today until the return date
                   if(moment().add(i, 'days').isSameOrBefore(moment(results[key]["return_date"], "MM/DD/YYYY"), 'day'))
                   {
-                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                    day.quantity -= results[key]["quantity"];
                   }
                 }
                 else
@@ -296,15 +295,15 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
                   var dates = results[key]["return_date"].split(" - ");
                   if(moment().add(i, 'days').isBetween(moment(dates[0], "MM/DD/YYYY").subtract(1, 'days'), moment(dates[1], "MM/DD/YYYY").add(1, 'days'), 'day'))
                   {
-                    quantityPerDay[moment().add(i, 'days').format("MM/DD/YYYY")] -= results[key]["quantity"];
+                    day.quantity -= results[key]["quantity"];
                   }
                 }
               }
+              quantityPerDay.push(day);
               i++;
             }
-  				for (key in quantityPerDay){
-					$scope.events.push( { date: moment(key, "MM/DD/YYYY").format(), title: quantityPerDay[key]});
-  				}
+            debugger;
+            $scope.events = quantityPerDay;
       });
       }
     });
@@ -385,9 +384,10 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       daysOfTheWeek: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       showAdjacentMonths: true,
   };
- 
+
  $scope.events = [];
  $scope.getCalendarInfo();
+ debugger;
 
 
 
