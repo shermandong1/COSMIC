@@ -303,7 +303,14 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
   $scope.availableItems = function (events) {
     var totalUnavailable = events.reduce((sum, event) => { return sum + event.quantity }, 0);
-    return $scope.quantityTotal - totalUnavailable;
+
+    if($scope.quantityTotal - totalUnavailable < 0)
+    {
+      return 0;
+    }
+    else {
+      return $scope.quantityTotal - totalUnavailable;
+    }
   }
 
   $scope.isAfterToday = function (date) {
@@ -396,7 +403,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var reserved = events.filter((event) => event.reserved).reduce((sum, event) => { return sum + event.quantity }, 0);
 
 
-      alert(`Reserved: ${reserved}, Checked Out: ${checkedOut} Total: ${totalUnavailable}`);
+    alert(`Reserved: ${reserved}, Checked Out: ${checkedOut} Total: ${totalUnavailable}`);
   };
 });
 
