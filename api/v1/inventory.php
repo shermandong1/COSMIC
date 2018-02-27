@@ -75,7 +75,7 @@ $app->post('/getHardwareID', function() use ($app) {
 
 
 
-}
+});
 
 /* Get a single item's details */
 $app->post('/getItem', function() use ($app) {
@@ -122,7 +122,7 @@ $app->post('/checkOut', function() use ($app) {
 
     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid,$quantityToCheckOut,'$returnDate','$checkoutUserName','$checkoutUserEmail', '$adminName', '$adminEmail')";
     $results["updatedCheckedOutTable"] = $db->update($sql3);
-    
+
     if($results["updatedCheckedOutTable"] == true)
     {
       // Update the quantity available for the item
@@ -344,7 +344,7 @@ $app->post('/checkOutReservation', function() use ($app) {
         // Remove from the items reserved table
         $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity";
         $results["dropReservation"] = $db->update($sql);
-            
+
         // Add to the items checked out table
          $sql = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid, $quantity, '$return_date', '$resUserName', '$resUserEmail', '$userName', '$userEmail' )";
         $results["addCheckedOut"] = $db->update($sql);
@@ -358,16 +358,16 @@ $app->post('/checkOutReservation', function() use ($app) {
 
    store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Check Out", $uniqueItemIDs, $return_date);
 
-        
+
 
     }
     else{
-        
+
         $results["duplicate"] = true;
     }
-     
+
     echoResponse(200, $results);
-    
+
 });
 
 /* Check in an item */
@@ -410,7 +410,7 @@ $app->post('/checkIn', function() use ($app) {
     $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
     $results["updateStatus"] = $db->update($sql);
 
-    
+
     store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
      //If quantity total is less than threshold, send a re-order email to the director
     $sql = "SELECT * FROM `items` WHERE `quantityTotal`<`reorderThreshold` AND `itemid`=$itemid";
