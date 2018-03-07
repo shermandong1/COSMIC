@@ -70,6 +70,7 @@ app.controller("newitemCtrl", ['$scope', '$filter', '$routeParams','$rootScope',
   $scope.newItem.tag5 = null;
   $scope.newItem.location = null;
   $scope.newItem.desc = null;
+  $scope.newItem.hardware = null;
 
   $scope.addItem = function () {
 
@@ -90,7 +91,7 @@ app.controller("newitemCtrl", ['$scope', '$filter', '$routeParams','$rootScope',
         status: $scope.newItem.status,
         quantityAvailable: $scope.newItem.quantityAvailable,
         isHardware: hardwareFlag,
-        HardwareID: $scope.newItem.hardware,
+        HardwareID:  $scope.newItem.hardware,
         reorderThreshold: $scope.newItem.reorderThreshold,
         tag1: mysql_real_escape_string ($scope.newItem.tag1),
         tag2: mysql_real_escape_string ($scope.newItem.tag2),
@@ -107,6 +108,7 @@ app.controller("newitemCtrl", ['$scope', '$filter', '$routeParams','$rootScope',
         }
         else
         {
+          console.log(results);
           Data.toast({status:"success",message:"Item added."})
           uploader.queue[0].file.name=results["addedItem"]+'.jpg';
           uploader.queue[0].upload();

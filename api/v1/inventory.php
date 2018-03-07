@@ -23,7 +23,7 @@ $app->post('/getLocationsList', function() use ($app) {
 // get the reservation and chedckouts for an item
 $app->post('/getCalendarInfo', function() use ($app) {
     $db = new DbHandler();
-	$r = json_decode($app->request->getBody());
+    $r = json_decode($app->request->getBody());
     $itemid = $r->itemid;
     $sql = "SELECT quantity, return_date FROM items_checkedout WHERE itemid = $itemid  UNION SELECT quantity, daterange  FROM items_reserved WHERE itemid =  ".$itemid;
     $result["reservations"] = $db->getMultRecords($sql);
@@ -62,6 +62,20 @@ $app->post('/getLocationsList', function() use ($app) {
    $result = $db->getMultRecords($sql);
    $response = $result;
    echoResponse(200, $response);
+});
+
+$app->post('/getHardwareID', function() use ($app) {
+    $r = json_decode($app->request->getBody());
+    $itemid = $r->itemid;
+    $db = new DbHandler();
+    $sql1 ="SELECT `HardwareID` FROM `HardwareTable` WHERE available=1 AND itemid= ".$itemid;
+    // $result = $sql1;
+    $result = $db->getMultRecords($sql1);
+    $response = $result;
+    echoResponse(200, $response);
+
+
+
 });
 
 
@@ -468,6 +482,7 @@ $app->post('/addItem', function() use ($app) {
     $location = $r->location;
     $desc = $r->desc;
 
+
     $status = "Unavailable";
     if($quantityAvailable > 0)
     {
@@ -494,10 +509,20 @@ $app->post('/addItem', function() use ($app) {
     if($result3["locationid"] != null){
         $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,".$result3["locationid"].",$reorderThreshold)";
         $results["addedItem"] = $db->insertItem($sql);
+
+        $sqlID = "SELECT `itemid` FROM `items` WHERE `name`='$name' AND `desc`='$desc' AND `quantityAvailable` = $quantityAvailable ";
+        //  $results["itemid"] = $sqlID;
+        // $result5 = 1;
+         $results4 = $db->getOneRecord($sqlID);
+
         if($isHardware){
             $token = strtok($HardwareID , " ");
+            $results["hardware"] =$name;
+
             while($token !==  false ){
-                $sql6 = "INSERT INTO `HardwareTable`(`HardwareID`,`itemid`, `available`) VALUES (`$token`,`$name`,1)";
+              $sql6 = "INSERT INTO `HardwareTable`(`HardwareID`,`itemid`, `available`) VALUES ('$token','".$results4["itemid"]."',1)";
+               $results["hardware"] = $sql6;
+                $db->insertItem($sql6);
                 $token = strtok(" ");
             }
         }
@@ -505,6 +530,24 @@ $app->post('/addItem', function() use ($app) {
     else{
          $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable, NULL ,$reorderThreshold)";
         $results["addedItem"] = $db->insertItem($sql);
+
+        $sqlID = "SELECT `itemid` FROM `items` WHERE `name`='$name' AND `desc`='$desc' AND `quantityAvailable` = $quantityAvailable ";
+        //  $result4["itemid"] = $sqlID;
+
+         $results4 = $db->getOneRecord($sqlID);
+         // $result4["itemid"]  = 1;
+
+         if($isHardware){
+            $token = strtok($HardwareID , " ");
+            // $results["hardware"] =$name;
+
+            while($token !==  false ){
+              $sql6 = "INSERT INTO `HardwareTable`(`HardwareID`,`itemid`, `available`) VALUES ($token,'".$results4["itemid"]."',1)";
+               // $results["hardware"] = $sql6;
+                $db->insertItem($sql6);
+                $token = strtok(" ");
+            }
+        }
     }
 
     echoResponse(200, $results);

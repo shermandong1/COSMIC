@@ -80,12 +80,23 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     }
   }
 
-  $scope.getItemDetails = function() {
+ $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
+            $scope.hardwareID = [];
+
+      Data.post('getHardwareID', {
+        itemid: $routeParams.itemID
+      }).then(function (results) {
+        console.log(results);
+        $scope.hardwareID = results;
+
+      });
+
       Data.post('getItem', {
         itemid: $routeParams.itemID
       }).then(function (results) {
+        console.log(results);
         $scope.data = results;
         $scope.updatedItemDetails = {};
         $scope.updatedItemDetails.name = $scope.data.name;
@@ -261,7 +272,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
 
   $scope.getCalendarInfo = function() {
-  	Data.get('session').then(function (results) {
+    Data.get('session').then(function (results) {
         if (results.uid) {
           Data.post('getCalendarInfo', {
             itemid: $routeParams.itemID,

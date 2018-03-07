@@ -97,7 +97,8 @@
 
         <div class="form-group" ng-if="data.hardware == 1">
         <label for="hardwareIDInput">Unique Item IDs<sup>*</sup></em></label>
-        <textarea class="form-control" rows="3" id="hardwareIDInput" ng-model="checkout.uniqueItemIDs" placeholder="Enter unique ID of each item checked out, separated by spaces" ></textarea>
+
+         <select class="form-control input-md pull-right custom-select searchbar" ng-model="queryHardwareID" ng-options="x.HardwareID for x in hardwareID"></select>
         <small>Enter unique ID of each item checked out, separated by spaces ({{ checkout.quantity==='' || checkout.quantity== null ? 0 : checkout.quantity}} IDs Expected)</small>
         </div>
 
