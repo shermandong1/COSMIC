@@ -472,6 +472,7 @@ $app->post('/addItem', function() use ($app) {
     $name = $r->name;
     $isHardware = $r->isHardware;
     $quantityAvailable = $r->quantityAvailable;
+    $HardwareID = $r->HardwareID;
     $reorderThreshold = $r->reorderThreshold;
     $tag1 = $r->tag1;
     $tag2 = $r->tag2;
@@ -507,6 +508,13 @@ $app->post('/addItem', function() use ($app) {
     if($result3["locationid"] != null){
         $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,".$result3["locationid"].",$reorderThreshold)";
         $results["addedItem"] = $db->insertItem($sql);
+        if($isHardware){
+            $token = strtok($HardwareID , " ");
+            while($token !==  false ){
+                $sql6 = "INSERT INTO `HardwareTable`(`HardwareID`,`itemid`, `available`) VALUES (`$token`,`$name`,1)";
+                $token = strtok(" ");
+            }
+        }
     }
     else{
          $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable, NULL ,$reorderThreshold)";

@@ -18,3 +18,4 @@ Sarah Wu,user2,user2@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/24/2018,0
 Sarah Wu,Newuser,Newuser@usc.edu,AAA Batteries,1,Reservation Cancelled,,02/24/2018,03:06pm,N/A,N/A,
 Sarah Wu,sarah,sarahlwu@usc.edu,AAA Batteries,10,Reserved,,02/26/2018,09:02pm,N/A,02/26/2018 - 02/26/2018,
 Sarah Wu,s,sarahlwu@usc.edu,AAA Batteries,1,Check Out,,02/26/2018,09:12pm,02/26/2018,N/A,
+Sarah Wu,nina,nina@usc.edu,Arduino Uno,10,Reserved,,03/01/2018,12:23pm,N/A,03/12/2018 - 04/11/2018,

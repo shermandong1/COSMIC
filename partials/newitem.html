@@ -18,6 +18,11 @@
   </div>
 
   <div class="form-group">
+    <h6><label for="hardware">Hardware IDs<sup>*</sup></label></h6>
+    <input type="text" class="form-control" id="hardware" placeholder="Enter Hardware IDs" ng-model="newItem.hardware" required>
+  </div>
+
+  <div class="form-group">
     <h6><label for="quantity">Quantity<sup>*</sup></label></h6>
     <input type="text" class="form-control" id="quantityAvailable" placeholder="Enter Quantity Available" ng-model="newItem.quantityAvailable" required>
     <small>It is assumed the new item is not checked out or reserved yet. If it is, please still enter the total quantity here (including checked out and reserved) and, after the item is added to the COSMIC-System, have the user officially check out/reserve the item from their account.</small>
