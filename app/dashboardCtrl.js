@@ -241,7 +241,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
               if(results["duplicate"]){
                 Data.toast({status:"error",message:"User must return all previously checkout items before checking out again."});
               }
-              else if(results["dropReservation"] && results["addCheckedOut"] && $results["substractVal"] &&  $results["updateStatus"])
+              else if(results["dropReservation"] && results["addCheckedOut"] && results["substractVal"] && results["updateStatus"])
               {
                 Data.toast({status:"success",message:"Reservation checked out."});
               }
