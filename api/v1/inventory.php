@@ -526,29 +526,10 @@ $app->post('/addItem', function() use ($app) {
                 $token = strtok(" ");
             }
         }
+    }else{
+        $results["locationid"] = null;
     }
-    else{
-         $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable, NULL ,$reorderThreshold)";
-        $results["addedItem"] = $db->insertItem($sql);
-
-        $sqlID = "SELECT `itemid` FROM `items` WHERE `name`='$name' AND `desc`='$desc' AND `quantityAvailable` = $quantityAvailable ";
-        //  $result4["itemid"] = $sqlID;
-
-         $results4 = $db->getOneRecord($sqlID);
-         // $result4["itemid"]  = 1;
-
-         if($isHardware){
-            $token = strtok($HardwareID , " ");
-            // $results["hardware"] =$name;
-
-            while($token !==  false ){
-              $sql6 = "INSERT INTO `HardwareTable`(`HardwareID`,`itemid`, `available`) VALUES ($token,'".$results4["itemid"]."',1)";
-               // $results["hardware"] = $sql6;
-                $db->insertItem($sql6);
-                $token = strtok(" ");
-            }
-        }
-    }
+  
 
     echoResponse(200, $results);
 });

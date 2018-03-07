@@ -82,6 +82,10 @@ app.controller("newitemCtrl", ['$scope', '$filter', '$routeParams','$rootScope',
     {
       Data.toast({status:"error",message:"Reorder threshold must be a non-negative number."})
     }
+    else if (!$scope.newItem.location){
+      Data.toast({status:"error",message:"Please specify your location."})
+
+    }
     else
     {
       var hardwareFlag = $scope.newItem.isHardware ? 1 : 0;
@@ -101,7 +105,7 @@ app.controller("newitemCtrl", ['$scope', '$filter', '$routeParams','$rootScope',
         location: mysql_real_escape_string ($scope.newItem.location),
         desc: mysql_real_escape_string ($scope.newItem.desc),
       }).then(function (results) {
-        if(results["addedItem"] == null || isNaN(results["addedItem"]))
+        if(results["addedItem"] == null || isNaN(results["addedItem"]) || results["locationid"] == null)
         {
           console.log(results);
           Data.toast({status:"error",message:"There was an error when adding the new item."})
