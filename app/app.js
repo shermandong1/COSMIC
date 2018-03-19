@@ -4,7 +4,8 @@ var app = angular.module('myApp', [
   'toaster',
   'angularFileUpload',
   'matchMedia',
-  'tien.clndr'
+  'tien.clndr',
+  'isteven-multi-select'
 ]);
 
 app.config(['$routeProvider',

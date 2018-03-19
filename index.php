@@ -108,5 +108,8 @@
     <script src="./js/momentOld.js"></script>
     <script src="./js/clndr.js"></script>
     <script src="./js/angular-clndr.min.js"></script>
+
+    <script src="./js/isteven-multi-select.js"></script>
+    <link rel="stylesheet" href="./css/isteven-multi-select.css">
   </body>
 </html>

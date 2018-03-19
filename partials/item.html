@@ -98,8 +98,18 @@
         <div class="form-group" ng-if="data.hardware == 1">
         <label for="hardwareIDInput">Unique Item IDs<sup>*</sup></em></label>
 
-         <select class="form-control input-md pull-right custom-select searchbar" ng-model="queryHardwareID" ng-options="x.HardwareID for x in hardwareID"></select>
-        <small>Enter unique ID of each item checked out, separated by spaces ({{ checkout.quantity==='' || checkout.quantity== null ? 0 : checkout.quantity}} IDs Expected)</small>
+         <!-- <select class="form-control input-md pull-right custom-select searchbar" ng-model="queryHardwareID" ng-options="x.HardwareID for x in hardwareID"></select> -->
+         <small>Enter unique ID of each item checked out, separated by spaces ({{ checkout.quantity==='' || checkout.quantity== null ? 0 : checkout.quantity}} IDs Expected)</small>
+         <br/>
+		<isteven-multi-select    
+    		input-model="hardwareID"    
+    		output-model="queryHardwareID"
+    		button-label="label"
+    		item-label="label"
+    		tick-property="ticked" >
+		</isteven-multi-select>
+
+        
         </div>
 
         <button type="submit" class="btn btn-primary" ng-click="checkOut()" ng-disabled="data.status ==='Unavailable'">Check Out</button>

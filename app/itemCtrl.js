@@ -83,15 +83,29 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
  $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
-            $scope.hardwareID = [];
+      //       $scope.hardwareID = [];
 
-      Data.post('getHardwareID', {
+      // Data.post('getHardwareID', {
+      //   itemid: $routeParams.itemID
+      // }).then(function (results) {
+      //   console.log(results);
+      //   $scope.hardwareID = results;
+
+      // });
+
+      $scope.hardwareID = [];
+  	  // $scope.queryHardwareID = [];
+  	  Data.post('getHardwareID', {
         itemid: $routeParams.itemID
       }).then(function (results) {
         console.log(results);
-        $scope.hardwareID = results;
+        // $scope.hardwareID = results;
+        for (key in results){
+        	$scope.hardwareID.push({label: results[key]['HardwareID'], ticked: false });
+        }
 
       });
+  console.log($scope.hardwareID);
 
       Data.post('getItem', {
         itemid: $routeParams.itemID
