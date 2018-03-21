@@ -101,16 +101,16 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
         console.log(results);
         // $scope.hardwareID = results;
         for (key in results){
-        	$scope.hardwareID.push({label: results[key]['HardwareID'], ticked: false });
+        	$scope.hardwareID.push({label: results[key]['HardwareID']});
         }
 
       });
-  console.log($scope.hardwareID);
+  		console.log($scope.hardwareID);
 
       Data.post('getItem', {
         itemid: $routeParams.itemID
       }).then(function (results) {
-        console.log(results);
+        // console.log(results);
         $scope.data = results;
         $scope.updatedItemDetails = {};
         $scope.updatedItemDetails.name = $scope.data.name;
