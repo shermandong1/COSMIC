@@ -49,5 +49,5 @@ app.controller('demoController', ['$scope', '$http','NgTableParams', function ($
 }]);
 
 angular.module('myApp').run(['$templateCache', function ($templateCache) {
-  $templateCache.put('ng-table/filters/text.html', '<input type="text" ng-model="params.filter()[name]" ng-if="filter==\'text\'" placeholder="Search for ID" class="input-filter form-control"/>');
+  $templateCache.put('ng-table/filters/text.html', '<input type="text" ng-model="params.filter()[name]" ng-if="filter==\'text\'" placeholder="Search..." class="input-filter form-control"/>');
 }]);
