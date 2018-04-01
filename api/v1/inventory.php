@@ -504,10 +504,10 @@ $app->post('/addItem', function() use ($app) {
     }
 
     $sql3 = "SELECT `locationid` FROM `locations` WHERE location=$location";
-    $result3 = $db->getOneRecord($sql3);
+    $results = $db->getOneRecord($sql3);
 
-    if($result3["locationid"] != null){
-        $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,".$result3["locationid"].",$reorderThreshold)";
+    if($results["locationid"] != null){
+        $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,".$results["locationid"].",$reorderThreshold)";
         $results["addedItem"] = $db->insertItem($sql);
 
         $sqlID = "SELECT `itemid` FROM `items` WHERE `name`='$name' AND `desc`='$desc' AND `quantityAvailable` = $quantityAvailable ";
