@@ -69,6 +69,15 @@ $app->post('/checkOut', function() use ($app) {
     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`) VALUES (".$itemid.",". $uid.",".$quantityToCheckOut.",'". $returnDate."','" .$checkoutUserName."','" .$checkoutUserEmail."')";
     $results["updatedCheckedOutTable"] = $db->update($sql3);
 
+    // for ($x = 0; $x < count($hardwareNotes); $x++) {
+    //     $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `HardwareID`=".$x;
+    //     $db->update($sql4);
+    // } 
+
+
+
+
+
     if($results["updatedCheckedOutTable"] == true)
     {
       // Update the quantity available for the item

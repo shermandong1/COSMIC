@@ -12,6 +12,19 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.checkOut = function () {
     var itemIDs = $scope.checkout.uniqueItemIDs.split(" ");
     var quantity = filterInt($scope.checkout.quantity);
+     var hardwareID = $scope.hardwareID;
+
+     var tickedItems = [];
+     angular.forEach( $scope.hardwareID, function( value, key ) {   
+      if(value.ticked){
+        tickedItems.push(key.label);
+
+      } 
+    });
+
+
+
+
      /*var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
     var checkoutUserName = $scope.checkout.checkoutUserName;
 */
@@ -22,7 +35,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       {
         Data.toast({status:"error",message:"Please enter the unique IDs as a SPACE separated list (no commas or semicolons)."});
       }
-      else if(itemIDs.length != quantity)
+      else if(tickedItems.length != quantity)
       {
         Data.toast({status:"error",message:"Please enter " + quantity + " total unique item IDs, one for each item you are checking out."});
       }
@@ -39,10 +52,53 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
   $scope.doCheckOut = function()
   {
-    var quantity = filterInt($scope.checkout.quantity);
     var returnDate = $('#checkoutReturnDate').val();
+<<<<<<< Updated upstream
     var checkoutUserEmail = $('#checkoutUserEmail').val();
     var checkoutUserName = $('#checkoutUserName').val();;
+=======
+    var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
+    var checkoutUserName = $scope.checkout.checkoutUserName;
+    var hardwareID = $scope.hardwareID;
+    var quantity = filterInt($scope.checkout.quantity); 
+
+     
+    var tickedItems = [];
+     angular.forEach( $scope.hardwareID, function( value, key ) {   
+      if(value.ticked){
+        tickedItems.push(value.label);
+
+      } 
+    });
+
+
+    if(!validateEmail(checkoutUserEmail)){
+      Data.toast({status:"error",message:"Please enter a valid email."});
+    }
+    else{
+      if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
+        {
+          Data.post('checkOut', {
+            itemid: $routeParams.itemID,
+            user: $rootScope.email,
+            uid: $rootScope.uid,
+            quantityToCheckOut: quantity,
+            uniqueItemIDs: tickedItems,
+            returnDate: returnDate,
+            checkoutUserEmail: checkoutUserEmail,
+            checkoutUserName: checkoutUserName,
+            date: Date(),
+          }).then(function (results) {
+            console.log(results.substractVal + "  " + results.updateStatus + " " +  results.updatedCheckedOutTable);
+            if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){
+              Data.toast({status:"success",message:"Item checked out"});
+            }
+            else{
+              Data.toast({status:"error",message:"There was an error when checking out the item. Please see the manager."});
+            }
+          });
+
+>>>>>>> Stashed changes
 
     console.log(returnDate);
     if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
@@ -80,6 +136,33 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
+<<<<<<< Updated upstream
+=======
+      //       $scope.hardwareID = [];
+
+      // Data.post('getHardwareID', {
+      //   itemid: $routeParams.itemID
+      // }).then(function (results) {
+      //   console.log(results);
+      //   $scope.hardwareID = results;
+
+      // });
+
+      $scope.hardwareID = [];
+  	  $scope.queryHardwareID = [];
+  	  Data.post('getHardwareID', {
+        itemid: $routeParams.itemID
+      }).then(function (results) {
+        console.log(results);
+        // $scope.hardwareID = results;
+        for (key in results){
+        	$scope.hardwareID.push({label: results[key]['HardwareID']});
+        }
+
+      });
+  		console.log($scope.hardwareID);
+
+>>>>>>> Stashed changes
       Data.post('getItem', {
         itemid: $routeParams.itemID
       }).then(function (results) {
