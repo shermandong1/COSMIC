@@ -15,12 +15,24 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.checkOut = function () {
     var itemIDs = $scope.checkout.uniqueItemIDs.split(" ");
     var quantity = filterInt($scope.checkout.quantity);
+<<<<<<< HEAD
      /*var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
     var checkoutUserName = $scope.checkout.checkoutUserName;
 */
 	console.log($scope.queryHardwareID);
 	console.log($scope.hardwareID);
 	
+=======
+
+     var tickedItems = [];
+     angular.forEach( $scope.hardwareID, function( value, key ) {   
+      if(value.ticked){
+        tickedItems.push(key.label);
+
+      } 
+    });
+
+>>>>>>> e7b2008c8bb11397b80cb708d4ff5c41e0ee729e
     if($scope.data.hardware == 1)
     {
       var str = $scope.checkout.uniqueItemIDs;
@@ -28,7 +40,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       {
         Data.toast({status:"error",message:"Please enter the unique IDs as a SPACE separated list (no commas or semicolons)."});
       }
-      else if(itemIDs.length != quantity)
+      else if(tickedItems.length != quantity)
       {
         Data.toast({status:"error",message:"Please enter " + quantity + " total unique item IDs, one for each item you are checking out."});
       }
@@ -49,6 +61,18 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var returnDate = $('#checkoutReturnDate').val();
     var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
     var checkoutUserName = $scope.checkout.checkoutUserName;
+    var quantity = filterInt($scope.checkout.quantity); 
+
+     
+    var tickedItems = [];
+     angular.forEach( $scope.hardwareID, function( value, key ) {   
+      if(value.ticked){
+        tickedItems.push(value.label);
+
+      } 
+    });
+
+
     if(!validateEmail(checkoutUserEmail)){
       Data.toast({status:"error",message:"Please enter a valid email."})
     }
@@ -60,12 +84,13 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             user: $rootScope.email,
             uid: $rootScope.uid,
             quantityToCheckOut: quantity,
-            uniqueItemIDs: $scope.checkout.uniqueItemIDs,
+            uniqueItemIDs: tickedItems,
             returnDate: returnDate,
             checkoutUserEmail: checkoutUserEmail,
             checkoutUserName: checkoutUserName,
             date: Date(),
           }).then(function (results) {
+            console.log(results);
             if(results.substractVal && results.updateStatus && results.updatedCheckedOutTable){
               Data.toast({status:"success",message:"Item checked out"});
             }

@@ -126,6 +126,19 @@ $app->post('/checkOut', function() use ($app) {
     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid,$quantityToCheckOut,'$returnDate','$checkoutUserName','$checkoutUserEmail', '$adminName', '$adminEmail')";
     $results["updatedCheckedOutTable"] = $db->update($sql3);
 
+    $ids = "";
+    for ($x = 0; $x < count($hardwareNotes); $x++) {
+        $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
+        $ids=" ".$hardwareNotes[$x];
+        $db->update($sql4);
+    } 
+    // $results["update"] = $sql4;
+    //   echoResponse(200, $results);
+
+
+
+
+
     if($results["updatedCheckedOutTable"] == true)
     {
       // Update the quantity available for the item
@@ -138,7 +151,7 @@ $app->post('/checkOut', function() use ($app) {
 
       // Update the items checked out table
       $alreadyHaveThisItem = $db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid`=$uid AND `itemid`=$itemid");
-      store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes, $returnDate);
+      store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $ids, $returnDate);
       echoResponse(200, $results);
     }
     else {
@@ -414,6 +427,13 @@ $app->post('/checkIn', function() use ($app) {
     $results["updateStatus"] = $db->update($sql);
 
 
+    // for ($x = 0; $x < count($hardwareNotes); $x++) {
+    //     $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
+    //     $ids=" ".$hardwareNotes[$x];
+    //     $db->update($sql4);
+    // }
+
+
     store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
      //If quantity total is less than threshold, send a re-order email to the director
     $sql = "SELECT * FROM `items` WHERE `quantityTotal`<`reorderThreshold` AND `itemid`=$itemid";
@@ -504,10 +524,10 @@ $app->post('/addItem', function() use ($app) {
     }
 
     $sql3 = "SELECT `locationid` FROM `locations` WHERE location=$location";
-    $result3 = $db->getOneRecord($sql3);
+    $results = $db->getOneRecord($sql3);
 
-    if($result3["locationid"] != null){
-        $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,".$result3["locationid"].",$reorderThreshold)";
+    if($results["locationid"] != null){
+        $sql = "INSERT INTO `items`(`name`,`hardware`, `desc`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `status`, `quantityAvailable`, `quantityTotal`, `locationid`, `reorderThreshold`) VALUES ('$name','$isHardware','$desc',$tag1,$tag2,$tag3,$tag4,$tag5,'$status',$quantityAvailable,$quantityAvailable,".$results["locationid"].",$reorderThreshold)";
         $results["addedItem"] = $db->insertItem($sql);
 
         $sqlID = "SELECT `itemid` FROM `items` WHERE `name`='$name' AND `desc`='$desc' AND `quantityAvailable` = $quantityAvailable ";
