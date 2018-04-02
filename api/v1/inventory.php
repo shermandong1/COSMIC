@@ -126,6 +126,19 @@ $app->post('/checkOut', function() use ($app) {
     $sql3 = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid,$quantityToCheckOut,'$returnDate','$checkoutUserName','$checkoutUserEmail', '$adminName', '$adminEmail')";
     $results["updatedCheckedOutTable"] = $db->update($sql3);
 
+    $ids = "";
+    for ($x = 0; $x < count($hardwareNotes); $x++) {
+        $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
+        $ids=" ".$hardwareNotes[$x];
+        $db->update($sql4);
+    } 
+    // $results["update"] = $sql4;
+    //   echoResponse(200, $results);
+
+
+
+
+
     if($results["updatedCheckedOutTable"] == true)
     {
       // Update the quantity available for the item
@@ -138,7 +151,7 @@ $app->post('/checkOut', function() use ($app) {
 
       // Update the items checked out table
       $alreadyHaveThisItem = $db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid`=$uid AND `itemid`=$itemid");
-      store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $hardwareNotes, $returnDate);
+      store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $quantityToCheckOut, "Check Out", $ids, $returnDate);
       echoResponse(200, $results);
     }
     else {
@@ -412,6 +425,13 @@ $app->post('/checkIn', function() use ($app) {
      // Update availability
     $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
     $results["updateStatus"] = $db->update($sql);
+
+
+    // for ($x = 0; $x < count($hardwareNotes); $x++) {
+    //     $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
+    //     $ids=" ".$hardwareNotes[$x];
+    //     $db->update($sql4);
+    // }
 
 
     store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
