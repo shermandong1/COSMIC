@@ -15,14 +15,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.checkOut = function () {
     var itemIDs = $scope.checkout.uniqueItemIDs.split(" ");
     var quantity = filterInt($scope.checkout.quantity);
-<<<<<<< HEAD
-     /*var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
-    var checkoutUserName = $scope.checkout.checkoutUserName;
-*/
-	console.log($scope.queryHardwareID);
-	console.log($scope.hardwareID);
-	
-=======
+
 
      var tickedItems = [];
      angular.forEach( $scope.hardwareID, function( value, key ) {   
@@ -32,7 +25,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       } 
     });
 
->>>>>>> e7b2008c8bb11397b80cb708d4ff5c41e0ee729e
     if($scope.data.hardware == 1)
     {
       var str = $scope.checkout.uniqueItemIDs;
