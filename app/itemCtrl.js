@@ -9,7 +9,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.checkout = {uid: $scope.uid, user: $scope.user, quantity: '', itemID: $routeParams.itemID, uniqueItemIDs: "" };
   $scope.hardwareID = [];
   $scope.queryHardwareID = [];
-  
+
 
 
   $scope.checkOut = function () {
@@ -18,11 +18,11 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
 
      var tickedItems = [];
-     angular.forEach( $scope.hardwareID, function( value, key ) {   
+     angular.forEach( $scope.hardwareID, function( value, key ) {
       if(value.ticked){
         tickedItems.push(key.label);
 
-      } 
+      }
     });
 
     if($scope.data.hardware == 1)
@@ -53,15 +53,14 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var returnDate = $('#checkoutReturnDate').val();
     var checkoutUserEmail = $scope.checkout.checkoutUserEmail;
     var checkoutUserName = $scope.checkout.checkoutUserName;
-    var quantity = filterInt($scope.checkout.quantity); 
+    var quantity = filterInt($scope.checkout.quantity);
 
-     
+
     var tickedItems = [];
-     angular.forEach( $scope.hardwareID, function( value, key ) {   
+     angular.forEach( $scope.hardwareID, function( value, key ) {
       if(value.ticked){
         tickedItems.push(value.label);
-
-      } 
+      }
     });
 
 
@@ -95,6 +94,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           $scope.checkout.quantity = '';
           $scope.checkout.uniqueItemIDs = "";
           $scope.getItemDetails();
+          $scope.getCalendarInfo();
         }
       else
       {
@@ -106,29 +106,14 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
  $scope.getItemDetails = function() {
     Data.get('session').then(function (results) {
     if (results.uid) {
-      //       $scope.hardwareID = [];
-
-      // Data.post('getHardwareID', {
-      //   itemid: $routeParams.itemID
-      // }).then(function (results) {
-      //   console.log(results);
-      //   $scope.hardwareID = results;
-
-      // });
-		
-      
   	  Data.post('getHardwareID', {
         itemid: $routeParams.itemID
       }).then(function (results) {
-        console.log(results);
-        // $scope.hardwareID = results;
         for (key in results){
         	$scope.hardwareID.push({label: results[key]['HardwareID']});
         }
 
       });
-  		console.log($scope.hardwareID);
-
 
       Data.post('getItem', {
         itemid: $routeParams.itemID
@@ -272,6 +257,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           });
           $scope.getItemDetails();
           $scope.getItemReservations();
+          $scope.getCalendarInfo();
         }
       });
     }
@@ -292,7 +278,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             borrowerName: $scope.reservations[index].username,
             borrowerEmail: $scope.reservations[index].useremail
           }).then(function (results) {
-            if(results["dropReservation"] && results["addQuantity"] && results["updateStatus"])
+            if(results["dropReservation"])
             {
               Data.toast({status:"success",message:"Reservation cancelled."});
             }
@@ -303,6 +289,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           });
           $scope.getItemDetails();
           $scope.getItemReservations();
+          $scope.getCalendarInfo();
         }
       });
   };
@@ -351,7 +338,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
   $scope.availableItems = function (events) {
     var totalUnavailable = events.reduce((sum, event) => { return sum + event.quantity }, 0);
-	
+
     if($scope.quantityTotal - totalUnavailable < 0)
     {
       return 0;
@@ -448,8 +435,6 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
  $scope.events = [];
  $scope.getCalendarInfo();
- console.log($scope.events);
-
 
   $scope.showEvents = function(events) {
     var totalUnavailable = events.reduce((sum, event) => { return sum + event.quantity }, 0);
