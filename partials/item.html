@@ -16,15 +16,13 @@
     <h5>Status</h5>
     <p>{{data.status}}</p>
 
-    <h5>Quantity</h5>
-    <p>{{data.quantityAvailable}}</p>
-
     <span ng-if="type === 'Admin' || type === 'USC Student'">
-    <h5>Location</h5>
-    <p>{{data.location}}</p>
-    <p ng-if="data.location == null||data.location.length < 1"><em>No location information</em></p>
+      <h5>Location</h5>
+      <p>{{data.location}}</p>
+      <p ng-if="data.location == null||data.location.length < 1"><em>No location information</em></p>
     </span>
 
+    <h5>Quantity</h5>
     <tien-clndr class="clndr" tien-clndr-object="clndr" tien-clndr-events="events" tien-clndr-options="options">
       <div class="clndr-controls">
         <div class="clndr-previous-button" ng-click="clndr.back()">
@@ -51,6 +49,8 @@
         </div>
       </div>
     </tien-clndr>
+
+
     <!--<h5>Tags</h5>
     <ul>
     <li ng-if="data.tag1">{{data.tag1}}</li>
@@ -102,17 +102,17 @@
          <!-- <select class="form-control input-md pull-right custom-select searchbar" ng-model="queryHardwareID" ng-options="x.HardwareID for x in hardwareID"></select> -->
          <small>Enter unique ID of each item checked out, separated by spaces ({{ checkout.quantity==='' || checkout.quantity== null ? 0 : checkout.quantity}} IDs Expected)</small>
          <br/>
-		<isteven-multi-select    
-    		input-model="hardwareID"    
+		<isteven-multi-select
+    		input-model="hardwareID"
     		output-model="queryHardwareID"
     		button-label="label"
     		item-label="label"
-    		tick-property="ticked" 
+    		tick-property="ticked"
 			output-properties="label ticked"
     		>
 		</isteven-multi-select>
 
-        
+
         </div>
 
         <button type="submit" class="btn btn-primary" ng-click="checkOut()" ng-disabled="data.status ==='Unavailable'">Check Out</button>
