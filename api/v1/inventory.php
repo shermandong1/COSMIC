@@ -139,7 +139,7 @@ $app->post('/checkOut', function() use ($app) {
         $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
         $ids=" ".$hardwareNotes[$x];
         $db->update($sql4);
-    } 
+    }
     // $results["update"] = $sql4;
     //   echoResponse(200, $results);
 
@@ -343,7 +343,7 @@ $app->post('/dropReservation', function() use ($app) {
 
     }
 
-   
+
     echoResponse(200, $results);
 });
 
@@ -456,31 +456,15 @@ $app->post('/checkIn', function() use ($app) {
         $sql = "UPDATE `items` SET `quantityAvailable`=(`quantityAvailable`+$checkInQuantity),`quantityTotal`=`quantityTotal`-($checkInConsumed) WHERE `itemid`=$itemid";
         $results["updateQuantities"] = $db->update($sql);
 
-<<<<<<< HEAD
-    for ($x = 0; $x < count($hardwareNotes); $x++) {
-        $sql4 = "UPDATE `HardwareTable` SET `available`=1 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
-        $ids=" ".$hardwareNotes[$x];
-        $db->update($sql4);
-    }
-
-    echo $sql4;
-=======
-         // Update availability
-        $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
-        $results["updateStatus"] = $db->update($sql);
-
-
-        // for ($x = 0; $x < count($hardwareNotes); $x++) {
-        //     $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
-        //     $ids=" ".$hardwareNotes[$x];
-        //     $db->update($sql4);
-        // }
+        for ($x = 0; $x < count($hardwareNotes); $x++) {
+            $sql4 = "UPDATE `HardwareTable` SET `available`=1 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
+            $ids=" ".$hardwareNotes[$x];
+            $db->update($sql4);
+        }
 
 
         store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
     }
->>>>>>> 9eddba37b18286d0ea11410e34d7ca2dfab19631
-
 
      //If quantity total is less than threshold, send a re-order email to the director
     $sql = "SELECT * FROM `items` WHERE `quantityTotal`<`reorderThreshold` AND `itemid`=$itemid";
@@ -596,7 +580,7 @@ $app->post('/addItem', function() use ($app) {
     }else{
         $results["locationid"] = null;
     }
-  
+
 
     echoResponse(200, $results);
 });
