@@ -181,6 +181,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             location: mysql_real_escape_string ($scope.updatedItemDetails.location),
             desc: mysql_real_escape_string ($scope.updatedItemDetails.desc),
         }).then(function (results) {
+          console.log(results);
           Data.toast({status:"success",message:"Item details updated."});
           $scope.getItemDetails();
         });
