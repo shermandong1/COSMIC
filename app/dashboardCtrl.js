@@ -114,6 +114,10 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
               {
                 Data.toast({status:"success",message:"Item checked in."});
               }
+              else if (results["checkedout"] == null)
+              {
+                Data.toast({status:"error",message:"This item was already checked in"});
+              }
               else
               {
                 Data.toast({status:"error",message:"There was an error when trying to check in the item."});

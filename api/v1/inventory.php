@@ -410,31 +410,40 @@ $app->post('/checkIn', function() use ($app) {
     $emailManager = $emailManager["email"];
 
 
-    // Update the value of the quantity
-    $sql = "UPDATE `items_checkedout` SET `quantity`=(`quantity`- $checkInConsumed - $checkInQuantity) WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$checkoutUserEmail' AND `checkout_user`=  '$checkoutUserName'";
-    $results["updateCheckOut"] = $db->update($sql);
+    $sql = "SELECT * FROM `items_checkedout` WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$checkoutUserEmail' AND `checkout_user`=  '$checkoutUserName'";
+    $results["checkedout"] = $db->getOneRecord($sql);
 
-    // Remove from items checked out if quantity checked out is now 0
-    $sql = "DELETE FROM `items_checkedout` WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$checkoutUserEmail' AND `checkout_user`=  '$checkoutUserName' AND `quantity`=0";
-    $results["dropCheckOut"] = $db->update($sql);
+    //if user actually has the item checked out
+    if($results["checkedout"]){
 
-    // Update quantity available & quantity total
-    $sql = "UPDATE `items` SET `quantityAvailable`=(`quantityAvailable`+$checkInQuantity),`quantityTotal`=`quantityTotal`-($checkInConsumed) WHERE `itemid`=$itemid";
-    $results["updateQuantities"] = $db->update($sql);
+        // Update the value of the quantity
+        $sql = "UPDATE `items_checkedout` SET `quantity`=(`quantity`- $checkInConsumed - $checkInQuantity) WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$checkoutUserEmail' AND `checkout_user`=  '$checkoutUserName'";
+        $results["updateCheckOut"] = $db->update($sql);
 
-     // Update availability
-    $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
-    $results["updateStatus"] = $db->update($sql);
+        // Remove from items checked out if quantity checked out is now 0
+        $sql = "DELETE FROM `items_checkedout` WHERE `itemid`=$itemid AND `uid` = $uid AND `checkout_useremail` = '$checkoutUserEmail' AND `checkout_user`=  '$checkoutUserName' AND `quantity`=0";
+        $results["dropCheckOut"] = $db->update($sql);
+
+        // Update quantity available & quantity total
+        $sql = "UPDATE `items` SET `quantityAvailable`=(`quantityAvailable`+$checkInQuantity),`quantityTotal`=`quantityTotal`-($checkInConsumed) WHERE `itemid`=$itemid";
+        $results["updateQuantities"] = $db->update($sql);
+
+         // Update availability
+        $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
+        $results["updateStatus"] = $db->update($sql);
 
 
-    // for ($x = 0; $x < count($hardwareNotes); $x++) {
-    //     $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
-    //     $ids=" ".$hardwareNotes[$x];
-    //     $db->update($sql4);
-    // }
+        // for ($x = 0; $x < count($hardwareNotes); $x++) {
+        //     $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
+        //     $ids=" ".$hardwareNotes[$x];
+        //     $db->update($sql4);
+        // }
 
 
-    store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
+        store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
+    }
+
+
      //If quantity total is less than threshold, send a re-order email to the director
     $sql = "SELECT * FROM `items` WHERE `quantityTotal`<`reorderThreshold` AND `itemid`=$itemid";
     $reorder = $db->getOneRecord($sql);
