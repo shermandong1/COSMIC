@@ -110,8 +110,19 @@
 
           <div class="form-group" ng-if="checkInData.isHardware == 1">
             <label>Enter Unique ID of Each Item<sup>*</sup></label>
-            <textarea class="form-control" rows="3" ng-model="checkInData.HardwareUniqueIDs" placeholder="Enter unique ID of each item checked in, separated by spaces" required></textarea>
+            <!-- <textarea class="form-control" rows="3" ng-model="checkInData.HardwareUniqueIDs" placeholder="Enter unique ID of each item checked in, separated by spaces" required></textarea> -->
             <small>Enter unique ID of each item checked in, separated by spaces ({{ checkInData.checkInQuantity===''  || checkInData.checkInQuantity== null ? 0 : checkInData.checkInQuantity}} IDs Expected)</small>
+
+             <br/>
+			<isteven-multi-select    
+	    		input-model="hardwareID"    
+	    		output-model="queryHardwareID"
+	    		button-label="label"
+	    		item-label="label"
+	    		tick-property="ticked" 
+				output-properties="label ticked"
+	    		>
+			</isteven-multi-select>
           </div>
 
           <div class="form-group">

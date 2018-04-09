@@ -14,6 +14,11 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
   });
 
 
+
+   
+
+
+
   $scope.logout = function () {
       Data.get('logout').then(function (results) {
           Data.toast(results);
@@ -50,6 +55,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
   };
 
   $scope.checkIn = function (itemname, itemid, quantity, name, email) {
+	
 
     Data.post('getItemHardwareFlag', {
       itemid: itemid,
@@ -59,19 +65,46 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
 
     });
 
-  };
+
+    $scope.hardwareID = [];
+    Data.post('getHardwareIDCheckin', {
+        itemid: itemid,
+      }).then(function (results) {
+        console.log(results);
+        // $scope.hardwareID = results;
+        for (key in results){
+        	$scope.hardwareID.push({label: results[key]['HardwareID']});
+        }
+
+      });
+  		console.log($scope.hardwareID);
+
+};
+
+    
+
 
   $scope.checkInButtonClick = function () {
     document.getElementById('checkInModal').style.display = "none";
     var checkInQuantity = filterInt($scope.checkInData.checkInQuantity);
     var checkInConsumed = filterInt($scope.checkInData.checkInConsumed);
 
-    var itemIDs = $scope.checkInData.HardwareUniqueIDs.split(" ");
-    var str = $scope.checkInData.HardwareUniqueIDs;
+    // var itemIDs = $scope.checkInData.HardwareUniqueIDs.split(" ");
+    // var str = $scope.checkInData.HardwareUniqueIDs;
 
-    if(checkInQuantity == 0 && itemIDs.length == 1 && itemIDs[0] == "")
+    var tickedItems = [];
+    angular.forEach( $scope.hardwareID, function(value, key){
+		if (value.ticked){
+			tickedItems.push(value.label);
+		}
+    });
+
+    console.log(tickedItems);
+
+
+    if(checkInQuantity == 0 && tickedItems.length == 1 && tickedItems[0] == "")
     {
-      itemIDs = [];
+      tickedItems = [];
     }
 
     if($scope.checkInData.checkInQuantity == null || $scope.checkInData.checkInConsumed == null)
@@ -86,11 +119,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
     {
       Data.toast({status:"error",message:"Total Quantities cannot be greater than total checked out quantity."});
     }
-    else if($scope.checkInData.isHardware == 1 && (str.indexOf(",") != -1 || str.indexOf(";") != -1))
-    {
-      Data.toast({status:"error",message:"Please enter the unique IDs as a SPACE separated list (no commas or semicolons)."});
-    }
-    else if($scope.checkInData.isHardware == 1 && itemIDs.length != checkInQuantity)
+    else if($scope.checkInData.isHardware == 1 && tickedItems.length != checkInQuantity)
     {
       Data.toast({status:"error",message:"Please enter " + checkInQuantity + " total unique item IDs, one for each item you are checking in."});
     }
@@ -107,7 +136,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
               checkInConsumed: $scope.checkInData.checkInConsumed,
               borrowerName: $scope.checkInData.borrowerName,
               borrowerEmail: $scope.checkInData.borrowerEmail,
-              hardwareNotes: $scope.checkInData.HardwareUniqueIDs,
+              hardwareNotes: tickedItems,
               note: $scope.checkInData.note,
             }).then(function (results) {
               if( results["updateCheckOut"] && results["dropCheckOut"] && results["updateStatus"] )

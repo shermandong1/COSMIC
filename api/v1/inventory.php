@@ -73,9 +73,17 @@ $app->post('/getHardwareID', function() use ($app) {
     $result = $db->getMultRecords($sql1);
     $response = $result;
     echoResponse(200, $response);
+});
 
-
-
+$app->post('/getHardwareIDCheckin', function() use ($app) {
+    $r = json_decode($app->request->getBody());
+    $itemid = $r->itemid;
+    $db = new DbHandler();
+    $sql1 ="SELECT `HardwareID` FROM `HardwareTable` WHERE available=0 AND itemid= ".$itemid;
+    // $result = $sql1;
+    $result = $db->getMultRecords($sql1);
+    $response = $result;
+    echoResponse(200, $response);
 });
 
 
@@ -400,6 +408,8 @@ $app->post('/checkIn', function() use ($app) {
 
     $hardwareNotes = $r->hardwareNotes;
 
+    echo "fucking";
+
     $note = $r->note;
     $db = new DbHandler();
 
@@ -427,11 +437,13 @@ $app->post('/checkIn', function() use ($app) {
     $results["updateStatus"] = $db->update($sql);
 
 
-    // for ($x = 0; $x < count($hardwareNotes); $x++) {
-    //     $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
-    //     $ids=" ".$hardwareNotes[$x];
-    //     $db->update($sql4);
-    // }
+    for ($x = 0; $x < count($hardwareNotes); $x++) {
+        $sql4 = "UPDATE `HardwareTable` SET `available`=1 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
+        $ids=" ".$hardwareNotes[$x];
+        $db->update($sql4);
+    }
+
+    echo $sql4;
 
 
     store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
