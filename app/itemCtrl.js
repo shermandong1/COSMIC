@@ -292,7 +292,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             borrowerName: $scope.reservations[index].username,
             borrowerEmail: $scope.reservations[index].useremail
           }).then(function (results) {
-            if(results["dropReservation"] && results["addQuantity"] && results["updateStatus"])
+            if(results["dropReservation"])
             {
               Data.toast({status:"success",message:"Reservation cancelled."});
             }

@@ -312,21 +312,30 @@ $app->post('/dropReservation', function() use ($app) {
     $quantity = $r->quantity;
     $db = new DbHandler();
 
-    // Drop the entry from the items reserved table
-    $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity AND `username` = '$resUserName' AND `useremail` ='$resUserEmail' ";
-    $results["dropReservation"] = $db->update($sql);
-    $results["drop"] = $sql;
+
+    $sql = "SELECT * FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity AND `username` = '$resUserName' AND `useremail` ='$resUserEmail' ";
+
+    $results['checkReservation'] = $db->getOneRecord($sql);
+
+    if($results['checkReservation']){
+         // Drop the entry from the items reserved table
+        $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity AND `username` = '$resUserName' AND `useremail` ='$resUserEmail' ";
+        $results["dropReservation"] = $db->update($sql);
 
 
-    // Update the quantity available for the item
-    $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` + $quantity WHERE `itemid` = $itemid";
-    $results["addQuantity"] = $db->update($sql2);
+        // // Update the quantity available for the item
+        // $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` + $quantity WHERE `itemid` = $itemid";
+        // $results["addQuantity"] = $db->update($sql2);
 
-    // Update the item status to available if the quantity available is now > 0
-    $sql3 = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
-    $results["updateStatus"] = $db->update($sql3);
+        // // Update the item status to available if the quantity available is now > 0
+        // $sql3 = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
+        // $results["updateStatus"] = $db->update($sql3);
 
-    store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Cancelled", "", $daterange);
+        store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Cancelled", "", $daterange);
+
+    }
+
+   
     echoResponse(200, $results);
 });
 
@@ -348,39 +357,48 @@ $app->post('/checkOutReservation', function() use ($app) {
     $userName = $user["name"];
     $userEmail = $user["email"];
 
-    $pieces = explode(" - ", $daterange);
 
-    $return_date = $pieces[1];
+     $sql = "SELECT * FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity AND `username` = '$resUserName' AND `useremail` ='$resUserEmail' ";
 
-    // check if the user has already checked out an item
-    $alreadyHaveThisItem =$db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid` = $uid AND `checkout_user` = '$resUserName' AND `checkout_useremail` = '$resUserEmail'");
+    $results['checkReservation'] = $db->getOneRecord($sql);
 
-    if($alreadyHaveThisItem == NULL){
+    if($results['checkReservation']){
 
-        // Remove from the items reserved table
-        $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity";
-        $results["dropReservation"] = $db->update($sql);
+        $pieces = explode(" - ", $daterange);
 
-        // Add to the items checked out table
-         $sql = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid, $quantity, '$return_date', '$resUserName', '$resUserEmail', '$userName', '$userEmail' )";
-        $results["addCheckedOut"] = $db->update($sql);
+        $return_date = $pieces[1];
 
-        $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;
-        $results["substractVal"] = $db->update($sql2);
+        // check if the user has already checked out an item
+        $alreadyHaveThisItem =$db->getOneRecord("SELECT * FROM `items_checkedout` WHERE `uid` = $uid AND `checkout_user` = '$resUserName' AND `checkout_useremail` = '$resUserEmail'");
 
-        // Update the item status to unavailable if the quantity available is now 0
-        $sql3 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
-        $results["updateStatus"] = $db->update($sql3);
+        if($alreadyHaveThisItem == NULL){
 
-   store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Check Out", $uniqueItemIDs, $return_date);
+            // Remove from the items reserved table
+            $sql = "DELETE FROM `items_reserved` WHERE `uid` = $uid AND `itemid` = $itemid AND `daterange` = '$daterange' AND `quantity` = $quantity";
+            $results["dropReservation"] = $db->update($sql);
+
+            // Add to the items checked out table
+             $sql = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid, $quantity, '$return_date', '$resUserName', '$resUserEmail', '$userName', '$userEmail' )";
+            $results["addCheckedOut"] = $db->update($sql);
+
+            $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;
+            $results["substractVal"] = $db->update($sql2);
+
+            // Update the item status to unavailable if the quantity available is now 0
+            $sql3 = "UPDATE `items` SET `status` = 'Unavailable' WHERE `quantityAvailable` = 0 AND `itemid` = " . $itemid;
+            $results["updateStatus"] = $db->update($sql3);
+
+       store_data($resUserName, $resUserEmail, $uid, $itemid, $quantity, "Reservation Check Out", $uniqueItemIDs, $return_date);
 
 
 
-    }
-    else{
+        }
+        else{
 
-        $results["duplicate"] = true;
-    }
+            $results["duplicate"] = true;
+        }
+
+}
 
     echoResponse(200, $results);
 
