@@ -14,7 +14,6 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
   });
 
 
-
    
 
 
@@ -64,6 +63,10 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
       $scope.checkInData = {checkOutQuantity: quantity, checkInConsumed: null, checkInQuantity: null, note: "", itemid: itemid, itemname: itemname, isHardware: results.hardware, HardwareUniqueIDs: "", borrowerName:name, borrowerEmail:email};
 
     });
+
+    $scope.queryHardwareID = [];
+
+
 
 
     $scope.hardwareID = [];
