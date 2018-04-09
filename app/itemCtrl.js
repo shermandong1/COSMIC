@@ -7,11 +7,15 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.uid = $rootScope.uid;
   $scope.user = $rootScope.email;
   $scope.checkout = {uid: $scope.uid, user: $scope.user, quantity: '', itemID: $routeParams.itemID, uniqueItemIDs: "" };
+  $scope.hardwareID = [];
+  $scope.queryHardwareID = [];
+  
 
 
   $scope.checkOut = function () {
     var itemIDs = $scope.checkout.uniqueItemIDs.split(" ");
     var quantity = filterInt($scope.checkout.quantity);
+
 
      var tickedItems = [];
      angular.forEach( $scope.hardwareID, function( value, key ) {   
@@ -111,9 +115,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       //   $scope.hardwareID = results;
 
       // });
-
-      $scope.hardwareID = [];
-  	  // $scope.queryHardwareID = [];
+		
+      
   	  Data.post('getHardwareID', {
         itemid: $routeParams.itemID
       }).then(function (results) {
@@ -125,6 +128,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
       });
   		console.log($scope.hardwareID);
+
 
       Data.post('getItem', {
         itemid: $routeParams.itemID
@@ -322,8 +326,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
                   start: moment().format("MM/DD/YYYY"),
                   end: reservation["return_date"],
                   quantity: parseInt(reservation["quantity"]),
-                  reserved: true,
-                  checkedOut: false
+                  reserved: false,
+                  checkedOut: true
                 };
               }
               else // must be a reserved item
@@ -334,8 +338,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
                   start: dates[0],
                   end: dates[1],
                   quantity: parseInt(reservation["quantity"]),
-                  checkedOut: true,
-                  reserved: false
+                  checkedOut: false,
+                  reserved: true
                 };
               }
             });
@@ -347,7 +351,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
   $scope.availableItems = function (events) {
     var totalUnavailable = events.reduce((sum, event) => { return sum + event.quantity }, 0);
-
+	
     if($scope.quantityTotal - totalUnavailable < 0)
     {
       return 0;
@@ -435,10 +439,16 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       weekOffset: 0,
       daysOfTheWeek: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       showAdjacentMonths: true,
+      multiDayEvents: {
+        endDate: 'end',
+        startDate: 'start',
+    },
+
   };
 
  $scope.events = [];
  $scope.getCalendarInfo();
+ console.log($scope.events);
 
 
   $scope.showEvents = function(events) {
