@@ -223,7 +223,24 @@ $app->post('/updateItemDetails', function() use ($app) {
 
     $quantityTotal = $oldQuantityTotal - $oldQuantityAvailable + $quantityAvailable;
 
-    $sql = "UPDATE `items` SET `name`='$name',`desc`='$desc',`tag1`=$tag1,`tag2`=$tag2,`tag3`=$tag3,`tag4`=$tag4,`tag5`=$tag5,`status`='$status',`quantityAvailable`=$quantityAvailable,`quantityTotal`=$quantityTotal,`reorderThreshold`=$reorderThreshold,`location`='$location' WHERE `itemid` = $itemid";
+    $sql3 = "SELECT `locationid` FROM `locations` WHERE `location`='$location'";
+    $results = $db->getOneRecord($sql3);
+
+    
+
+    if($results["locationid"] != NULL){
+          $sql = "UPDATE `items` SET `name`='$name',`desc`='$desc',`tag1`=$tag1,`tag2`=$tag2,`tag3`=$tag3,`tag4`=$tag4,`tag5`=$tag5,`status`='$status',`quantityAvailable`=$quantityAvailable,`quantityTotal`=$quantityTotal,`reorderThreshold`=$reorderThreshold,`locationid`=".$results["locationid"]." WHERE `itemid` = $itemid";
+    }
+    else
+    {
+        $sql2 = "INSERT INTO `locations` (`location`) VALUES ('$location')";
+        $db->insertItem($sql2);
+        $sql3 = "SELECT `locationid` FROM `locations` WHERE location='$location'";
+        $location = $db->getOneRecord($sql3);
+        $sql = "UPDATE `items` SET `name`='$name',`desc`='$desc',`tag1`=$tag1,`tag2`=$tag2,`tag3`=$tag3,`tag4`=$tag4,`tag5`=$tag5,`status`='$status',`quantityAvailable`=$quantityAvailable,`quantityTotal`=$quantityTotal,`reorderThreshold`=$reorderThreshold,`locationid`=".$location["locationid"]." WHERE `itemid` = $itemid";
+
+    }
+  
     $results = $db->update($sql);
 
     // Update the item status to available if the quantity available is now > 0
