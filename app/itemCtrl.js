@@ -155,6 +155,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.updateItem = function() {
     Data.get('session').then(function (results) {
 
+
+
     if (results.uid) {
       if($scope.updatedItemDetails.name == null || $scope.updatedItemDetails.name.length <= 0)
       {
@@ -164,6 +166,10 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       {
         Data.toast({status:"error",message:"Quantity can be no less than 0."});
       }
+      else if($scope.updatedItemDetails.hardware  && ($scope.updatedItemDetails.quantityAvailable != ( $scope.updatedItemDetails.hardware.split(" ").length + parseInt($scope.data.quantityAvailable ))))
+        {
+          Data.toast({status:"error",message:"Make sure quantity available takes new hardware IDs into account"});
+        }
       else
       {
         Data.post('updateItemDetails', {
@@ -179,6 +185,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
             tag4: mysql_real_escape_string ($scope.updatedItemDetails.tag4),
             tag5: mysql_real_escape_string ($scope.updatedItemDetails.tag5),
             location: mysql_real_escape_string ($scope.updatedItemDetails.location),
+            HardwareID: mysql_real_escape_string( $scope.updatedItemDetails.hardware),
             desc: mysql_real_escape_string ($scope.updatedItemDetails.desc),
         }).then(function (results) {
           console.log(results);
@@ -381,16 +388,16 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
               Data.post('deleteItem', {
                 itemid: $routeParams.itemID,
               }).then(function (results3) {
-                //console.log(results3);
+                // console.log(results3);
 
-                if(results3.image)
+                /*if(results3.image)
                 {
                   Data.toast({status:"success",message:"Item deleted."});
                 }
                 else if(!results3.image)
                 {
                   Data.toast({status:"error",message:"Item not deleted."});
-                }
+                }*/
 
                 if(results3.sqlDelete)
                 {
@@ -401,10 +408,14 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
                   Data.toast({status:"error",message:"Item image not deleted."});
                 }
 
-                if(results3.sqlDelete && results3.image)
+                if(results3.sqlDelete)
                 {
                   $location.path('inventory');
                 }
+               /* if(results3.sqlDelete && results3.image)
+                {
+                  $location.path('inventory');
+                }*/
 
 
               });

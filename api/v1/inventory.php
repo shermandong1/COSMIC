@@ -212,6 +212,8 @@ $app->post('/updateItemDetails', function() use ($app) {
     $tag5 = $r->tag5;
     $location = $r->location;
     $desc = $r->desc;
+    $HardwareID = $r->HardwareID;
+
 
     $tag1 = !empty($tag1) ? "'$tag1'" : "NULL";
     $tag2 = !empty($tag2) ? "'$tag2'" : "NULL";
@@ -250,6 +252,18 @@ $app->post('/updateItemDetails', function() use ($app) {
     }
   
     $results = $db->update($sql);
+
+    if(!empty($HardwareID)){
+        $token = strtok($HardwareID , " ");
+
+        while($token !==  false ){
+            $sql6 = "INSERT INTO `HardwareTable`(`HardwareID`,`itemid`, `available`) VALUES ('$token','$itemid',1)";
+            $db->insertItem($sql6);
+            $token = strtok(" ");
+        }
+    }
+
+    
 
     // Update the item status to available if the quantity available is now > 0
     $sql = "UPDATE `items` SET `status` = 'Available' WHERE `quantityAvailable` > 0 AND `itemid` = $itemid";
@@ -620,7 +634,16 @@ $app->post('/deleteItem', function() use ($app) {
     $db = new DbHandler();
     $itemid = $r->itemid;
 
-    $result["image"] = unlink('../../images/items/' . $itemid . '.jpg');
+    // $result["image"] = unlink('../../images/items/' . $itemid . '.jpg');
+
+    $sql = "SELECT `hardware` FROM `items` WHERE `itemid`= $itemid";
+    $hardware = $db->getOneRecord($sql);
+
+    if($hardware["hardware"] === "1")
+    {
+        $sql = "DELETE FROM `HardwareTable` WHERE `itemid`= $itemid";
+        $result["hardware"] =$db->update($sql);
+    }
 
     $sql = "DELETE FROM `items` WHERE itemid = $itemid";
 
