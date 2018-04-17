@@ -222,6 +222,21 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
       {
         $scope.checkOutReservationSuccess(index);
       }
+
+      $scope.queryHardwareID = [];
+
+	    $scope.hardwareID = [];
+	    Data.post('getHardwareID', {
+	        itemid: $scope.reservations[index].itemid,
+	      }).then(function (results) {
+	        console.log(results);
+	        // $scope.hardwareID = results;
+	        for (key in results){
+	        	$scope.hardwareID.push({label: results[key]['HardwareID']});
+	        }
+
+	      });
+	  		console.log($scope.hardwareID);
     });
 
   }

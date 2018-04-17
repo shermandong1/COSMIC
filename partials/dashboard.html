@@ -146,8 +146,17 @@
         <form>
           <div class="form-group">
             <label>Enter Unique ID of Each Item<sup>*</sup></label>
-            <textarea class="form-control" rows="3" ng-model="checkOutData.HardwareUniqueIDs" placeholder="Enter unique ID of each item checked out, separated by commas and/or spaces" required></textarea>
+            <!-- <textarea class="form-control" rows="3" ng-model="checkOutData.HardwareUniqueIDs" placeholder="Enter unique ID of each item checked out, separated by commas and/or spaces" required></textarea> -->
             <small>Enter unique ID of each item checked out, separated by spaces ({{checkOutData.quantity}} IDs Expected)</small>
+            <isteven-multi-select    
+	    		input-model="hardwareID"    
+	    		output-model="queryHardwareID"
+	    		button-label="label"
+	    		item-label="label"
+	    		tick-property="ticked" 
+				output-properties="label ticked"
+	    		>
+			</isteven-multi-select>
           </div>
           <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkOutHardwareButtonClick()">Check Out</button>
           <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="checkOutHardwareButtonCancel()">Cancel</button>
