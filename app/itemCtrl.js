@@ -9,6 +9,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
   $scope.checkout = {uid: $scope.uid, user: $scope.user, quantity: '', itemID: $routeParams.itemID, uniqueItemIDs: "" };
   $scope.hardwareID = [];
   $scope.queryHardwareID = [];
+  $scope.quantityTotal;
 
 
 
@@ -55,6 +56,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var checkoutUserName = $scope.checkout.checkoutUserName;
     var quantity = filterInt($scope.checkout.quantity);
 
+    console.log(returnDate);
 
     var tickedItems = [];
      angular.forEach( $scope.hardwareID, function( value, key ) {
@@ -68,7 +70,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       Data.toast({status:"error",message:"Please enter a valid email."})
     }
     else{
-      if (!isNaN(quantity) && quantity <= $scope.data.quantityAvailable && quantity> 0)
+      if (!isNaN(quantity) && $scope.checkAvailability(moment(), moment(returnDate,"MM/DD/YYY"), quantity) && quantity> 0)
         {
           Data.post('checkOut', {
             itemid: $routeParams.itemID,
@@ -124,6 +126,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
         $scope.updatedItemDetails.name = $scope.data.name;
         $scope.updatedItemDetails.status = $scope.data.status;
         $scope.updatedItemDetails.quantityAvailable = $scope.data.quantityAvailable;
+        $scope.updatedItemDetails.quantityTotal = $scope.data.quantityTotal;
         $scope.updatedItemDetails.reorderThreshold = $scope.data.reorderThreshold;
         $scope.updatedItemDetails.tag1 = $scope.data.tag1;
         $scope.updatedItemDetails.tag2 = $scope.data.tag2;
@@ -135,6 +138,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
           $scope.newRes = {};
           $scope.newRes.user = "";
           $scope.newRes.quantity = "";
+          $scope.quantityTotal = $scope.data.quantityTotal;
       });
     }
     });
@@ -318,8 +322,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
               if(reservation["return_date"].indexOf("-") == -1) // if checkout
               {
                 return {
-                  start: moment().format("MM/DD/YYYY"),
-                  end: reservation["return_date"],
+                  start: moment().format("YYYY/MM/DD"),
+                  end: moment(reservation["return_date"], "MM/DD/YYYY").format("YYYY/MM/DD"),
                   quantity: parseInt(reservation["quantity"]),
                   reserved: false,
                   checkedOut: true
@@ -330,8 +334,8 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
                 //parse the reservation dates, items within the date range should be decremented
                 var dates = reservation["return_date"].split(" - ");
                 return {
-                  start: dates[0],
-                  end: dates[1],
+                  start: moment(dates[0], "MM/DD/YYYY").format("YYYY/MM/DD"),
+                  end: moment(dates[1], "MM/DD/YYYY").format("YYYY/MM/DD"),
                   quantity: parseInt(reservation["quantity"]),
                   checkedOut: false,
                   reserved: true
@@ -456,8 +460,42 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
 
     alert(`Reserved: ${reserved}, Checked Out: ${checkedOut} Total: ${totalUnavailable}`);
   };
+  $scope.checkAvailability = function(start, end, quantity){
+    $scope.getCalendarInfo();
+
+    var startMoment = moment(start);
+    console.log(moment(start));
+    console.log(moment(end));
+    console.log(startMoment.isSameOrBefore(moment(end),'days'));
+    // while(startMoment.isSameOrBefore(moment(end), 'day'))
+    // {
+    //   var sum = quantity;
+    //   for(event in $scope.events)
+    //   {
+    //     if(overlappingRanges(startMoment, startMoment, moment(event.start), moment(event.end)))
+    //     {
+    //       sum += event.quantity;
+    //     }
+    //   }
+    //   if(sum > $scope.quantityTotal)
+    //   {
+    //     return false;
+    //   }
+    //   startMoment.add(1, 'day');
+    //   //console.log(startMoment);
+    // }
+    return true;
+  };
 });
 
+//takes in 4 moment objects
+function overlappingRanges(lhsStart, lhsEnd, rhsStart, rhsEnd){
+  if(lhsEnd.isSameOrBefore(rhsStart, 'day') || rhsEnd.isSameOrBefore(lhsStart, 'day'))
+  {
+    return true;
+  }
+  return false;
+}
 
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
