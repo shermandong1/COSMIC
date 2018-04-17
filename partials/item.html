@@ -284,4 +284,21 @@
 
   <!-- /Borrower Information -->
 
+  <!-- calendar modal -->
+  <div id="calendarModal" class="modal">
+      <div class="modal-content">
+        <h2>Availability Status</h4>
+        <hr/>
+        <form>
+          <div class="form-group">
+            <h5>Total Unavailable: </h5> {{calendarData.totalUnavailable}} </br>
+            <h5> Checked Out: </h5> {{calendarData.checkedOut}} </br>
+            <h5> Reserved: </h5> {{calendarData.reserved}} </br>
+          </div>
+          <button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="closeCalendarButtonClick()">Close</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
 </div>
