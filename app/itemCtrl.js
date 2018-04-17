@@ -70,7 +70,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
       Data.toast({status:"error",message:"Please enter a valid email."})
     }
     else{
-      if (!isNaN(quantity) && $scope.checkAvailability(moment(), moment(returnDate,"MM/DD/YYY"), quantity) && quantity> 0)
+      if (!isNaN(quantity) && $scope.checkAvailability(moment(), moment(returnDate,"MM/DD/YYYY"), quantity) && quantity> 0)
         {
           Data.post('checkOut', {
             itemid: $routeParams.itemID,
@@ -234,7 +234,7 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     else if($scope.newRes.user == null || $scope.newRes.user.length == 0){
        Data.toast({status:"error", message:"Reservation requires associated user e-mail."});
     }
-    else if(isNaN(resQuantity) || resQuantity > $scope.data.quantityAvailable || resQuantity <= 0){
+    else if(isNaN(resQuantity) || !$scope.checkAvailability(moment(startDateObj), moment(returnDateObj), resQuantity) || resQuantity <= 0){
        Data.toast({status:"error", message:"Please enter valid quantity for reservation."});
     }else if (!validateEmail(email)){
       Data.toast({status:"error", message: "Please enter a valid email"});
@@ -464,26 +464,26 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     $scope.getCalendarInfo();
 
     var startMoment = moment(start);
-    console.log(moment(start));
-    console.log(moment(end));
-    console.log(startMoment.isSameOrBefore(moment(end),'days'));
-    // while(startMoment.isSameOrBefore(moment(end), 'day'))
-    // {
-    //   var sum = quantity;
-    //   for(event in $scope.events)
-    //   {
-    //     if(overlappingRanges(startMoment, startMoment, moment(event.start), moment(event.end)))
-    //     {
-    //       sum += event.quantity;
-    //     }
-    //   }
-    //   if(sum > $scope.quantityTotal)
-    //   {
-    //     return false;
-    //   }
-    //   startMoment.add(1, 'day');
-    //   //console.log(startMoment);
-    // }
+
+    while(startMoment.isSameOrBefore(moment(end), 'day'))
+    {
+      var sum = quantity;
+      for(event in $scope.events)
+      {
+        //console.log($scope.events[event])
+        if(overlappingRanges(startMoment, startMoment, moment($scope.events[event].start,"YYYY/MM/DD"), moment($scope.events[event].end,"YYYY/MM/DD")))
+        {
+          sum += $scope.events[event].quantity;
+        }
+      }
+      //console.log(sum);
+      if(sum > $scope.quantityTotal)
+      {
+        return false;
+      }
+      startMoment.add(1, 'day');
+      //console.log(startMoment);
+    }
     return true;
   };
 });
