@@ -90,7 +90,7 @@
                 <li ng-if="item.tag5"><a href="" class="tag" ng-click="searchTagsInd(item.tag5)">{{item.tag5}}</a></li>
               </ul>
             </td>
-            <td>{{item.status}}<span ng-if="item.status === 'Available'"><br />[{{item.quantityAvailable}}]</span></td>
+            <td>{{item.status}}<span ng-if="item.status === 'Available'"><br /></span></td>
           </tr>
 
           <tr ng-if='!desktop' ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">

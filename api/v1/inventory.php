@@ -420,6 +420,13 @@ $app->post('/checkOutReservation', function() use ($app) {
              $sql = "INSERT INTO `items_checkedout`(`itemid`, `uid`, `quantity`, `return_date`, `checkout_user`, `checkout_useremail`, `checkout_adminusername`, `checkout_adminemail`) VALUES ($itemid, $uid, $quantity, '$return_date', '$resUserName', '$resUserEmail', '$userName', '$userEmail' )";
             $results["addCheckedOut"] = $db->update($sql);
 
+            $ids = "";
+            for ($x = 0; $x < count($uniqueItemIDs); $x++) {
+                $sql4 = "UPDATE `HardwareTable` SET `available`=0 WHERE `itemid` = $itemid AND `HardwareID`=".$uniqueItemIDs[$x] ;
+                $ids=" ".$uniqueItemIDs[$x];
+                $db->update($sql4);
+            }
+
             $sql2 = "UPDATE `items` SET `quantityAvailable` = `quantityAvailable` - ". $quantity  . " WHERE `itemid` =" . $itemid;
             $results["substractVal"] = $db->update($sql2);
 
@@ -456,8 +463,6 @@ $app->post('/checkIn', function() use ($app) {
     $checkoutUserEmail = $r->borrowerEmail;
 
     $hardwareNotes = $r->hardwareNotes;
-
-    echo "fucking";
 
     $note = $r->note;
     $db = new DbHandler();

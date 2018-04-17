@@ -457,8 +457,12 @@ app.controller("itemCtrl", function($scope, $filter, $routeParams, $rootScope,$h
     var checkedOut = events.filter((event) => event.checkedOut).reduce((sum, event) => { return sum + event.quantity }, 0);
     var reserved = events.filter((event) => event.reserved).reduce((sum, event) => { return sum + event.quantity }, 0);
 
+    document.getElementById('calendarModal').style.display = "block";
+    $scope.calendarData = {totalUnavailable: totalUnavailable, checkedOut: checkedOut, reserved: reserved};
+  };
 
-    alert(`Reserved: ${reserved}, Checked Out: ${checkedOut} Total: ${totalUnavailable}`);
+  $scope.closeCalendarButtonClick = function () {
+    document.getElementById('calendarModal').style.display = "none";
   };
   $scope.checkAvailability = function(start, end, quantity){
     $scope.getCalendarInfo();

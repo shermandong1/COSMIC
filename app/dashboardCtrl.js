@@ -178,14 +178,12 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
           borrowerName: $scope.reservations[index].username,
           borrowerEmail: $scope.reservations[index].useremail
         }).then(function (results) {
-          if(results["dropReservation"] && results["addQuantity"] && results["updateStatus"])
+          if(results["dropReservation"])
           {
-            console.log("melody " + results["drop"]);
             Data.toast({status:"success",message:"Reservation cancelled."});
           }
           else
           {
-            console.log("melody 2 " + results["drop"]);
             Data.toast({status:"error",message:"There was an error when trying to cancel the reservation."});
           }
 
@@ -222,6 +220,21 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
       {
         $scope.checkOutReservationSuccess(index);
       }
+
+      $scope.queryHardwareID = [];
+
+	    $scope.hardwareID = [];
+	    Data.post('getHardwareID', {
+	        itemid: $scope.reservations[index].itemid,
+	      }).then(function (results) {
+	        console.log(results);
+	        // $scope.hardwareID = results;
+	        for (key in results){
+	        	$scope.hardwareID.push({label: results[key]['HardwareID']});
+	        }
+
+	      });
+	  		console.log($scope.hardwareID);
     });
 
   }
@@ -245,21 +258,25 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
     var endDateObj = new Date(partsEnd[2],partsEnd[0]-1,partsEnd[1]);
     var dateOkToCheckOut = (startDateObj <= currDate && currDate <= endDateObj);
 
+
+
     if(dateOkToCheckOut)
     {
       /*if($scope.checkOutData.hasIDs == 1 && ($scope.checkOutData.HardwareUniqueIDs === "" || $scope.checkOutData.HardwareUniqueIDs.split(" ").length != $scope.reservations[index].quantity))
       {
         Data.toast({status:"error",message:"Please enter the unique ID of each item you are checking out, separated by spaces."});
       }*/
-      var str = $scope.checkOutData.HardwareUniqueIDs;
-      var itemIDs = $scope.checkOutData.HardwareUniqueIDs.split(" ");
-      if($scope.checkOutData.hasIDs == 1 && (str.indexOf(",") != -1 || str.indexOf(";") != -1))
+
+      var tickedItems = [];
+      angular.forEach( $scope.hardwareID, function( value, key ) {
+        if(value.ticked){
+          tickedItems.push(value.label);
+        }
+      });
+
+      if($scope.checkOutData.hasIDs == 1 && tickedItems.length != $scope.reservations[index].quantity)
       {
-        Data.toast({status:"error",message:"Please enter the unique IDs as a SPACE separated list (no commas or semicolons)."});
-      }
-      else if($scope.checkOutData.hasIDs == 1 && itemIDs.length != $scope.reservations[index].quantity)
-      {
-        Data.toast({status:"error",message:"Please enter " + $scope.reservations[index].quantity + " total unique item IDs, one for each item you are checking out."});
+        Data.toast({status:"error",message:"Please select " + $scope.reservations[index].quantity + " total unique item IDs, one for each item you are checking out."});
       }
       else
       {
@@ -272,7 +289,7 @@ app.controller("dashboardCtrl", function($scope, $filter, $http, Data, $location
               uid: results.uid,
               quantity: parseInt($scope.reservations[index].quantity),
               daterange: $scope.reservations[index].daterange,
-              uniqueItemIDs: $scope.checkOutData.HardwareUniqueIDs
+              uniqueItemIDs: tickedItems,
             }).then(function (results) {
               if(results["duplicate"]){
                 Data.toast({status:"error",message:"User must return all previously checkout items before checking out again."});
