@@ -461,7 +461,7 @@ $app->post('/checkIn', function() use ($app) {
     $checkInQuantity = $r->checkInQuantity;
     $checkoutUserName = $r->borrowerName;
     $checkoutUserEmail = $r->borrowerEmail;
-
+	 $ids = "";
     $hardwareNotes = $r->hardwareNotes;
 
     $note = $r->note;
@@ -494,7 +494,7 @@ $app->post('/checkIn', function() use ($app) {
 
         for ($x = 0; $x < count($hardwareNotes); $x++) {
             $sql4 = "UPDATE `HardwareTable` SET `available`=1 WHERE `itemid` = $itemid AND `HardwareID`=".$hardwareNotes[$x] ;
-            $ids=" ".$hardwareNotes[$x];
+            $ids=$ids. " ".$hardwareNotes[$x];
             $db->update($sql4);
         }
 
