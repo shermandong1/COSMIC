@@ -11,8 +11,8 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-DROP TABLE IF EXISTS `items`;
 DROP TABLE IF EXISTS `locations`;
+DROP TABLE IF EXISTS `items`;
 DROP TABLE IF EXISTS `items_checkedout`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `superadmin`;
@@ -27,10 +27,69 @@ CREATE TABLE `locations` (
   )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `locations` (`locationid`, `location`) VALUES
-(1, 'USC'),
-(2, 'Off Site'),
-(3,'RTH 210D');
-
+(1 ,'(No Location)'),
+(2 ,'A2'),
+(3 ,'A2, A3'),
+(4 ,'A3'),
+(5 ,'A4'),
+(6 ,'B'),
+(7 ,'B1'),
+(8 ,'B1, RTH210, B0'),
+(9 ,'B2'),
+(10 ,'B4-on the floor'),
+(11 ,'Between I and A'),
+(12 ,'Bin to Left of Table'),
+(13 ,'C1'),
+(14 ,'C1, H0'),
+(15 ,'C2'),
+(16 ,'C2, Bin to Left of Table'),
+(17 ,'C3'),
+(18 ,'C3, H0'),
+(19 ,'C4'),
+(20 ,'C4- bin on floor'),
+(21 ,'D'),
+(22 ,'D/H'),
+(23 ,'D1'),
+(24 ,'D2'),
+(25 ,'D2,D3,D4,D5'),
+(26 ,'D3'),
+(27 ,'D3 and D2'),
+(28 ,'D4'),
+(29 ,'D6'),
+(30 ,'D7'),
+(31 ,'E0'),
+(32 ,'E1'),
+(33 ,'E2'),
+(34 ,'E3'),
+(35 ,'E4'),
+(36 ,'E5'),
+(37 ,'E6'),
+(38 ,'E7'),
+(39 ,'E7, H0 surplus'),
+(40 ,'E7, orange bucket on floor'),
+(41 ,'E8'),
+(42 ,'E8, (maybe also C0, E2, F3)'),
+(43 ,'F3'),
+(44 ,'Food Bin - In front of B'),
+(45 ,'G'),
+(46 ,'G1'),
+(47 ,'H0'),
+(48 ,'H1'),
+(49 ,'H2'),
+(50 ,'H3'),
+(51 ,'H4'),
+(52 ,'I'),
+(53 ,'In plastic bin on the floor by the pull up door'),
+(54 ,'Laptop Cart RTH 210D'),
+(55 ,'Next to Rolling Door'),
+(56 ,'Plastic Container'),
+(57 ,'Red Bucket'),
+(58 ,'Red Tub'),
+(59 ,'RTH 210D Cabinet'),
+(60 ,'RTH210'),
+(61 ,'TBD'),
+(62 ,'Top of shelf F'),
+(63 ,'Under table in RTH 102');
 -- --------------------------------------------------------
 
 -- Table structure for table `items`
@@ -58,201 +117,201 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 -- LOCK TABLES `items` WRITE;
+INSERT INTO `items` VALUES (1,1,'Arduino Uno','Single-board microcontroller. Ages 10+. Measured in units of Arduinos..','Arduino','Computer','Microcontroller',NULL,NULL,'Available',0,0,49,4);
+INSERT INTO `items` VALUES (15,0,'AAA Battery','Please round quantity to the nearest 10 batteries.','Battery','AAA','AAA batteries',NULL,NULL,'Available',100,111,2,10);
+INSERT INTO `items` VALUES (33,0,'Color Pencils (12 Pack)','Check in and out as whole packs only. 12 pack of Crayola colored pencils.','Colored Pencils','Crafts',NULL,NULL,NULL,'Available',3,3,46,0);
+INSERT INTO `items` VALUES (45,0,'D Battery','Please round quantity to the nearest 10. Standard D Batteries.','Battery','D cell','batteries','D batteries',NULL,'Available',1,20,2,5);
+INSERT INTO `items` VALUES (127,1,'3D Printer','3D Printer',NULL,NULL,NULL,NULL,NULL,'Available',0,0,1,6);
+INSERT INTO `items` VALUES (128,0,'DC Motor','Please round quantity to the nearest 10. DC motor','motors',NULL,NULL,NULL,NULL,'Available',129,150,29,10);
+INSERT INTO `items` VALUES (129,0,'9 Volt Battery','Please round quantity to the nearest 10.','9V','Square','battery','batteries',NULL,'Available',31,59,2,10);
+INSERT INTO `items` VALUES (130,0,'Popsicle Sticks','Please round quantity to the nearest 100 sticks.  Includes regular sized and jumbo sized popsicle sticks.','popsicle stick','craft stick',NULL,NULL,NULL,'Available',1300,1400,33,100);
+INSERT INTO `items` VALUES (131,0,'Magnet Wire','Please round quantity to the nearest bundle/spool.','copper wire','wire','magnet wire',NULL,NULL,'Available',10,10,25,1);
+INSERT INTO `items` VALUES (132,0,'Switch (Momentary)','Push Button Switch',NULL,NULL,NULL,NULL,NULL,'Available',1,1,22,1);
+INSERT INTO `items` VALUES (133,0,'Switch ( Toggle)','Toggle Switch','Quantity Available TBD',NULL,NULL,NULL,NULL,'Unavailable',0,1,22,1);
+INSERT INTO `items` VALUES (135,0,'Cups - 7oz plastic','Please round quantity to the  nearest 20.  Plastic Cups are not clear plastic as in picture. NOT for food.','cup','plastic',NULL,NULL,NULL,'Available',230,285,12,20);
+INSERT INTO `items` VALUES (136,0,'Cup  - Cone','Please round quantity to the  nearest 20 cups. Cone Cup for rocket cones.','sno-cone','paper cup','cone cup','rocket',NULL,'Available',600,600,47,50);
+INSERT INTO `items` VALUES (137,0,'Cup -Styrofoam','Please round quantity to the  nearest 10 cups.','cup','foam','styrofoam',NULL,NULL,'Available',400,400,47,50);
+INSERT INTO `items` VALUES (138,0,'Bottle (Liter)','Liter Bottle','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,58,1);
+INSERT INTO `items` VALUES (139,0,'Bottle (500 ML)','500ml Bottle','500ml',NULL,NULL,NULL,NULL,'Available',25,40,56,1);
+INSERT INTO `items` VALUES (140,0,'Borax','Please round quantity to the nearest quarter box. Quantity listed in quarter boxes.','Borax','slime',NULL,NULL,NULL,'Available',11,11,17,2);
+INSERT INTO `items` VALUES (141,0,'Baking Soda','Please round quantity to the nearest quarter of a large box.  Quantity listed in quarter boxes.','baking soda',NULL,NULL,NULL,NULL,'Available',14,15,13,4);
+INSERT INTO `items` VALUES (142,0,'LEDs','Please round quantity to the nearest 20 LEDs.  Quantity includes Red, Yellow, and Green LEDs','LED','light bulb','light',NULL,NULL,'Available',450,450,26,10);
+INSERT INTO `items` VALUES (143,0,'Dish Soap','Please round quantity to the  nearest pint.  Quantity in approximate pints of soap.','detergent','soap','liquid soap',NULL,NULL,'Unavailable',0,4,15,1);
+INSERT INTO `items` VALUES (144,0,'Cardstock','Quantity not updated.','cardstock','construction paper','cardboard',NULL,NULL,'Available',80,100,8,1);
+INSERT INTO `items` VALUES (145,0,'Index Cards','Please round quantity to the nearest 10 index cards. Includes 4x6 in cards and 3x5 cards.','index card','cards',NULL,NULL,NULL,'Available',786,800,46,10);
+INSERT INTO `items` VALUES (146,0,'Marshmallow','Please round quantity to the nearest full bag.  Do not return open bags.','mini marshmallows','marshmallows',NULL,NULL,NULL,'Unavailable',0,0,13,0);
+INSERT INTO `items` VALUES (147,0,'Graphing Notebooks','Notebook','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,56,1);
+INSERT INTO `items` VALUES (148,0,'Hot Glue Sticks','Estimated quantity.  Hot Glue Sticks, does not include sticks already in glue guns','hot glue','glue sticks',NULL,NULL,NULL,'Available',12,17,4,1);
+INSERT INTO `items` VALUES (149,0,'Pipe Cleaners','Please round quantity to the nearest 10. Assorted colors of pipe cleaners','pipe cleaners','chenille stems',NULL,NULL,NULL,'Available',20,20,32,1);
+INSERT INTO `items` VALUES (150,0,'Tape - Masking','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','masking tape','tape',NULL,NULL,NULL,'Unavailable',0,6,34,2);
+INSERT INTO `items` VALUES (151,0,'Tape - Electrical','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','electrical tape','tape','black tape',NULL,NULL,'Available',13,13,29,3);
+INSERT INTO `items` VALUES (152,0,'Pencils','Please round quantity to the nearest 10. Includes new pencils and already sharpened pencils.','pencils','pencil',NULL,NULL,NULL,'Available',150,150,46,10);
+INSERT INTO `items` VALUES (153,0,'Balloons','Please round quantity to the nearest 10 Balloons','balloon','bags of ballons',NULL,NULL,NULL,'Available',25,100,42,10);
+INSERT INTO `items` VALUES (154,0,'Plastic Wheels','Please round quantity to the nearest 10. Black Wheels for making of cars','wheel','black plastic wheel','plastic wheel',NULL,NULL,'Available',145,145,29,10);
+INSERT INTO `items` VALUES (155,0,'Wooden Dowel','Wooden Dowels for Black Wheels','Dowels','Wood','Cars',NULL,NULL,'Available',1,1,57,20);
+INSERT INTO `items` VALUES (156,0,'Paper Towel','Please round quantity to the nearest full roll.  Paper Towels','towel','paper towels',NULL,NULL,NULL,'Available',9,9,14,1);
+INSERT INTO `items` VALUES (157,0,'3D Printing Filament','Filament for 3D Printers','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,52,1);
+INSERT INTO `items` VALUES (158,0,'Battery Holder - single','Please round quantity to the nearest 10. Battery holder/clip for AA battery.  Some have wires other have tabs.','AA Single Battery Clip','battery holder','AA battery','battery clip',NULL,'Available',149,150,30,10);
+INSERT INTO `items` VALUES (159,0,'Solder','Solder for Soldering Iron','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,21,1);
+INSERT INTO `items` VALUES (160,0,'Rubber Bands','Please round quantity to the nearest 100. Includes assorted sizes of rubber bands.','rubber band',NULL,NULL,NULL,NULL,'Available',1705,1901,34,100);
+INSERT INTO `items` VALUES (161,0,'Cardboard Tube','Tube of Cardboard','Tubes',NULL,NULL,NULL,NULL,'Available',20,20,56,10);
+INSERT INTO `items` VALUES (162,0,'Tape - Packing','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','Packing Tape','clear tape',NULL,NULL,NULL,'Available',2,3,34,1);
+INSERT INTO `items` VALUES (163,0,'Solid Core Wire','Please round quantity to the nearest 100 wire pieces. Includes pre-cut jumper wire and spools of solid core wire.','wire','jumper wire','breadboard',NULL,NULL,'Available',990,1000,25,100);
+INSERT INTO `items` VALUES (164,0,'Battery Holder - Double','Please round quantity to the nearest 10. Double AA Battery Clip','Battery clip','AA batteries','Battery Holder',NULL,NULL,'Available',299,300,21,10);
+INSERT INTO `items` VALUES (165,0,'Paperclips','Please round quantity to the nearest 50 paperclips (typically half a box).  Includes various sizes of paperclips.','paper clip','small paperclips','large paperclips',NULL,NULL,'Available',950,980,46,100);
+INSERT INTO `items` VALUES (166,0,'Foam Core Sheets','Foam core','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,1,1);
+INSERT INTO `items` VALUES (167,0,'Food Coloring','Please round quantity to the  nearest full bottle.  Food Coloring currently in red and blue.  Does not include almost empty bottles.','food dye','red food coloring','blue food coloring',NULL,NULL,'Available',1,3,13,1);
+INSERT INTO `items` VALUES (168,0,'Gloves','rubber gloves','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,61,1);
+INSERT INTO `items` VALUES (169,0,'Straws - clear','Please round quantity to the nearest 10.  Includes unwrapped clear straws.','straw','clear straw',NULL,NULL,NULL,'Available',90,200,35,10);
+INSERT INTO `items` VALUES (170,0,'Coffee Stirrer','Please round quantity to the  nearest 20. There are 700 red straw stirrers, 3500 wood sticks.','Wood','Stick','Stirrer','red straw',NULL,'Available',4100,4100,47,100);
+INSERT INTO `items` VALUES (171,0,'Beaker 400 ml','Beaker','Beaker','Glass','400ml',NULL,NULL,'Available',1,1,1,1);
+INSERT INTO `items` VALUES (172,0,'Binder Clips','Binder Clip','Clips','Paper','Binder',NULL,NULL,'Available',1,1,1,1);
+INSERT INTO `items` VALUES (173,0,'Brass Clips','Please round quantity to the  nearest 10 Brass Clips','Brass','Clips','brads','brass fasteners',NULL,'Available',100,100,33,10);
+INSERT INTO `items` VALUES (174,0,'Bucket','Bucket','Orange','Bucket',NULL,NULL,NULL,'Available',1,1,11,1);
+INSERT INTO `items` VALUES (175,0,'Light Bulbs','Please round quantity to the nearest 10 Light Bulbs.  Quantity is very approximate.','Small Light Bulbs','Blue wire',NULL,NULL,NULL,'Available',200,200,28,10);
+INSERT INTO `items` VALUES (176,0,'CDs','CDs','Blank CDs','CD',NULL,NULL,NULL,'Available',50,50,24,1);
+INSERT INTO `items` VALUES (177,0,'Drill','Drill','Drill','Tool',NULL,NULL,NULL,'Available',1,1,6,1);
+INSERT INTO `items` VALUES (178,0,'Foot Pump','Foot Air Pump','Pump','Foot','Air Pump',NULL,NULL,'Available',1,1,1,1);
+INSERT INTO `items` VALUES (179,0,'Glass Tube','Glass Tube','Glass Tube','Test Tube','Glass','Small',NULL,'Unavailable',0,30,17,1);
+INSERT INTO `items` VALUES (180,0,'Hot Glue Gun','Estimated quantity. Hot Glue Gun','Hot Glue Gun','Glue',NULL,NULL,NULL,'Available',18,20,4,1);
+INSERT INTO `items` VALUES (181,0,'Goggles','Goggles','Eyewear','Safety','safety goggles','safety glasses',NULL,'Available',40,40,47,1);
+INSERT INTO `items` VALUES (182,0,'Hand Saw','Hand Saw','Saw','Tools','Wood',NULL,NULL,'Available',1,1,19,1);
+INSERT INTO `items` VALUES (183,0,'Hole Puncher','Hole Puncher','Paper','Hole Puncher',NULL,NULL,NULL,'Available',19,19,45,5);
+INSERT INTO `items` VALUES (184,0,'Insulated Wire','Please round quantity to the nearest wire bundle. Quantity is a very approximate estimate. \n Includes spools, large, and small bundles of all colors of insulated wire.','Wire','Insulated','Stranded','Multicolor',NULL,'Available',200,200,25,1);
+INSERT INTO `items` VALUES (185,0,'Magnet - rectangular','Please round quantity to the nearest 10 magnets.','Rectangle','Magnet','Bar Magnet',NULL,NULL,'Available',50,50,24,10);
+INSERT INTO `items` VALUES (186,0,'Magnifying Glass','Please round quantity to the nearest 5. Hand Held Magnifying Glass','Lens','Magnifying Glass','hand lens',NULL,NULL,'Available',70,70,12,1);
+INSERT INTO `items` VALUES (187,1,'Dell Inspiron 15 5000 Series','5 Dell computers Viterbi ID 1006263 -  1006267','Dell','Silver','Laptop','Computer',NULL,'Available',5,5,54,0);
+INSERT INTO `items` VALUES (188,1,'Dell Inspiron 15','Black Laptops. Viterbi ID Tag 1004660, 1004661, 1004665','Dell','Black','Laptop','Computer','Windows 7','Available',2,3,54,0);
+INSERT INTO `items` VALUES (189,1,'Chromebook','S/N 5CD7222SVB','Chromebook','HP','Laptop',NULL,NULL,'Available',1,1,54,0);
+INSERT INTO `items` VALUES (190,1,'Dell Inspiron 15 5000 Series - 2 in -1','10 Viterbi ID 1006679 - 1006688\nComputer ID STEM-PC-01 = STEM-PC10','Dell','2 in 1','Laptop','Computer',NULL,'Available',10,10,54,0);
+INSERT INTO `items` VALUES (192,1,'Dell Inspiron 15 5000 Series - PC100 series','Hardware IDs are the Viterbi tag on the back: STEM-PC100=1006719; STEM-PC101=1006720; STEM-PC102=1006721; STEM-PC103=1006722; STEM-PC104=1006723; STEM-PC105=1006728; STEM-PC106=1006724; STEM-PC108=1006726; STEM-PC109=1006727','Dell','Charcaoal','Laptop','Computer',NULL,'Available',9,9,54,0);
+INSERT INTO `items` VALUES (193,1,'Lenovo Tablet','Viterbi Tag ID 1006671 - 1006678 and 1007514-1007519, 107521, 107522','Android','Tablet',NULL,NULL,NULL,'Available',15,15,59,0);
+INSERT INTO `items` VALUES (194,1,'Lenovo Tablet','Viterbi Tag ID 1006671 - 1006678 and 1007514-107522','Android','Tablet',NULL,NULL,NULL,'Available',16,16,59,0);
+INSERT INTO `items` VALUES (195,1,'Azpen Tablet','12 Viterbi ID tags 1007504 - 1007513, 1007517, 1007523','Tablet','Android','10\"',NULL,NULL,'Available',12,12,59,0);
+INSERT INTO `items` VALUES (196,0,'HP Laptop','Viterbi Tag ID 1005226 - 1005228','HP','Laptop','Computer','Windows 7',NULL,'Available',3,3,54,0);
+INSERT INTO `items` VALUES (197,0,'HP Laptop','Viterbi Tag ID 1005226 - 1005228','HP','Laptop','Computer','Windows 7',NULL,'Available',3,3,54,0);
+INSERT INTO `items` VALUES (198,1,'LASER and Optics Supplies','Items do not need to be checked out at the same time. However, if individual items are checked out, the total number and number checked out will need to be inputted','Laser Pointers','Magnifying Glasses','Lenses','Mirrors',NULL,'Available',1,1,53,0);
+INSERT INTO `items` VALUES (199,1,'GAK Portable Supplies','Gak supplies for class. Must replenish materials after use','Rolling Cart','Gak',NULL,NULL,NULL,'Available',1,1,55,0);
+INSERT INTO `items` VALUES (200,1,'Rolling Carts','Rolling carts to transport supplies','Carts',NULL,NULL,NULL,NULL,'Available',4,4,63,0);
+INSERT INTO `items` VALUES (201,1,'Extended Gripper','Extended grippers. Was used for \"camera surgery\"',NULL,NULL,NULL,NULL,NULL,'Available',12,12,62,0);
+INSERT INTO `items` VALUES (202,0,'Wood Glue (Small Bottles)','Elmer\'s Wood Glue','glue','wood glue',NULL,NULL,NULL,'Available',8,8,1,2);
+INSERT INTO `items` VALUES (203,0,'Wood Glue (Gallon)','Elmer\'s Wood Glue (Gallon Size)','glue','wood glue',NULL,NULL,NULL,'Unavailable',0,0,1,0);
+INSERT INTO `items` VALUES (204,0,'Krazy Glue','Krazy Glue','glue','crazy glue','krazy glue',NULL,NULL,'Available',20,20,1,5);
+INSERT INTO `items` VALUES (205,0,'Hammer','Hammer','hammer','hand tool',NULL,NULL,NULL,'Available',11,11,1,5);
+INSERT INTO `items` VALUES (206,0,'Imitation Vanilla Flavor','Please round quantity to the  nearest full bottle. \n Check back in as used up if less than a 10th full. Simple Value Imitation Vanilla Flavor','vanilla flavor','vanilla extract','imitation vanilla',NULL,NULL,'Available',1,1,13,0);
+INSERT INTO `items` VALUES (207,0,'Aluminum Foil','Round to nearest half roll - quantity in half rolls. Aluminum Foil','aluminum foil','foil','tin foil','tinfoil',NULL,'Available',5,7,50,0);
+INSERT INTO `items` VALUES (208,0,'Wax Paper','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','wax paper',NULL,NULL,NULL,NULL,'Available',2,2,50,0);
+INSERT INTO `items` VALUES (209,0,'Plastic Food Wrap','Please round quantity to the nearest full roll.  Check back in as used up if almost empty.','food wrap','plastic food wrap','saran wrap','clear wrap',NULL,'Available',1,2,50,0);
+INSERT INTO `items` VALUES (210,0,'Spaghetti','Please round quantity to the nearest full box. Only count quantity as 0 if box in less than 20\\% full.','Spaghetti','Thin Spaghetti','Pasta',NULL,NULL,'Available',35,35,38,2);
+INSERT INTO `items` VALUES (211,0,'Clorox Wipes','Round to the nearest container.  Only check in as 0 if on the last couple wipes. Clorox Disinfecting Wet Wipes','clorox wipes','disinfecting wipes','wipes','wet paper towels',NULL,'Available',1,1,13,0);
+INSERT INTO `items` VALUES (212,0,'Corn Starch','Please round quantity to the  nearest pound of corn starch.  Quantity listed in pounds.','corn starch','starch',NULL,NULL,NULL,'Available',8,8,51,1);
+INSERT INTO `items` VALUES (213,0,'Baking Powder','Please round quantity to the nearest half container.  Quantity in half containers. Glabber Girl\'s baking powder, 8.1 oz','baking powder',NULL,NULL,NULL,NULL,'Available',4,4,13,0);
+INSERT INTO `items` VALUES (214,0,'Alka-seltzer tablets','Alka-seltzer tablets','Alka-seltzer','Antacids','Lava Lamp',NULL,NULL,'Available',10,20,51,10);
+INSERT INTO `items` VALUES (215,0,'Alligator Clips','Please round quantity to the nearest 10 \n\nMetal Alligator Clips','alligator clips','metal clips',NULL,NULL,NULL,'Available',100,100,27,0);
+INSERT INTO `items` VALUES (216,0,'Battery Holder - Quad','Please round quantity to the nearest 5 \n\nHolds 4 AA batteries.  Most have plug ending not loose wires','battery holder','battery clip','AA batteries',NULL,NULL,'Available',34,35,30,5);
+INSERT INTO `items` VALUES (217,0,'Black Pepper','Please round quantity to the nearest half container - Quantity is in half containers.','pepper','black pepper',NULL,NULL,NULL,'Available',4,4,51,0);
+INSERT INTO `items` VALUES (218,0,'Breadboard','about 25 small and 10 large','breadboard',NULL,NULL,NULL,NULL,'Available',35,35,49,0);
+INSERT INTO `items` VALUES (219,0,'Clothes Pin','Please round quantity to the nearest 10 \n\nWooden clothes pins','clothespin','clothes pins',NULL,NULL,NULL,'Available',350,350,35,10);
+INSERT INTO `items` VALUES (220,0,'Compass','Compass','compass',NULL,NULL,NULL,NULL,'Available',30,30,2,0);
+INSERT INTO `items` VALUES (221,0,'Corks','Please round quantity to the nearest 10 \n\nVariety of materials (natural corks, plastic) and different shapes.  Can be used for wheels','corks','wine stoppers','wheels',NULL,NULL,'Available',60,60,1,0);
+INSERT INTO `items` VALUES (222,0,'Cotton Balls','Please round quantity to the nearest 50','cotton ball',NULL,NULL,NULL,NULL,'Available',500,500,15,10);
+INSERT INTO `items` VALUES (223,0,'Cotton Swabs','Please round quantity to the nearest 50','Q-Tips','cotton swabs',NULL,NULL,NULL,'Available',750,750,37,10);
+INSERT INTO `items` VALUES (224,0,'Clear Plastic Deli Container - 16oz','Deli containers for wigglebots','deli container','plastic bowl','clear plastic','wigglebots',NULL,'Unavailable',0,0,12,0);
+INSERT INTO `items` VALUES (225,0,'Cups - 5.5oz clear plastic','Please round quantity to the nearest 10 cups. NOT for food.','cups','clear plastic',NULL,NULL,NULL,'Available',50,50,12,10);
+INSERT INTO `items` VALUES (226,0,'Cups - 9oz paper','Please round quantity to the nearest 10 medium sized paper cups. NOT for food.','paper cups',NULL,NULL,NULL,NULL,'Available',155,155,12,0);
+INSERT INTO `items` VALUES (227,0,'Cups - 3oz paper','Please round quantity to the nearest 20 cups.  These are the very small paper cups. NOT for food.','cups','paper',NULL,NULL,NULL,'Available',654,654,12,100);
+INSERT INTO `items` VALUES (228,0,'Dissecting Kits','dissecting kits have forceps/tweezers, probes, and scalpels.  \n\nMay not all be complete or be exactly like image','tweezers','scalpel','probes','dissection',NULL,'Available',20,20,51,0);
+INSERT INTO `items` VALUES (229,0,'Dominos','Please round quantity to the nearest 20 \n\ndominos are useful as weight for foil boats','weights','dominos',NULL,NULL,NULL,'Available',150,150,37,10);
+INSERT INTO `items` VALUES (230,0,'Duct Tape','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','tape','duct tape',NULL,NULL,NULL,'Available',3,3,34,0);
+INSERT INTO `items` VALUES (231,0,'erlenmeyer flask - 125ml','Glass Flask 125ML','flask','glass',NULL,NULL,NULL,'Available',8,10,15,0);
+INSERT INTO `items` VALUES (232,0,'Film Canister','Please round quantity to the nearest 5 \n\nClear plastic film canister',56,'film canister',NULL,NULL,NULL,'Available',40,40,19,0);
+INSERT INTO `items` VALUES (233,0,'Fishing Line','Please round quantity to the nearest roll.  Only mark as used up when actually empty. \n\nFishing line','Fishing wire','fishing line','string',NULL,NULL,'Available',1,1,32,0);
+INSERT INTO `items` VALUES (234,0,'Forks- plastic','Please round quantity to the nearest 20','plastic utencils','fork','plastic fork',NULL,NULL,'Available',1500,1500,47,100);
+INSERT INTO `items` VALUES (235,0,'Funnel','Please round quantity to the nearest 5 \n\nThere are about 11 large funnels and 40 small funnels.','funnel','plastic funnel',NULL,NULL,NULL,'Available',51,51,20,5);
+INSERT INTO `items` VALUES (236,0,'Goggly Eyes','Please round quantity to the nearest 20','goggly eyes','craft','wigglebots',NULL,NULL,'Available',200,200,33,0);
+INSERT INTO `items` VALUES (237,0,'Graduated cylinders','Mostly 50 ml plastic cylinders','measuring','graduated cylinder',NULL,NULL,NULL,'Available',10,10,12,0);
+INSERT INTO `items` VALUES (238,0,'Hydrogen Peroxide','Please round quantity to the nearest quart.  Quantity listed to nearest quart. \n\n3\\% hydrogen peroxide','Hydrogen Peroxide','H2O2',NULL,NULL,NULL,'Unavailable',0,4,15,0);
+INSERT INTO `items` VALUES (239,0,'Iron Oxide','Please round quantity to the nearest 2.5lbs (half bag).  Quantity listed to nearest half a bag (2.5lbs). \n\nIron oxide powder to use in magnetic goo','iron oxide','iron filings','magnetic goo',NULL,NULL,'Available',6,6,15,0);
+INSERT INTO `items` VALUES (240,0,'Liquid Starch','Please round quantity to the nearest quart (i.e. quarter bottle).  Quantity in quarts \n\nLiquid Starch for slime and magnetic goo','slime','liquid starch','Sta-Flo',NULL,NULL,'Available',8,8,17,0);
+INSERT INTO `items` VALUES (241,0,'magnets - small round','Please round quantity to the nearest 20 \n\nSmall round magnets','magnet','round',NULL,NULL,NULL,'Available',240,240,24,20);
+INSERT INTO `items` VALUES (242,0,'Magnets-round','Please round quantity to the nearest 10 \n\nRound washer like disk magnets','round','disk magnet',NULL,NULL,NULL,'Available',200,200,24,50);
+INSERT INTO `items` VALUES (243,0,'Markers- for wigglebots','Please round quantity to the nearest 10 \n\nCrayola markers for wigglebots.  Not a consumable item.','markers','pens','wigglebot',NULL,NULL,'Available',98,98,46,0);
+INSERT INTO `items` VALUES (244,0,'measuring beaker - 400ml','Please round quantity to the nearest 5. Plastic beaker to measure 400ml. NOT for food.','measuring','measuring cup','beaker','plastic',NULL,'Available',30,30,12,0);
+INSERT INTO `items` VALUES (245,0,'measuring beaker - 50ml','Please round quantity to the nearest 5. Plastic beaker to measure 50ml. NOT for food.','measuring cup','plastic beaker','beaker',NULL,NULL,'Available',15,15,16,0);
+INSERT INTO `items` VALUES (246,0,'Modeling clay','Please round quantity to the nearest 4 strips of crayola modeling clay.  Some clay is in packages of 12 strips and others in packages of 4.  Each strip is 0.5oz (so 4 is 2oz, 12 is 6oz).  If returning used, place is a plastic bag.','clay','modeling clay','craft',NULL,NULL,'Available',52,57,43,0);
+INSERT INTO `items` VALUES (247,0,'Pens','Please round quantity to the nearest 10 \n\nCurrent quantity is very approximate.  Includes ball point pens,sharpies, etc.','pens','sharpie','ball point',NULL,NULL,'Available',40,40,46,0);
+INSERT INTO `items` VALUES (248,0,'petroleum jelly','Please round quantity to the nearest container. List as 1 container until it is mostly empty.','vaseline','petroleum jelly',NULL,NULL,NULL,'Available',1,1,51,0);
+INSERT INTO `items` VALUES (249,0,'measuring beaker - 250ml','Please round quantity to the nearest 5 beakers. Plastic beaker to measure 250ml. NOT for food.','measuring cup','beaker','plastic',NULL,NULL,'Available',9,11,16,0);
+INSERT INTO `items` VALUES (250,0,'plastic bowls','Please round quantity to the nearest 10.  White plastic bowls - 12oz.  For mixing slime, etc. NOT for food.','bowls','plastic bowls','small bowls',NULL,NULL,'Available',200,200,12,50);
+INSERT INTO `items` VALUES (251,0,'Plastic caps','Please round quantity to the nearest 20 \n\nPicture does not represent the item well - small white rounded cap.  Can be used for wheels','plastic','wheels',NULL,NULL,NULL,'Available',175,175,29,0);
+INSERT INTO `items` VALUES (252,0,'Plastic petri dish','Please round quantity to the nearest 10 \n\nSome plates have a separator down the middle','plastic dish','petri plate','petri dish',NULL,NULL,'Available',225,225,12,20);
+INSERT INTO `items` VALUES (253,0,'Plastic pipettes','Please round quantity to the nearest 10 \n\nCan be used to measure up to 3ml.','Eye Dropper','Pipet','Pipette',NULL,NULL,'Available',99,99,15,0);
+INSERT INTO `items` VALUES (254,0,'Plastic Propeller','Please round quantity to the nearest 10 \n\nRed propellers','propeller',NULL,NULL,NULL,NULL,'Available',25,80,5,0);
+INSERT INTO `items` VALUES (255,0,'Plates- paper, foam','Please round quantity to the nearest 20 \n\nPaper and Foam plates, mostly large foam dinner plates.','paper plate','foam plate','styrofoam plate','dinner plate',NULL,'Available',160,160,18,0);
+INSERT INTO `items` VALUES (256,0,'Pliers','Assorted types and sizes of pliers','needle nose pliers','pliers',NULL,NULL,NULL,'Available',15,15,23,0);
+INSERT INTO `items` VALUES (257,0,'Rubbing Alcohol','Please round quantity to the nearest pint.  Quantity in pints (1 quart has 2 pints) \n\nIsopropyl alcohol','alcohol','isopropyl','rubbing alcohol',NULL,NULL,'Available',1,1,15,0);
+INSERT INTO `items` VALUES (258,0,'Ruler','Please round quantity to the nearest 5 \n\nfoot long rulers, some have metric, some both, some only imperial.','ruler','measuring',NULL,NULL,NULL,'Available',23,25,46,0);
+INSERT INTO `items` VALUES (259,0,'Salt','Please round quantity to the nearest 2.5lbs (half a large box). \n\nThere are 3 boxes regular kosher salt (the quantity included here in half boxes), 1 box of rock salt, 2 bags of epsom salt, 2 smaller table salts.','salt',NULL,NULL,NULL,NULL,'Available',5,5,51,0);
+INSERT INTO `items` VALUES (260,0,'Scissors - small sharp metal','These are the small but sharp scissors.','scissors','metal','small',NULL,NULL,'Available',8,8,32,0);
+INSERT INTO `items` VALUES (261,0,'Scissors - Adult','These are the larger sized scissors','Scissors','Plastic handle',NULL,NULL,NULL,'Available',7,7,32,0);
+INSERT INTO `items` VALUES (262,0,'Scissors - Student','These are the small student scissors with plastic handles','scissors','kid scissors','plastic handles',NULL,NULL,'Available',9,25,32,0);
+INSERT INTO `items` VALUES (263,0,'Scissors- student Lefty','These are the small metal scissors labeled \"lefty\"','scissors','metal','lefty',NULL,NULL,'Available',13,15,32,0);
+INSERT INTO `items` VALUES (264,0,'Sieve','Various sizes of sieves with and without handles','sieve','filter','strainer',NULL,NULL,'Available',9,9,51,0);
+INSERT INTO `items` VALUES (265,0,'Bucket - small','1 gallon white plastic bucket','pail','bucket',NULL,NULL,NULL,'Available',12,12,10,0);
+INSERT INTO `items` VALUES (266,0,'Spoons - plastic','Please round quantity to the nearest 10.  White plastic spoons. NOT for food.','plastic utencil','spoon','plastic spoon',NULL,NULL,'Available',197,197,41,50);
+INSERT INTO `items` VALUES (267,0,'Spoons - measuring','NOT for FOOD! Quantity in number of sets.  Each set has 4 sizes','measuring spoons','spoon','teaspoon','tablespoon',NULL,'Available',10,10,46,0);
+INSERT INTO `items` VALUES (268,0,'Stopwatch','stop watch - See Ben Louie to check out this item.','stopwatch','watch',NULL,NULL,NULL,'Available',12,12,60,0);
+INSERT INTO `items` VALUES (269,0,'Straw- wrapped','Please round quantity to the nearest 20 \n\nThese wrapped bendy straws are best for straw rockets or other activities where people put the straws in their mouths.','straws','plastic straws','straw rockets',NULL,NULL,'Available',338,340,31,0);
+INSERT INTO `items` VALUES (270,0,'straw - colorful','Please round quantity to the nearest 20 \n\nVarious colors- straight','plastic straws',NULL,NULL,NULL,NULL,'Available',330,390,35,0);
+INSERT INTO `items` VALUES (271,0,'Tape - Scotch','Please round quantity to the nearest full roll. This includes scotch tape on a dispenser and extra rolls.  Once a roll is close to done, consider it used up.','tape','clear tape','scotch tape','cellophane tape',NULL,'Available',3,12,34,3);
+INSERT INTO `items` VALUES (272,0,'Thermometer','thermometer on a metal backing','thermometer',NULL,NULL,NULL,NULL,'Available',6,6,51,0);
+INSERT INTO `items` VALUES (273,0,'Toothpicks','Please round quantity to the nearest box. If box is mostly empty, check it back in as all used.  No need to count individual toothpicks.','toothpicks',NULL,NULL,NULL,NULL,'Available',14,14,39,0);
+INSERT INTO `items` VALUES (274,0,'Oil','Please round quantity to the nearest quart. Quantity listed in approximate quarts. Includes vegetable and corn oil','vegetable oil','corn oil','oil',NULL,NULL,'Available',11,11,13,0);
+INSERT INTO `items` VALUES (275,0,'Vinegar','Please round quantity to the nearest quart. Quantity listed in approximate quarts. Includes apple cider, white, and all other types of vinegar.','vinegar','white vinegar','apple cider vinegar',NULL,NULL,'Available',3,3,17,0);
+INSERT INTO `items` VALUES (276,0,'Wire cutters','various types of wire cutters.','wire cutter',NULL,NULL,NULL,NULL,'Available',30,30,23,0);
+INSERT INTO `items` VALUES (277,0,'Wire stripper','Wire stripper tool','wire stripper','wire cutter',NULL,NULL,NULL,'Available',8,8,23,0);
+INSERT INTO `items` VALUES (278,0,'Wood Skewers','Please round quantity to the nearest 20','skewer','bamboo sticks','wood sticks',NULL,NULL,'Available',343,445,40,0);
+INSERT INTO `items` VALUES (279,0,'Ziplock bags - Quart','Please round quantity to the nearest 10. Quart sized freezer bags','ziplock','resealable bag','freezer bag','plastic bag',NULL,'Available',170,170,50,0);
+INSERT INTO `items` VALUES (280,0,'Ziplock - Gallon','Please round quantity to the nearest 10. Gallon sized ziplock bags','ziplock','plastic bags','resealable bag',NULL,NULL,'Available',73,80,50,0);
+INSERT INTO `items` VALUES (281,0,'Ziplock - sandwich bag','Please round quantity to the nearest 20. Sandwich sized ziplock bags. Not for food.','ziplock','plastic bag','resealable bag',NULL,NULL,'Available',378,378,50,20);
+INSERT INTO `items` VALUES (282,0,'Yeast','Please round quantity to the nearest full packet or bottle. Only mark as used up if package or bottle is almost completely empty.','yeast',NULL,NULL,NULL,NULL,'Available',4,7,51,0);
+INSERT INTO `items` VALUES (283,0,'Elmers Glue - gallon','Please round quantity to the  nearest quart.  Quantity in quarts of glue (4 quarts in a gallon of glue).  Includes white school glue, washable white glue, clear glue.','glue','clear glue','elmer\'s','School glue','white glue','Available',7,7,17,2);
+INSERT INTO `items` VALUES (284,0,'AA Battery','Please round quantity to the nearest 10.  Includes loose batteries (use these first) and boxes of 4.','AA batteries','battery','batteries',NULL,NULL,'Available',342,450,3,50);
+INSERT INTO `items` VALUES (285,0,'Tape - double sided','Please round quantity to the nearest full roll. This includes scotch double sided tape on a dispenser and mounting tape.  Once a roll is close to done, consider it used up.','tape','double-sided',NULL,NULL,NULL,'Available',2,3,34,1);
+INSERT INTO `items` VALUES (286,0,'Mask','Disposable cone mask','Mask','Disposable Mask','Cone Mask','Disposable Cone Mask',NULL,'Available',50,50,37,10);
+INSERT INTO `items` VALUES (287,0,'Paint Mixing Sticks','Paint mixing sticks','Paint Mixing Stick','Mixing Stick','Sticks','Wood Sticks',NULL,'Available',200,200,47,50);
+INSERT INTO `items` VALUES (288,0,'Ping Pong Balls','Ping Pong Balls','Ping Pong Balls','Ping Pong',NULL,NULL,NULL,'Available',9,9,1,5);
+INSERT INTO `items` VALUES (289,0,'Playing Cards','Playing Cards','Playing Cards','Cards','Card Set',NULL,NULL,'Available',15,15,1,5);
+INSERT INTO `items` VALUES (290,0,'Sparkfun Inventors Kit (Plastic container) complete','The SparkFun Inventorâ€™s Kit (SIK) is a great way to get started with programming and hardware interaction with the Arduino programming language. The SIK includes everything you need to complete five overarching projects consisting of 16 interconnected circuits that teach everything from blinking an LED to reading sensors.','Arduino','Sparkfun',NULL,NULL,NULL,'Unavailable',0,2,1,0);
+INSERT INTO `items` VALUES (291,0,'Sparkfun Inventors Kit (Box) complete','The SparkFun Inventorâ€™s Kit (SIK) is a great way to get started with programming and hardware interaction with the Arduino programming language. The SIK includes everything you need to complete five overarching projects consisting of 16 interconnected circuits that teach everything from blinking an LED to reading sensors.','Arduino','Sparkfun',NULL,NULL,NULL,'Unavailable',0,6,1,0);
+INSERT INTO `items` VALUES (292,0,'Cups-5oz paper','Please round quantity to the nearest 10','cup','paper cup','small cup',NULL,NULL,'Available',440,440,12,50);
+INSERT INTO `items` VALUES (293,0,'measuring cups - set - for food','Set contains 10 cups ranging from 2 cups to 1/8 cup.  Use with food items only.','measuring cup','cup','food',NULL,NULL,'Available',1,1,44,0);
+INSERT INTO `items` VALUES (294,0,'measuring spoon set - for food','set of measuring spoons  - keep set together.','teaspoon','tablespoon','food','measuring spoon',NULL,'Available',1,1,44,0);
+INSERT INTO `items` VALUES (295,0,'measuring spoon - for food','Teaspoon sized measuring spoons for use with food only.','measuring spoons','teaspoon','food',NULL,NULL,'Available',10,10,44,0);
+INSERT INTO `items` VALUES (296,0,'Plastic spoons - for Food','Please round quantity to the nearest 10 spoons.  For use with food only!','spoon','plastic','food',NULL,NULL,'Available',193,197,44,20);
+INSERT INTO `items` VALUES (297,0,'Cups - 9oz plastic- for Food','Please round quantity to the nearest 10 cups.  For food use only.','cup','food','plastic',NULL,NULL,'Available',55,55,44,10);
+INSERT INTO `items` VALUES (298,0,'plastic bowl - 30oz - for Food','Please round quantity to the nearest 5. Larger bowl for mixing or serving food. For food use only.','bowl','plastic bowl','mixing bowl','food',NULL,'Available',50,50,44,10);
+INSERT INTO `items` VALUES (299,0,'ziplock - sandwich bag - for food','Please round to the nearest 5 bags.  For use with food only.','ziplock','sandwich bag','food',NULL,NULL,'Available',223,230,44,10);
+INSERT INTO `items` VALUES (300,0,'plastic knife - for food','Please round to the nearest 10.  For food use only.','knives','plastic utencil','plastic knives','food',NULL,'Available',50,50,44,1);
+INSERT INTO `items` VALUES (301,0,'paper plate - 6in - for food','Please round to the nearest 10 plates.  For food use only.','paper plate','small plate','food',NULL,NULL,'Available',179,179,44,10);
+INSERT INTO `items` VALUES (302,0,'paper napkins - for food','Please round to the nearest 10 napkins.  For food use only.','napkin','paper towel','food',NULL,NULL,'Available',40,100,44,10);
+INSERT INTO `items` VALUES (303,0,'X-Acto Knife','X-Acto Knife','Knife','X-Acto Knife',NULL,NULL,NULL,'Available',24,24,36,5);
+INSERT INTO `items` VALUES (304,0,'X-Acto Replacement Blades','X-Acto Replacement Blades, in boxes','X-Acto Knife','X-Acto Replacement Blades','Blades',NULL,NULL,'Available',4,4,1,2);
+INSERT INTO `items` VALUES (305,0,'Cane Sugar','Boxed Cane Sugar','Cane Sugar','Sugar','Boxed Sugar',NULL,NULL,'Available',2,2,51,1);
+INSERT INTO `items` VALUES (306,0,'Mass Hanger 50g','Mass Hanger, 50g','Mass Hanger','Mass',NULL,NULL,NULL,'Available',23,23,36,10);
+INSERT INTO `items` VALUES (307,0,'Marbles','Marbles','Marbles','Clear Marbles',NULL,NULL,NULL,'Available',200,200,38,100);
+INSERT INTO `items` VALUES (308,0,'Protractors','Protractors','Protractors',NULL,NULL,NULL,NULL,'Available',23,30,1,10);
+INSERT INTO `items` VALUES (309,0,'Plastic propellers with hooks','Round to the nearest 10 (each set in a bag has 10). Each propeller has a built in hook and popsicle stick mount.  Each set also has small plastic hook for other end of stick and a plastic weight.  Keep sets together and note if any hooks/weights go missing. These are reusable and should be returned after use.','propeller','rubber band plane',NULL,NULL,NULL,'Available',50,50,5,0);
+INSERT INTO `items` VALUES (311,0,'cups - 3oz paper - For FOOD','Please round to the nearest 10 cups.  For use with food only.','paper cups','cup','food',NULL,NULL,'Available',200,200,44,0);
+INSERT INTO `items` VALUES (312,0,'Dice','Dice','Dice','Rolling Dice',NULL,NULL,NULL,'Available',219,219,37,100);
+INSERT INTO `items` VALUES (313,0,'Screwdrivers (Philip\'s Head)','Screwdrivers (Philip\'s Head)','Screwdriver','philip\'s head',NULL,NULL,NULL,'Available',18,18,9,8);
+INSERT INTO `items` VALUES (314,0,'Screwdrivers (Flat Head)','Screwdrivers (Flat Head)','screwdriver','flat head','tool',NULL,NULL,'Available',39,39,9,10);
+INSERT INTO `items` VALUES (315,0,'Wrench','Wrench','Wrench','Hand Tool',NULL,NULL,NULL,'Available',15,15,9,5);
+INSERT INTO `items` VALUES (316,0,'Screwdrivers (Removable Heads)','Screwdrivers (Removable Heads)','screwdriver','replaceable tip','removable tip',NULL,NULL,'Available',6,6,9,4);
+INSERT INTO `items` VALUES (317,0,'Utility Cutter','heavy duty utility cutter','utility cutter','cutter','cutting tool','heavy duty cutter',NULL,'Available',4,4,9,2);
+INSERT INTO `items` VALUES (318,0,'Webcam','Webcam','webcam','camera',NULL,NULL,NULL,'Available',4,4,48,2);
+INSERT INTO `items` VALUES (319,0,'Pizza Box - 10 inch','Please re-use unless box is soiled or broken.','box','pizza box','solar smores',NULL,NULL,'Available',20,30,7,0);
 
-INSERT INTO `items` VALUES (1,1,'Arduino Uno','Single-board microcontroller. Ages 10+. Measured in units of Arduinos..','Arduino','Computer','Microcontroller',NULL,NULL,'Available',13,14,'H2',4);
-INSERT INTO `items` VALUES (15,0,'AAA Battery','Please round quantity to the nearest 10 batteries.','Battery','AAA','AAA batteries',NULL,NULL,'Available',100,111,'A2',10);
-INSERT INTO `items` VALUES (33,0,'Color Pencils (12 Pack)','Check in and out as whole packs only. 12 pack of Crayola colored pencils.','Colored Pencils','Crafts',NULL,NULL,NULL,'Available',3,3,'G1',0);
-INSERT INTO `items` VALUES (45,0,'D Battery','Please round quantity to the nearest 10. Standard D Batteries.','Battery','D cell','batteries','D batteries',NULL,'Available',1,20,'A2',5);
-INSERT INTO `items` VALUES (127,1,'3D Printer','3D Printer',NULL,NULL,NULL,NULL,NULL,'Available',9,10,NULL,6);
-INSERT INTO `items` VALUES (128,0,'DC Motor','Please round quantity to the nearest 10. DC motor','motors',NULL,NULL,NULL,NULL,'Available',129,150,'D6',10);
-INSERT INTO `items` VALUES (129,0,'9 Volt Battery','Please round quantity to the nearest 10.','9V','Square','battery','batteries',NULL,'Available',31,59,'A2',10);
-INSERT INTO `items` VALUES (130,0,'Popsicle Sticks','Please round quantity to the nearest 100 sticks.  Includes regular sized and jumbo sized popsicle sticks.','popsicle stick','craft stick',NULL,NULL,NULL,'Available',1300,1400,'E2',100);
-INSERT INTO `items` VALUES (131,0,'Magnet Wire','Please round quantity to the nearest bundle/spool.','copper wire','wire','magnet wire',NULL,NULL,'Available',10,10,'D2,D3,D4,D5',1);
-INSERT INTO `items` VALUES (132,0,'Switch (Momentary)','Push Button Switch',NULL,NULL,NULL,NULL,NULL,'Available',1,1,'D/H',1);
-INSERT INTO `items` VALUES (133,0,'Switch ( Toggle)','Toggle Switch','Quantity Available TBD',NULL,NULL,NULL,NULL,'Unavailable',0,1,'D/H',1);
-INSERT INTO `items` VALUES (135,0,'Cups - 7oz plastic','Please round quantity to the  nearest 20.  Plastic Cups are not clear plastic as in picture. NOT for food.','cup','plastic',NULL,NULL,NULL,'Available',230,285,'Bin to Left of Table',20);
-INSERT INTO `items` VALUES (136,0,'Cup  - Cone','Please round quantity to the  nearest 20 cups. Cone Cup for rocket cones.','sno-cone','paper cup','cone cup','rocket',NULL,'Available',600,600,'H0',50);
-INSERT INTO `items` VALUES (137,0,'Cup -Styrofoam','Please round quantity to the  nearest 10 cups.','cup','foam','styrofoam',NULL,NULL,'Available',400,400,'H0',50);
-INSERT INTO `items` VALUES (138,0,'Bottle (Liter)','Liter Bottle','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,'Red Tub',1);
-INSERT INTO `items` VALUES (139,0,'Bottle (500 ML)','500ml Bottle','500ml',NULL,NULL,NULL,NULL,'Available',25,40,'Plastic Container',1);
-INSERT INTO `items` VALUES (140,0,'Borax','Please round quantity to the nearest quarter box. Quantity listed in quarter boxes.','Borax','slime',NULL,NULL,NULL,'Available',11,11,'C3',2);
-INSERT INTO `items` VALUES (141,0,'Baking Soda','Please round quantity to the nearest quarter of a large box.  Quantity listed in quarter boxes.','baking soda',NULL,NULL,NULL,NULL,'Available',14,15,'C1',4);
-INSERT INTO `items` VALUES (142,0,'LEDs','Please round quantity to the nearest 20 LEDs.  Quantity includes Red, Yellow, and Green LEDs','LED','light bulb','light',NULL,NULL,'Available',450,450,'D3',10);
-INSERT INTO `items` VALUES (143,0,'Dish Soap','Please round quantity to the  nearest pint.  Quantity in approximate pints of soap.','detergent','soap','liquid soap',NULL,NULL,'Unavailable',0,4,'C2',1);
-INSERT INTO `items` VALUES (144,0,'Cardstock','Quantity not updated.','cardstock','construction paper','cardboard',NULL,NULL,'Available',80,100,'B1, RTH210, B0',1);
-INSERT INTO `items` VALUES (145,0,'Index Cards','Please round quantity to the nearest 10 index cards. Includes 4x6 in cards and 3x5 cards.','index card','cards',NULL,NULL,NULL,'Available',786,800,'G1',10);
-INSERT INTO `items` VALUES (146,0,'Marshmallow','Please round quantity to the nearest full bag.  Do not return open bags.','mini marshmallows','marshmallows',NULL,NULL,NULL,'Unavailable',0,0,'C1',0);
-INSERT INTO `items` VALUES (147,0,'Graphing Notebooks','Notebook','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,'Plastic Container',1);
-INSERT INTO `items` VALUES (148,0,'Hot Glue Sticks','Estimated quantity.  Hot Glue Sticks, does not include sticks already in glue guns','hot glue','glue sticks',NULL,NULL,NULL,'Available',12,17,'A3',1);
-INSERT INTO `items` VALUES (149,0,'Pipe Cleaners','Please round quantity to the nearest 10. Assorted colors of pipe cleaners','pipe cleaners','chenille stems',NULL,NULL,NULL,'Available',20,20,'E1',1);
-INSERT INTO `items` VALUES (150,0,'Tape - Masking','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','masking tape','tape',NULL,NULL,NULL,'Unavailable',0,6,'E3',2);
-INSERT INTO `items` VALUES (151,0,'Tape - Electrical','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','electrical tape','tape','black tape',NULL,NULL,'Available',13,13,'D6',3);
-INSERT INTO `items` VALUES (152,0,'Pencils','Please round quantity to the nearest 10. Includes new pencils and already sharpened pencils.','pencils','pencil',NULL,NULL,NULL,'Available',150,150,'G1',10);
-INSERT INTO `items` VALUES (153,0,'Balloons','Please round quantity to the nearest 10 Balloons','balloon','bags of ballons',NULL,NULL,NULL,'Available',25,100,'E8, (maybe also C0, E2, F3)',10);
-INSERT INTO `items` VALUES (154,0,'Plastic Wheels','Please round quantity to the nearest 10. Black Wheels for making of cars','wheel','black plastic wheel','plastic wheel',NULL,NULL,'Available',145,145,'D6',10);
-INSERT INTO `items` VALUES (155,0,'Wooden Dowel','Wooden Dowels for Black Wheels','Dowels','Wood','Cars',NULL,NULL,'Available',1,1,'Red Bucket',20);
-INSERT INTO `items` VALUES (156,0,'Paper Towel','Please round quantity to the nearest full roll.  Paper Towels','towel','paper towels',NULL,NULL,NULL,'Available',9,9,'C1, H0',1);
-INSERT INTO `items` VALUES (157,0,'3D Printing Filament','Filament for 3D Printers','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,'I',1);
-INSERT INTO `items` VALUES (158,0,'Battery Holder - single','Please round quantity to the nearest 10. Battery holder/clip for AA battery.  Some have wires other have tabs.','AA Single Battery Clip','battery holder','AA battery','battery clip',NULL,'Available',149,150,'D7',10);
-INSERT INTO `items` VALUES (159,0,'Solder','Solder for Soldering Iron','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,'D',1);
-INSERT INTO `items` VALUES (160,0,'Rubber Bands','Please round quantity to the nearest 100. Includes assorted sizes of rubber bands.','rubber band',NULL,NULL,NULL,NULL,'Available',1705,1901,'E3',100);
-INSERT INTO `items` VALUES (161,0,'Cardboard Tube','Tube of Cardboard','Tubes',NULL,NULL,NULL,NULL,'Available',20,20,'Plastic Container',10);
-INSERT INTO `items` VALUES (162,0,'Tape - Packing','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','Packing Tape','clear tape',NULL,NULL,NULL,'Available',2,3,'E3',1);
-INSERT INTO `items` VALUES (163,0,'Solid Core Wire','Please round quantity to the nearest 100 wire pieces. Includes pre-cut jumper wire and spools of solid core wire.','wire','jumper wire','breadboard',NULL,NULL,'Available',990,1000,'D2,D3,D4,D5',100);
-INSERT INTO `items` VALUES (164,0,'Battery Holder - Double','Please round quantity to the nearest 10. Double AA Battery Clip','Battery clip','AA batteries','Battery Holder',NULL,NULL,'Available',299,300,'D',10);
-INSERT INTO `items` VALUES (165,0,'Paperclips','Please round quantity to the nearest 50 paperclips (typically half a box).  Includes various sizes of paperclips.','paper clip','small paperclips','large paperclips',NULL,NULL,'Available',950,980,'G1',100);
-INSERT INTO `items` VALUES (166,0,'Foam Core Sheets','Foam core','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,NULL,1);
-INSERT INTO `items` VALUES (167,0,'Food Coloring','Please round quantity to the  nearest full bottle.  Food Coloring currently in red and blue.  Does not include almost empty bottles.','food dye','red food coloring','blue food coloring',NULL,NULL,'Available',1,3,'C1',1);
-INSERT INTO `items` VALUES (168,0,'Gloves','rubber gloves','Quantity Available TBD',NULL,NULL,NULL,NULL,'Available',1,1,'TBD',1);
-INSERT INTO `items` VALUES (169,0,'Straws - clear','Please round quantity to the nearest 10.  Includes unwrapped clear straws.','straw','clear straw',NULL,NULL,NULL,'Available',90,200,'E4',10);
-INSERT INTO `items` VALUES (170,0,'Coffee Stirrer','Please round quantity to the  nearest 20. There are 700 red straw stirrers, 3500 wood sticks.','Wood','Stick','Stirrer','red straw',NULL,'Available',4100,4100,'H0',100);
-INSERT INTO `items` VALUES (171,0,'Beaker 400 ml','Beaker','Beaker','Glass','400ml',NULL,NULL,'Available',1,1,NULL,1);
-INSERT INTO `items` VALUES (172,0,'Binder Clips','Binder Clip','Clips','Paper','Binder',NULL,NULL,'Available',1,1,NULL,1);
-INSERT INTO `items` VALUES (173,0,'Brass Clips','Please round quantity to the  nearest 10 Brass Clips','Brass','Clips','brads','brass fasteners',NULL,'Available',100,100,'E2',10);
-INSERT INTO `items` VALUES (174,0,'Bucket','Bucket','Orange','Bucket',NULL,NULL,NULL,'Available',1,1,'Between I and A',1);
-INSERT INTO `items` VALUES (175,0,'Light Bulbs','Please round quantity to the nearest 10 Light Bulbs.  Quantity is very approximate.','Small Light Bulbs','Blue wire',NULL,NULL,NULL,'Available',200,200,'D4',10);
-INSERT INTO `items` VALUES (176,0,'CDs','CDs','Blank CDs','CD',NULL,NULL,NULL,'Available',50,50,'D2',1);
-INSERT INTO `items` VALUES (177,0,'Drill','Drill','Drill','Tool',NULL,NULL,NULL,'Available',1,1,'B',1);
-INSERT INTO `items` VALUES (178,0,'Foot Pump','Foot Air Pump','Pump','Foot','Air Pump',NULL,NULL,'Available',1,1,NULL,1);
-INSERT INTO `items` VALUES (179,0,'Glass Tube','Glass Tube','Glass Tube','Test Tube','Glass','Small',NULL,'Unavailable',0,30,'C3',1);
-INSERT INTO `items` VALUES (180,0,'Hot Glue Gun','Estimated quantity. Hot Glue Gun','Hot Glue Gun','Glue',NULL,NULL,NULL,'Available',18,20,'A3',1);
-INSERT INTO `items` VALUES (181,0,'Goggles','Goggles','Eyewear','Safety','safety goggles','safety glasses',NULL,'Available',40,40,'H0',1);
-INSERT INTO `items` VALUES (182,0,'Hand Saw','Hand Saw','Saw','Tools','Wood',NULL,NULL,'Available',1,1,'C4',1);
-INSERT INTO `items` VALUES (183,0,'Hole Puncher','Hole Puncher','Paper','Hole Puncher',NULL,NULL,NULL,'Available',19,19,'G',5);
-INSERT INTO `items` VALUES (184,0,'Insulated Wire','Please round quantity to the nearest wire bundle. Quantity is a very approximate estimate. \n Includes spools, large, and small bundles of all colors of insulated wire.','Wire','Insulated','Stranded','Multicolor',NULL,'Available',200,200,'D2,D3,D4,D5',1);
-INSERT INTO `items` VALUES (185,0,'Magnet - rectangular','Please round quantity to the nearest 10 magnets.','Rectangle','Magnet','Bar Magnet',NULL,NULL,'Available',50,50,'D2',10);
-INSERT INTO `items` VALUES (186,0,'Magnifying Glass','Please round quantity to the nearest 5. Hand Held Magnifying Glass','Lens','Magnifying Glass','hand lens',NULL,NULL,'Available',70,70,'Bin to Left of Table',1);
-INSERT INTO `items` VALUES (187,1,'Dell Inspiron 15 5000 Series','5 Dell computers Viterbi ID 1006263 -  1006267','Dell','Silver','Laptop','Computer',NULL,'Available',5,5,'Laptop Cart RTH 210D',0);
-INSERT INTO `items` VALUES (188,1,'Dell Inspiron 15','Black Laptops. Viterbi ID Tag 1004660, 1004661, 1004665','Dell','Black','Laptop','Computer','Windows 7','Available',2,3,'Laptop Cart RTH 210D',0);
-INSERT INTO `items` VALUES (189,1,'Chromebook','S/N 5CD7222SVB','Chromebook','HP','Laptop',NULL,NULL,'Available',1,1,'Laptop Cart RTH 210D',0);
-INSERT INTO `items` VALUES (190,1,'Dell Inspiron 15 5000 Series - 2 in -1','10 Viterbi ID 1006679 - 1006688\nComputer ID STEM-PC-01 = STEM-PC10','Dell','2 in 1','Laptop','Computer',NULL,'Available',10,10,'Laptop Cart RTH 210D',0);
-INSERT INTO `items` VALUES (192,1,'Dell Inspiron 15 5000 Series - PC100 series','Hardware IDs are the Viterbi tag on the back: STEM-PC100=1006719; STEM-PC101=1006720; STEM-PC102=1006721; STEM-PC103=1006722; STEM-PC104=1006723; STEM-PC105=1006728; STEM-PC106=1006724; STEM-PC108=1006726; STEM-PC109=1006727','Dell','Charcaoal','Laptop','Computer',NULL,'Available',9,9,'Laptop Cart RTH 210D',0);
-INSERT INTO `items` VALUES (193,1,'Lenovo Tablet','Viterbi Tag ID 1006671 - 1006678 and 1007514-1007519, 107521, 107522','Android','Tablet',NULL,NULL,NULL,'Available',15,15,'RTH 210D Cabinet',0);
-INSERT INTO `items` VALUES (194,1,'Lenovo Tablet','Viterbi Tag ID 1006671 - 1006678 and 1007514-107522','Android','Tablet',NULL,NULL,NULL,'Available',16,16,'RTH 210D Cabinet',0);
-INSERT INTO `items` VALUES (195,1,'Azpen Tablet','12 Viterbi ID tags 1007504 - 1007513, 1007517, 1007523','Tablet','Android','10\"',NULL,NULL,'Available',12,12,'RTH 210D Cabinet',0);
-INSERT INTO `items` VALUES (196,0,'HP Laptop','Viterbi Tag ID 1005226 - 1005228','HP','Laptop','Computer','Windows 7',NULL,'Available',3,3,'Laptop Cart RTH 210D',0);
-INSERT INTO `items` VALUES (197,0,'HP Laptop','Viterbi Tag ID 1005226 - 1005228','HP','Laptop','Computer','Windows 7',NULL,'Available',3,3,'Laptop Cart RTH 210D',0);
-INSERT INTO `items` VALUES (198,1,'LASER and Optics Supplies','Items do not need to be checked out at the same time. However, if individual items are checked out, the total number and number checked out will need to be inputted','Laser Pointers','Magnifying Glasses','Lenses','Mirrors',NULL,'Available',1,1,'In plastic bin on the floor by the pull up door',0);
-INSERT INTO `items` VALUES (199,1,'GAK Portable Supplies','Gak supplies for class. Must replenish materials after use','Rolling Cart','Gak',NULL,NULL,NULL,'Available',1,1,'Next to Rolling Door',0);
-INSERT INTO `items` VALUES (200,1,'Rolling Carts','Rolling carts to transport supplies','Carts',NULL,NULL,NULL,NULL,'Available',4,4,'Under table in RTH 102',0);
-INSERT INTO `items` VALUES (201,1,'Extended Gripper','Extended grippers. Was used for \"camera surgery\"',NULL,NULL,NULL,NULL,NULL,'Available',12,12,'Top of shelf F',0);
-INSERT INTO `items` VALUES (202,0,'Wood Glue (Small Bottles)','Elmer\'s Wood Glue','glue','wood glue',NULL,NULL,NULL,'Available',8,8,NULL,2);
-INSERT INTO `items` VALUES (203,0,'Wood Glue (Gallon)','Elmer\'s Wood Glue (Gallon Size)','glue','wood glue',NULL,NULL,NULL,'Unavailable',0,0,'',0);
-INSERT INTO `items` VALUES (204,0,'Krazy Glue','Krazy Glue','glue','crazy glue','krazy glue',NULL,NULL,'Available',20,20,NULL,5);
-INSERT INTO `items` VALUES (205,0,'Hammer','Hammer','hammer','hand tool',NULL,NULL,NULL,'Available',11,11,NULL,5);
-INSERT INTO `items` VALUES (206,0,'Imitation Vanilla Flavor','Please round quantity to the  nearest full bottle. \n Check back in as used up if less than a 10th full. Simple Value Imitation Vanilla Flavor','vanilla flavor','vanilla extract','imitation vanilla',NULL,NULL,'Available',1,1,'C1',0);
-INSERT INTO `items` VALUES (207,0,'Aluminum Foil','Round to nearest half roll - quantity in half rolls. Aluminum Foil','aluminum foil','foil','tin foil','tinfoil',NULL,'Available',5,7,'H3',0);
-INSERT INTO `items` VALUES (208,0,'Wax Paper','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','wax paper',NULL,NULL,NULL,NULL,'Available',2,2,'H3',0);
-INSERT INTO `items` VALUES (209,0,'Plastic Food Wrap','Please round quantity to the nearest full roll.  Check back in as used up if almost empty.','food wrap','plastic food wrap','saran wrap','clear wrap',NULL,'Available',1,2,'H3',0);
-INSERT INTO `items` VALUES (210,0,'Spaghetti','Please round quantity to the nearest full box. Only count quantity as 0 if box in less than 20\\% full.','Spaghetti','Thin Spaghetti','Pasta',NULL,NULL,'Available',35,35,'E7',2);
-INSERT INTO `items` VALUES (211,0,'Clorox Wipes','Round to the nearest container.  Only check in as 0 if on the last couple wipes. Clorox Disinfecting Wet Wipes','clorox wipes','disinfecting wipes','wipes','wet paper towels',NULL,'Available',1,1,'C1',0);
-INSERT INTO `items` VALUES (212,0,'Corn Starch','Please round quantity to the  nearest pound of corn starch.  Quantity listed in pounds.','corn starch','starch',NULL,NULL,NULL,'Available',8,8,'H4',1);
-INSERT INTO `items` VALUES (213,0,'Baking Powder','Please round quantity to the nearest half container.  Quantity in half containers. Glabber Girl\'s baking powder, 8.1 oz','baking powder',NULL,NULL,NULL,NULL,'Available',4,4,'C1',0);
-INSERT INTO `items` VALUES (214,0,'Alka-seltzer tablets','Alka-seltzer tablets','Alka-seltzer','Antacids','Lava Lamp',NULL,NULL,'Available',10,20,'H4',10);
-INSERT INTO `items` VALUES (215,0,'Alligator Clips','Please round quantity to the nearest 10 \n\nMetal Alligator Clips','alligator clips','metal clips',NULL,NULL,NULL,'Available',100,100,'D3 and D2',0);
-INSERT INTO `items` VALUES (216,0,'Battery Holder - Quad','Please round quantity to the nearest 5 \n\nHolds 4 AA batteries.  Most have plug ending not loose wires','battery holder','battery clip','AA batteries',NULL,NULL,'Available',34,35,'D7',5);
-INSERT INTO `items` VALUES (217,0,'Black Pepper','Please round quantity to the nearest half container - Quantity is in half containers.','pepper','black pepper',NULL,NULL,NULL,'Available',4,4,'H4',0);
-INSERT INTO `items` VALUES (218,0,'Breadboard','about 25 small and 10 large','breadboard',NULL,NULL,NULL,NULL,'Available',35,35,'H2',0);
-INSERT INTO `items` VALUES (219,0,'Clothes Pin','Please round quantity to the nearest 10 \n\nWooden clothes pins','clothespin','clothes pins',NULL,NULL,NULL,'Available',350,350,'E4',10);
-INSERT INTO `items` VALUES (220,0,'Compass','Compass','compass',NULL,NULL,NULL,NULL,'Available',30,30,'A2',0);
-INSERT INTO `items` VALUES (221,0,'Corks','Please round quantity to the nearest 10 \n\nVariety of materials (natural corks, plastic) and different shapes.  Can be used for wheels','corks','wine stoppers','wheels',NULL,NULL,'Available',60,60,NULL,0);
-INSERT INTO `items` VALUES (222,0,'Cotton Balls','Please round quantity to the nearest 50','cotton ball',NULL,NULL,NULL,NULL,'Available',500,500,'C2',10);
-INSERT INTO `items` VALUES (223,0,'Cotton Swabs','Please round quantity to the nearest 50','Q-Tips','cotton swabs',NULL,NULL,NULL,'Available',750,750,'E6',10);
-INSERT INTO `items` VALUES (224,0,'Clear Plastic Deli Container - 16oz','Deli containers for wigglebots','deli container','plastic bowl','clear plastic','wigglebots',NULL,'Unavailable',0,0,'Bin to Left of Table',0);
-INSERT INTO `items` VALUES (225,0,'Cups - 5.5oz clear plastic','Please round quantity to the nearest 10 cups. NOT for food.','cups','clear plastic',NULL,NULL,NULL,'Available',50,50,'Bin to Left of Table',10);
-INSERT INTO `items` VALUES (226,0,'Cups - 9oz paper','Please round quantity to the nearest 10 medium sized paper cups. NOT for food.','paper cups',NULL,NULL,NULL,NULL,'Available',155,155,'Bin to Left of Table',0);
-INSERT INTO `items` VALUES (227,0,'Cups - 3oz paper','Please round quantity to the nearest 20 cups.  These are the very small paper cups. NOT for food.','cups','paper',NULL,NULL,NULL,'Available',654,654,'Bin to Left of Table',100);
-INSERT INTO `items` VALUES (228,0,'Dissecting Kits','dissecting kits have forceps/tweezers, probes, and scalpels.  \n\nMay not all be complete or be exactly like image','tweezers','scalpel','probes','dissection',NULL,'Available',20,20,'H4',0);
-INSERT INTO `items` VALUES (229,0,'Dominos','Please round quantity to the nearest 20 \n\ndominos are useful as weight for foil boats','weights','dominos',NULL,NULL,NULL,'Available',150,150,'E6',10);
-INSERT INTO `items` VALUES (230,0,'Duct Tape','Please round quantity to the nearest full roll. Once a roll is close to done, consider it used up.','tape','duct tape',NULL,NULL,NULL,'Available',3,3,'E3',0);
-INSERT INTO `items` VALUES (231,0,'erlenmeyer flask - 125ml','Glass Flask 125ML','flask','glass',NULL,NULL,NULL,'Available',8,10,'C2',0);
-INSERT INTO `items` VALUES (232,0,'Film Canister','Please round quantity to the nearest 5 \n\nClear plastic film canister','plastic container','film canister',NULL,NULL,NULL,'Available',40,40,'C4',0);
-INSERT INTO `items` VALUES (233,0,'Fishing Line','Please round quantity to the nearest roll.  Only mark as used up when actually empty. \n\nFishing line','Fishing wire','fishing line','string',NULL,NULL,'Available',1,1,'E1',0);
-INSERT INTO `items` VALUES (234,0,'Forks- plastic','Please round quantity to the nearest 20','plastic utencils','fork','plastic fork',NULL,NULL,'Available',1500,1500,'H0',100);
-INSERT INTO `items` VALUES (235,0,'Funnel','Please round quantity to the nearest 5 \n\nThere are about 11 large funnels and 40 small funnels.','funnel','plastic funnel',NULL,NULL,NULL,'Available',51,51,'C4- bin on floor',5);
-INSERT INTO `items` VALUES (236,0,'Goggly Eyes','Please round quantity to the nearest 20','goggly eyes','craft','wigglebots',NULL,NULL,'Available',200,200,'E2',0);
-INSERT INTO `items` VALUES (237,0,'Graduated cylinders','Mostly 50 ml plastic cylinders','measuring','graduated cylinder',NULL,NULL,NULL,'Available',10,10,'Bin to Left of Table',0);
-INSERT INTO `items` VALUES (238,0,'Hydrogen Peroxide','Please round quantity to the nearest quart.  Quantity listed to nearest quart. \n\n3\\% hydrogen peroxide','Hydrogen Peroxide','H2O2',NULL,NULL,NULL,'Unavailable',0,4,'C2',0);
-INSERT INTO `items` VALUES (239,0,'Iron Oxide','Please round quantity to the nearest 2.5lbs (half bag).  Quantity listed to nearest half a bag (2.5lbs). \n\nIron oxide powder to use in magnetic goo','iron oxide','iron filings','magnetic goo',NULL,NULL,'Available',6,6,'C2',0);
-INSERT INTO `items` VALUES (240,0,'Liquid Starch','Please round quantity to the nearest quart (i.e. quarter bottle).  Quantity in quarts \n\nLiquid Starch for slime and magnetic goo','slime','liquid starch','Sta-Flo',NULL,NULL,'Available',8,8,'C3',0);
-INSERT INTO `items` VALUES (241,0,'magnets - small round','Please round quantity to the nearest 20 \n\nSmall round magnets','magnet','round',NULL,NULL,NULL,'Available',240,240,'D2',20);
-INSERT INTO `items` VALUES (242,0,'Magnets-round','Please round quantity to the nearest 10 \n\nRound washer like disk magnets','round','disk magnet',NULL,NULL,NULL,'Available',200,200,'D2',50);
-INSERT INTO `items` VALUES (243,0,'Markers- for wigglebots','Please round quantity to the nearest 10 \n\nCrayola markers for wigglebots.  Not a consumable item.','markers','pens','wigglebot',NULL,NULL,'Available',98,98,'G1',0);
-INSERT INTO `items` VALUES (244,0,'measuring beaker - 400ml','Please round quantity to the nearest 5. Plastic beaker to measure 400ml. NOT for food.','measuring','measuring cup','beaker','plastic',NULL,'Available',30,30,'Bin to Left of Table',0);
-INSERT INTO `items` VALUES (245,0,'measuring beaker - 50ml','Please round quantity to the nearest 5. Plastic beaker to measure 50ml. NOT for food.','measuring cup','plastic beaker','beaker',NULL,NULL,'Available',15,15,'C2, Bin to Left of Table',0);
-INSERT INTO `items` VALUES (246,0,'Modeling clay','Please round quantity to the nearest 4 strips of crayola modeling clay.  Some clay is in packages of 12 strips and others in packages of 4.  Each strip is 0.5oz (so 4 is 2oz, 12 is 6oz).  If returning used, place is a plastic bag.','clay','modeling clay','craft',NULL,NULL,'Available',52,57,'F3',0);
-INSERT INTO `items` VALUES (247,0,'Pens','Please round quantity to the nearest 10 \n\nCurrent quantity is very approximate.  Includes ball point pens,sharpies, etc.','pens','sharpie','ball point',NULL,NULL,'Available',40,40,'G1',0);
-INSERT INTO `items` VALUES (248,0,'petroleum jelly','Please round quantity to the nearest container. List as 1 container until it is mostly empty.','vaseline','petroleum jelly',NULL,NULL,NULL,'Available',1,1,'H4',0);
-INSERT INTO `items` VALUES (249,0,'measuring beaker - 250ml','Please round quantity to the nearest 5 beakers. Plastic beaker to measure 250ml. NOT for food.','measuring cup','beaker','plastic',NULL,NULL,'Available',9,11,'C2, Bin to Left of Table',0);
-INSERT INTO `items` VALUES (250,0,'plastic bowls','Please round quantity to the nearest 10.  White plastic bowls - 12oz.  For mixing slime, etc. NOT for food.','bowls','plastic bowls','small bowls',NULL,NULL,'Available',200,200,'Bin to Left of Table',50);
-INSERT INTO `items` VALUES (251,0,'Plastic caps','Please round quantity to the nearest 20 \n\nPicture does not represent the item well - small white rounded cap.  Can be used for wheels','plastic','wheels',NULL,NULL,NULL,'Available',175,175,'D6',0);
-INSERT INTO `items` VALUES (252,0,'Plastic petri dish','Please round quantity to the nearest 10 \n\nSome plates have a separator down the middle','plastic dish','petri plate','petri dish',NULL,NULL,'Available',225,225,'Bin to Left of Table',20);
-INSERT INTO `items` VALUES (253,0,'Plastic pipettes','Please round quantity to the nearest 10 \n\nCan be used to measure up to 3ml.','Eye Dropper','Pipet','Pipette',NULL,NULL,'Available',99,99,'C2',0);
-INSERT INTO `items` VALUES (254,0,'Plastic Propeller','Please round quantity to the nearest 10 \n\nRed propellers','propeller',NULL,NULL,NULL,NULL,'Available',25,80,'A4',0);
-INSERT INTO `items` VALUES (255,0,'Plates- paper, foam','Please round quantity to the nearest 20 \n\nPaper and Foam plates, mostly large foam dinner plates.','paper plate','foam plate','styrofoam plate','dinner plate',NULL,'Available',160,160,'C3, H0',0);
-INSERT INTO `items` VALUES (256,0,'Pliers','Assorted types and sizes of pliers','needle nose pliers','pliers',NULL,NULL,NULL,'Available',15,15,'D1',0);
-INSERT INTO `items` VALUES (257,0,'Rubbing Alcohol','Please round quantity to the nearest pint.  Quantity in pints (1 quart has 2 pints) \n\nIsopropyl alcohol','alcohol','isopropyl','rubbing alcohol',NULL,NULL,'Available',1,1,'C2',0);
-INSERT INTO `items` VALUES (258,0,'Ruler','Please round quantity to the nearest 5 \n\nfoot long rulers, some have metric, some both, some only imperial.','ruler','measuring',NULL,NULL,NULL,'Available',23,25,'G1',0);
-INSERT INTO `items` VALUES (259,0,'Salt','Please round quantity to the nearest 2.5lbs (half a large box). \n\nThere are 3 boxes regular kosher salt (the quantity included here in half boxes), 1 box of rock salt, 2 bags of epsom salt, 2 smaller table salts.','salt',NULL,NULL,NULL,NULL,'Available',5,5,'H4',0);
-INSERT INTO `items` VALUES (260,0,'Scissors - small sharp metal','These are the small but sharp scissors.','scissors','metal','small',NULL,NULL,'Available',8,8,'E1',0);
-INSERT INTO `items` VALUES (261,0,'Scissors - Adult','These are the larger sized scissors','Scissors','Plastic handle',NULL,NULL,NULL,'Available',7,7,'E1',0);
-INSERT INTO `items` VALUES (262,0,'Scissors - Student','These are the small student scissors with plastic handles','scissors','kid scissors','plastic handles',NULL,NULL,'Available',9,25,'E1',0);
-INSERT INTO `items` VALUES (263,0,'Scissors- student Lefty','These are the small metal scissors labeled \"lefty\"','scissors','metal','lefty',NULL,NULL,'Available',13,15,'E1',0);
-INSERT INTO `items` VALUES (264,0,'Sieve','Various sizes of sieves with and without handles','sieve','filter','strainer',NULL,NULL,'Available',9,9,'H4',0);
-INSERT INTO `items` VALUES (265,0,'Bucket - small','1 gallon white plastic bucket','pail','bucket',NULL,NULL,NULL,'Available',12,12,'B4-on the floor',0);
-INSERT INTO `items` VALUES (266,0,'Spoons - plastic','Please round quantity to the nearest 10.  White plastic spoons. NOT for food.','plastic utencil','spoon','plastic spoon',NULL,NULL,'Available',197,197,'E8',50);
-INSERT INTO `items` VALUES (267,0,'Spoons - measuring','NOT for FOOD! Quantity in number of sets.  Each set has 4 sizes','measuring spoons','spoon','teaspoon','tablespoon',NULL,'Available',10,10,'G1',0);
-INSERT INTO `items` VALUES (268,0,'Stopwatch','stop watch - See Ben Louie to check out this item.','stopwatch','watch',NULL,NULL,NULL,'Available',12,12,'RTH210',0);
-INSERT INTO `items` VALUES (269,0,'Straw- wrapped','Please round quantity to the nearest 20 \n\nThese wrapped bendy straws are best for straw rockets or other activities where people put the straws in their mouths.','straws','plastic straws','straw rockets',NULL,NULL,'Available',338,340,'E0',0);
-INSERT INTO `items` VALUES (270,0,'straw - colorful','Please round quantity to the nearest 20 \n\nVarious colors- straight','plastic straws',NULL,NULL,NULL,NULL,'Available',330,390,'E4',0);
-INSERT INTO `items` VALUES (271,0,'Tape - Scotch','Please round quantity to the nearest full roll. This includes scotch tape on a dispenser and extra rolls.  Once a roll is close to done, consider it used up.','tape','clear tape','scotch tape','cellophane tape',NULL,'Available',3,12,'E3',3);
-INSERT INTO `items` VALUES (272,0,'Thermometer','thermometer on a metal backing','thermometer',NULL,NULL,NULL,NULL,'Available',6,6,'H4',0);
-INSERT INTO `items` VALUES (273,0,'Toothpicks','Please round quantity to the nearest box. If box is mostly empty, check it back in as all used.  No need to count individual toothpicks.','toothpicks',NULL,NULL,NULL,NULL,'Available',14,14,'E7, H0 surplus',0);
-INSERT INTO `items` VALUES (274,0,'Oil','Please round quantity to the nearest quart. Quantity listed in approximate quarts. Includes vegetable and corn oil','vegetable oil','corn oil','oil',NULL,NULL,'Available',11,11,'C1',0);
-INSERT INTO `items` VALUES (275,0,'Vinegar','Please round quantity to the nearest quart. Quantity listed in approximate quarts. Includes apple cider, white, and all other types of vinegar.','vinegar','white vinegar','apple cider vinegar',NULL,NULL,'Available',3,3,'C3',0);
-INSERT INTO `items` VALUES (276,0,'Wire cutters','various types of wire cutters.','wire cutter',NULL,NULL,NULL,NULL,'Available',30,30,'D1',0);
-INSERT INTO `items` VALUES (277,0,'Wire stripper','Wire stripper tool','wire stripper','wire cutter',NULL,NULL,NULL,'Available',8,8,'D1',0);
-INSERT INTO `items` VALUES (278,0,'Wood Skewers','Please round quantity to the nearest 20','skewer','bamboo sticks','wood sticks',NULL,NULL,'Available',343,445,'E7, orange bucket on floor',0);
-INSERT INTO `items` VALUES (279,0,'Ziplock bags - Quart','Please round quantity to the nearest 10. Quart sized freezer bags','ziplock','resealable bag','freezer bag','plastic bag',NULL,'Available',170,170,'H3',0);
-INSERT INTO `items` VALUES (280,0,'Ziplock - Gallon','Please round quantity to the nearest 10. Gallon sized ziplock bags','ziplock','plastic bags','resealable bag',NULL,NULL,'Available',73,80,'H3',0);
-INSERT INTO `items` VALUES (281,0,'Ziplock - sandwich bag','Please round quantity to the nearest 20. Sandwich sized ziplock bags. Not for food.','ziplock','plastic bag','resealable bag',NULL,NULL,'Available',378,378,'H3',20);
-INSERT INTO `items` VALUES (282,0,'Yeast','Please round quantity to the nearest full packet or bottle. Only mark as used up if package or bottle is almost completely empty.','yeast',NULL,NULL,NULL,NULL,'Available',4,7,'H4',0);
-INSERT INTO `items` VALUES (283,0,'Elmers Glue - gallon','Please round quantity to the  nearest quart.  Quantity in quarts of glue (4 quarts in a gallon of glue).  Includes white school glue, washable white glue, clear glue.','glue','clear glue','elmer\'s','School glue','white glue','Available',7,7,'C3',2);
-INSERT INTO `items` VALUES (284,0,'AA Battery','Please round quantity to the nearest 10.  Includes loose batteries (use these first) and boxes of 4.','AA batteries','battery','batteries',NULL,NULL,'Available',342,450,'A2, A3',50);
-INSERT INTO `items` VALUES (285,0,'Tape - double sided','Please round quantity to the nearest full roll. This includes scotch double sided tape on a dispenser and mounting tape.  Once a roll is close to done, consider it used up.','tape','double-sided',NULL,NULL,NULL,'Available',2,3,'E3',1);
-INSERT INTO `items` VALUES (286,0,'Mask','Disposable cone mask','Mask','Disposable Mask','Cone Mask','Disposable Cone Mask',NULL,'Available',50,50,'E6',10);
-INSERT INTO `items` VALUES (287,0,'Paint Mixing Sticks','Paint mixing sticks','Paint Mixing Stick','Mixing Stick','Sticks','Wood Sticks',NULL,'Available',200,200,'H0',50);
-INSERT INTO `items` VALUES (288,0,'Ping Pong Balls','Ping Pong Balls','Ping Pong Balls','Ping Pong',NULL,NULL,NULL,'Available',9,9,NULL,5);
-INSERT INTO `items` VALUES (289,0,'Playing Cards','Playing Cards','Playing Cards','Cards','Card Set',NULL,NULL,'Available',15,15,NULL,5);
-INSERT INTO `items` VALUES (290,0,'Sparkfun Inventors Kit (Plastic container) complete','The SparkFun Inventorâ€™s Kit (SIK) is a great way to get started with programming and hardware interaction with the Arduino programming language. The SIK includes everything you need to complete five overarching projects consisting of 16 interconnected circuits that teach everything from blinking an LED to reading sensors.','Arduino','Sparkfun',NULL,NULL,NULL,'Unavailable',0,2,NULL,0);
-INSERT INTO `items` VALUES (291,0,'Sparkfun Inventors Kit (Box) complete','The SparkFun Inventorâ€™s Kit (SIK) is a great way to get started with programming and hardware interaction with the Arduino programming language. The SIK includes everything you need to complete five overarching projects consisting of 16 interconnected circuits that teach everything from blinking an LED to reading sensors.','Arduino','Sparkfun',NULL,NULL,NULL,'Unavailable',0,6,NULL,0);
-INSERT INTO `items` VALUES (292,0,'Cups-5oz paper','Please round quantity to the nearest 10','cup','paper cup','small cup',NULL,NULL,'Available',440,440,'Bin to Left of Table',50);
-INSERT INTO `items` VALUES (293,0,'measuring cups - set - for food','Set contains 10 cups ranging from 2 cups to 1/8 cup.  Use with food items only.','measuring cup','cup','food',NULL,NULL,'Available',1,1,'Food Bin - In front of B',0);
-INSERT INTO `items` VALUES (294,0,'measuring spoon set - for food','set of measuring spoons  - keep set together.','teaspoon','tablespoon','food','measuring spoon',NULL,'Available',1,1,'Food Bin - In front of B',0);
-INSERT INTO `items` VALUES (295,0,'measuring spoon - for food','Teaspoon sized measuring spoons for use with food only.','measuring spoons','teaspoon','food',NULL,NULL,'Available',10,10,'Food Bin - In front of B',0);
-INSERT INTO `items` VALUES (296,0,'Plastic spoons - for Food','Please round quantity to the nearest 10 spoons.  For use with food only!','spoon','plastic','food',NULL,NULL,'Available',193,197,'Food Bin - In front of B',20);
-INSERT INTO `items` VALUES (297,0,'Cups - 9oz plastic- for Food','Please round quantity to the nearest 10 cups.  For food use only.','cup','food','plastic',NULL,NULL,'Available',55,55,'Food Bin - In front of B',10);
-INSERT INTO `items` VALUES (298,0,'plastic bowl - 30oz - for Food','Please round quantity to the nearest 5. Larger bowl for mixing or serving food. For food use only.','bowl','plastic bowl','mixing bowl','food',NULL,'Available',50,50,'Food Bin - In front of B',10);
-INSERT INTO `items` VALUES (299,0,'ziplock - sandwich bag - for food','Please round to the nearest 5 bags.  For use with food only.','ziplock','sandwich bag','food',NULL,NULL,'Available',223,230,'Food Bin - In front of B',10);
-INSERT INTO `items` VALUES (300,0,'plastic knife - for food','Please round to the nearest 10.  For food use only.','knives','plastic utencil','plastic knives','food',NULL,'Available',50,50,'Food Bin - In front of B',1);
-INSERT INTO `items` VALUES (301,0,'paper plate - 6in - for food','Please round to the nearest 10 plates.  For food use only.','paper plate','small plate','food',NULL,NULL,'Available',179,179,'Food Bin - In front of B',10);
-INSERT INTO `items` VALUES (302,0,'paper napkins - for food','Please round to the nearest 10 napkins.  For food use only.','napkin','paper towel','food',NULL,NULL,'Available',40,100,'Food Bin - In front of B',10);
-INSERT INTO `items` VALUES (303,0,'X-Acto Knife','X-Acto Knife','Knife','X-Acto Knife',NULL,NULL,NULL,'Available',24,24,'E5',5);
-INSERT INTO `items` VALUES (304,0,'X-Acto Replacement Blades','X-Acto Replacement Blades, in boxes','X-Acto Knife','X-Acto Replacement Blades','Blades',NULL,NULL,'Available',4,4,NULL,2);
-INSERT INTO `items` VALUES (305,0,'Cane Sugar','Boxed Cane Sugar','Cane Sugar','Sugar','Boxed Sugar',NULL,NULL,'Available',2,2,'H4',1);
-INSERT INTO `items` VALUES (306,0,'Mass Hanger 50g','Mass Hanger, 50g','Mass Hanger','Mass',NULL,NULL,NULL,'Available',23,23,'E5',10);
-INSERT INTO `items` VALUES (307,0,'Marbles','Marbles','Marbles','Clear Marbles',NULL,NULL,NULL,'Available',200,200,'E7',100);
-INSERT INTO `items` VALUES (308,0,'Protractors','Protractors','Protractors',NULL,NULL,NULL,NULL,'Available',23,30,NULL,10);
-INSERT INTO `items` VALUES (309,0,'Plastic propellers with hooks','Round to the nearest 10 (each set in a bag has 10). Each propeller has a built in hook and popsicle stick mount.  Each set also has small plastic hook for other end of stick and a plastic weight.  Keep sets together and note if any hooks/weights go missing. These are reusable and should be returned after use.','propeller','rubber band plane',NULL,NULL,NULL,'Available',50,50,'A4',0);
-INSERT INTO `items` VALUES (311,0,'cups - 3oz paper - For FOOD','Please round to the nearest 10 cups.  For use with food only.','paper cups','cup','food',NULL,NULL,'Available',200,200,'Food Bin - In front of B',0);
-INSERT INTO `items` VALUES (312,0,'Dice','Dice','Dice','Rolling Dice',NULL,NULL,NULL,'Available',219,219,'E6',100);
-INSERT INTO `items` VALUES (313,0,'Screwdrivers (Philip\'s Head)','Screwdrivers (Philip\'s Head)','Screwdriver','philip\'s head',NULL,NULL,NULL,'Available',18,18,'B2',8);
-INSERT INTO `items` VALUES (314,0,'Screwdrivers (Flat Head)','Screwdrivers (Flat Head)','screwdriver','flat head','tool',NULL,NULL,'Available',39,39,'B2',10);
-INSERT INTO `items` VALUES (315,0,'Wrench','Wrench','Wrench','Hand Tool',NULL,NULL,NULL,'Available',15,15,'B2',5);
-INSERT INTO `items` VALUES (316,0,'Screwdrivers (Removable Heads)','Screwdrivers (Removable Heads)','screwdriver','replaceable tip','removable tip',NULL,NULL,'Available',6,6,'B2',4);
-INSERT INTO `items` VALUES (317,0,'Utility Cutter','heavy duty utility cutter','utility cutter','cutter','cutting tool','heavy duty cutter',NULL,'Available',4,4,'B2',2);
-INSERT INTO `items` VALUES (318,0,'Webcam','Webcam','webcam','camera',NULL,NULL,NULL,'Available',4,4,'H1',2);
-INSERT INTO `items` VALUES (319,0,'Pizza Box - 10 inch','Please re-use unless box is soiled or broken.','box','pizza box','solar smores',NULL,NULL,'Available',20,30,'B1',0);
 -- UNLOCK TABLES;
 -- --------------------------------------------------------
 
@@ -491,7 +550,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29,
+  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=320,
    ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`locationid`) REFERENCES `locations` (`locationid`);
 
 
