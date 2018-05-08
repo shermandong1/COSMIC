@@ -499,7 +499,7 @@ $app->post('/checkIn', function() use ($app) {
         }
 
 
-        store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $hardwareNotes, "");
+        store_data($checkoutUserName, $checkoutUserEmail, $uid, $itemid, $checkInQuantity, "Check In", $ids, "");
     }
 
      //If quantity total is less than threshold, send a re-order email to the director
