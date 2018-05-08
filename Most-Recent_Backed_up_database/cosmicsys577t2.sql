@@ -59,9 +59,9 @@ CREATE TABLE `items` (
 --
 -- LOCK TABLES `items` WRITE;
 
-INSERT INTO `items` VALUES (1,1,'Arduino Uno','Single-board microcontroller. Ages 10+. Measured in units of Arduinos..','Arduino','Computer','Microcontroller',NULL,NULL,'Available',13,14,1,4);
-INSERT INTO `items` VALUES (15,0,'AAA Battery','Please round quantity to the nearest 10 batteries.','Battery','AAA','AAA batteries',NULL,NULL,'Available',100,111,3,10);
-INSERT INTO `items` VALUES (33,0,'Color Pencils (12 Pack)','Check in and out as whole packs only. 12 pack of Crayola colored pencils.','Colored Pencils','Crafts',NULL,NULL,NULL,'Available',3,3,3,0);
+INSERT INTO `items` VALUES (1,1,'Arduino Uno','Single-board microcontroller. Ages 10+. Measured in units of Arduinos..','Arduino','Computer','Microcontroller',NULL,NULL,'Available',13,14,'H2',4);
+INSERT INTO `items` VALUES (15,0,'AAA Battery','Please round quantity to the nearest 10 batteries.','Battery','AAA','AAA batteries',NULL,NULL,'Available',100,111,'A2',10);
+INSERT INTO `items` VALUES (33,0,'Color Pencils (12 Pack)','Check in and out as whole packs only. 12 pack of Crayola colored pencils.','Colored Pencils','Crafts',NULL,NULL,NULL,'Available',3,3,'G1',0);
 INSERT INTO `items` VALUES (45,0,'D Battery','Please round quantity to the nearest 10. Standard D Batteries.','Battery','D cell','batteries','D batteries',NULL,'Available',1,20,'A2',5);
 INSERT INTO `items` VALUES (127,1,'3D Printer','3D Printer',NULL,NULL,NULL,NULL,NULL,'Available',9,10,NULL,6);
 INSERT INTO `items` VALUES (128,0,'DC Motor','Please round quantity to the nearest 10. DC motor','motors',NULL,NULL,NULL,NULL,'Available',129,150,'D6',10);
